@@ -14,6 +14,10 @@ Our program will have several classes. One of the classes will of course be Main
 
 The pictures show the relationships between all of the classes. An arrow indicates the relationship between the classes it is point to. For instance, an arrow pointing from Control to Reader indicates that Control will have to call Reader. These arrows simply serve to establish the relationships between the different classes. 
 
+![alt text][logo]
+
+[logo]: img/Overview.PNG?raw=true "Cell Society Overview"
+
 ##User Interface
 
 The user interface will be a 540px high and 500px wide. The bottom 500 by 500 pixels will be the grid where the cells reside. The 40px bar along the top will be the toolbar with the following controls:
@@ -29,7 +33,7 @@ The image below shows the GUI.
 
 ![alt text][logo]
 
-[logo]: Interface.PNG "Cell Society GUI"
+[logo]: img/Interface.PNG?raw=true "Cell Society GUI"
 
 Besides the toolbar, there will also be options for user-input toward the actual simulation, such as clicking a cell to reset it to its original state anytime during the simulation. 
 
