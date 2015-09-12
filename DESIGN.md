@@ -55,7 +55,9 @@ Erroneous situations that will be reported to the user are listed below, along w
 ##Design Details
 
 ###Main
-The main class will be quite short and responsible for a few important things. First of all, it will have boilerplate code such as constants that are needed for the program to function. It will also have a start() method that will show the stage and essentially display the GUI. In doing this, it will create an instance of the GUI class by calling the GUI's initialization() method which will return a scene that can then be shown through the start method. The Main class will also handle the timeline, keyframes, and animation, which will have to update through the step() method, also in this class. The step() method will be executed every certain amount of milliseconds so the grid and program in general is being updated every x milliseconds. This main class is needed even though it should not be theoretically very long because this is where the main game loop will be run and updating, which is obviously essential to the program functioning properly.
+The main class will be quite short but responsible for a few important things. First of all, it will have boilerplate code such as constants that are needed for the program to function. It will also have a start() method that will show the stage and essentially display the GUI. In doing this, it will create an instance of the GUI class by calling the GUI's initialization() method which will return a scene that can then be shown through the start method. The Main class will also handle the timeline, keyframes, and animation, which will have to update through the step() method, also in this class. The step() method will be executed every certain amount of milliseconds so the grid and program in general is being updated every x milliseconds. This main class is needed even though it should not be theoretically very long because this is where the main game loop will be run and updating, which is obviously essential to the program functioning properly.
+
+The Main class will interact with the GUI class because it has to create an instance of it, and will also interact with the Grid class due to the step method. The step method will be used to update the grid, which directly ties into the Grid class where the behind the scenes updating is being done.
 
 ###Reader
 
@@ -64,7 +66,26 @@ The Reader class is the main handler for the XML. This class will have a method 
 This class will interact with the Sim class and the GUI class, as it will have to send the data regarding the type of simulation to the Sim class, and if there is an error to be thrown, then this error will have to be sent to the GUI regarding an invalid file. 
 
 ###Control
-The Control class is used to handle the key and mouse input form the GUI. So, it will essentially take care of the options that the user can select on the GUI, including Play, Pause, Speed Multiply, Open, Simulation, and Settings. These buttons will allow the user to do specific tasks, as described above in the User Interface section of this Design document. 
+The Control class is used to handle the key and mouse input form the GUI. So, it will essentially take care of the options that the user can select on the GUI, including Play, Pause, Speed Multiply, Open, Simulation, and Settings. These buttons will allow the user to do specific tasks, as described above in the User Interface section of this Design document. The Control class will have to interact with the Reader class, specifically for when the user selects the type of simulation. This class can easily be added onto if the user wants to add more to the GUI because this class will mainly have a handler method, which will handle mouse and key input. So, these methods can easily be updated if someone wants to add to the GUI control or change something. This class is necessary because it centralizes the handling of all of the possible events, instead of having the handler within the GUI class. This will allow for a clear division of responsibility between the Control and GUI class, and thus will lead to less complications within the GUI class. 
+
+###GUI 
+The GUI class will be responsible for handling a few important parts of the User Interface. It will of course have an initialize() method that will return a scene in which it calls on the Grid class to pass in the grid object for initialization. This class will also initialize the interface for the user; all the different buttons/drop down menus explained above in the User Interface section will have to be initialized in the GUI class so that they can be displayed. This will involve simply adding things to the Group, so we can have an addToGroup() method. And then, the GUI will have to be updated every time the step method is called, so this can be done through an update() method. This is merely just updating the display of the GUI to the user, so it is not responsible for updating the back-end attributes, such as the state of the cell or the next state or anything along those lines. 
+
+The GUI class will have to interact with the Reader class, Control class, and the Grid class. The GUI class is a key part of our implementation because it is the means by which we are displaying everything to the user. This class should be flexible enough if someone would want to add to it. For instance, if someone wanted to add more buttons and thus more functionality to the GUI, then it should be fairly simple with the addToGroup() method.
+
+
+
+###Use Cases
+
+1. This use case will be handled by our design because we will be using the Grid, Cell, and Sim class to determine the current state, next state, update the state, and locate the neighbors. The Sim class will specify which simulation we are using (in this case, Game of Life), which will then dictate what constitutes the neighbors of the cell. The neighbors are found in the Grid class. Because it is a middle cell, we don't have to worry about checking the boundaries of the window, but of course, those checks will be there to handle the next use case. The information for rules and how they are applied will come from the Sim class, while the application of the rules themselves will come from the Cell and Grid classes. The Map described above that maps characteristics to a list of possible states will be used to determine the next state for the middle cell.
+
+2. For the edge cell case, this will be able to be adapted because we will have a simple out of bounds check in the Grid class, and that will ensure that the neighbors are being determined properly. The rest of the updating as described above will be done by by the same classes (Sim, Grid, and Cell), also as described above.
+
+3. To update the cells, the Cell class will be used to hold the current state and to determine the next state. These states will be determined using the Sim class, as this class has the rules for determining the states and it also contains the Map we are using to map the characteristic to the list of possible states. Then, this updated state will be sent to the Grid class, which will update the cell object being acted upon. Finally, the Grid class will interact with the GUI to display this update. 
+
+4. Simulation parameters can be set by simply parsing the XML file using the Reader class and then that information will be sent to the Sim class. Based on the information and the type of simulation, the exchange of information will continue and the parameter will be accounted for in determining the current/next states.
+
+5. The GUI can easily be used to change the simulation type. This can be done using the Simulation drop down menu in the GUI, which will allow the user to choose which simulation they would like to run. Once the user chooses a different simulation, this will cause the open file pop-up to display, which will allow the user to choose a corresponding XML file for the simulation they want to run. 
 
 
 ###GUI
@@ -101,16 +122,16 @@ Assumptions made during design include (1) the Grid will be two-dimensional but 
 ###Jiawei Zhang
 * Create test XML files with different starting configurations. 
 * Create the XML reader and pass the simulation configuration and data  to _____ to use in Sim and Grid. 
-* Work with _____ on the Grid getNext method.
+* Work with Ankit Kayastha on the Grid getNext method.
 
-###_____
+###Jaidev Satish
 * Create main boilerplate class with timeline and step method.
 * Create controls class including 'Start', 'Pause', 'Stop', 'Open XML', 'Speed Up', 'Slow Down'.
 * Create GUI that allows manipulation of all controls in addition to working with Jiawei to display XML validation messages.
-* Work with _____ to implement the Cells' appearance on the Grid. 
+* Work with Ankit Kayastha to implement the Cells' appearance on the Grid. 
 * Set up the Grid. 
 
-###_____
+###Ankit Kayastha
 * Fill out the Sim rules and configuration using simulation data from Jiawei. 
 * Initialize Grid using simulation configurations and data.
 * Use Grid to manipulate Cells at every step to determine their next state based on the rules within Sim.  
