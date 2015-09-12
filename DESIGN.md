@@ -1,6 +1,6 @@
 #Cell Society
 
-##Members
+##Members - Team 6
 * Jiawei Zhang (jz134)
 * Ankit Kayastha (ak308)
 * Jaidev Satish (js541)
@@ -73,7 +73,14 @@ The GUI class will be responsible for handling a few important parts of the User
 
 The GUI class will have to interact with the Reader class, Control class, and the Grid class. The GUI class is a key part of our implementation because it is the means by which we are displaying everything to the user. This class should be flexible enough if someone would want to add to it. For instance, if someone wanted to add more buttons and thus more functionality to the GUI, then it should be fairly simple with the addToGroup() method.
 
+###Sim
+The Sim class is an abstract class that is extended for every different simulation. The Sim class takes care of taking the output from the XML Reader and implementing datastructures that store the Cell characteristics and configurations. In addition, the Sim clas contains the rules for any simulation. The characteristics and configurations are implemented using a HashMap of Strings (characteristic names) to ArrayLists of some type (states of the characteristic). For example, if the characteristic was health, the states could be integers from 0 to 100. These ArrayLists will be able to store any possible characteristic including all data types. The Sim class also takes output from the Reader class and puts it into context using the HashMap datastructures and then calls on Grid to initialize itself using the passed-on configurations. Since Sim is an abstract class with very general methods such as readCharacteristics() and readConfiguration() and passToGrid(), the class is very easily extended to the specific instances required by specific simulations. This class allows for very high-level abstraction as all possible rules are stored here and only here. Other classes must access Sim to obtain rules, configurations, and characteristics in order to determine any state. 
 
+###Grid
+The Grid abstract class is most closely related to the other two abstract classes. The Grid initializes itself when grid and cell configuration data is given to it by the Sim class. The Grid then creates Cells with the configuration data. Whenever the Main class steps through another frame, the Grid class updates all the Cells using the rules from Sim. Methods implemented would be updateCell() and findNeighbors(). Additionally, the Grid is responsible for calling the GUI class to update all the Cells' appearance. The Grid class uses a standard ArrayList to store all the Cells. This way, all shapes of Cells and Grids are supported by extending the class. Because of the findNeighbors() method, different rules for determining the neighbors can be easily added into the extended classes. The Grid is also essentially the only class Cell interacts with because the Cells can only make up a part of the Grid and have no relationship to anything except the Grid. There are two Grid instances during a simulation. The 'current' Grid and the 'next' Grid. After every Cell is upgraded, the next Grid's content is moved to the current Grid. 
+
+###Cell
+The Cell abstract class implements data structures and variables required to store its current state and determine its next state along with setting its next state. One variable stored by a cell would be its location, which would be composed of an index and not coordinates, as coordinates could take on different configurations depending on the simulation. Indices are always consistent across all simulations (0-n). The method determineNextState() is called from Grid when it steps through Cells and updates them all into a 'new' Grid instance. The method setNextState() is called from Grid when it is finished stepping through Cells and moves its 'next' contents into its 'current' contents. Because a Cell could take on many shapes and characteristics, repetitive could potentially occur. A solution to the problem is simply passing all configuration parameters from Grid as Grid uses them to update itself, instead of passing the simulation configuration from Sim, which connects a link which breaks the interactions between Grid and Sim and makes them repetitive. 
 
 ###Use Cases
 
@@ -87,17 +94,6 @@ The GUI class will have to interact with the Reader class, Control class, and th
 
 5. The GUI can easily be used to change the simulation type. This can be done using the Simulation drop down menu in the GUI, which will allow the user to choose which simulation they would like to run. Once the user chooses a different simulation, this will cause the open file pop-up to display, which will allow the user to choose a corresponding XML file for the simulation they want to run. 
 
-
-###GUI
-
-###Sim
-The Sim class is an abstract class that is extended for every different simulation. The Sim class takes care of taking the output from the XML Reader and implementing datastructures that store the Cell characteristics and configurations. In addition, the Sim clas contains the rules for any simulation. The characteristics and configurations are implemented using a HashMap of Strings (characteristic names) to ArrayLists of some type (states of the characteristic). For example, if the characteristic was health, the states could be integers from 0 to 100. These ArrayLists will be able to store any possible characteristic including all data types. The Sim class also takes output from the Reader class and puts it into context using the HashMap datastructures and then calls on Grid to initialize itself using the passed-on configurations. Since Sim is an abstract class with very general methods such as readCharacteristics() and readConfiguration() and passToGrid(), the class is very easily extended to the specific instances required by specific simulations. This class allows for very high-level abstraction as all possible rules are stored here and only here. Other classes must access Sim to obtain rules, configurations, and characteristics in order to determine any state. 
-
-###Grid
-The Grid abstract class is most closely related to the other two abstract classes. The Grid initializes itself when grid and cell configuration data is given to it by the Sim class. The Grid then creates Cells with the configuration data. Whenever the Main class steps through another frame, the Grid class updates all the Cells using the rules from Sim. Methods implemented would be updateCell() and findNeighbors(). Additionally, the Grid is responsible for calling the GUI class to update all the Cells' appearance. The Grid class uses a standard ArrayList to store all the Cells. This way, all shapes of Cells and Grids are supported by extending the class. Because of the findNeighbors() method, different rules for determining the neighbors can be easily added into the extended classes. The Grid is also essentially the only class Cell interacts with because the Cells can only make up a part of the Grid and have no relationship to anything except the Grid. There are two Grid instances during a simulation. The 'current' Grid and the 'next' Grid. After every Cell is upgraded, the next Grid's content is moved to the current Grid. 
-
-###Cell
-The Cell abstract class implements data structures and variables required to store its current state and determine its next state along with setting its next state. One variable stored by a cell would be its location, which would be composed of an index and not coordinates, as coordinates could take on different configurations depending on the simulation. Indices are always consistent across all simulations (0-n). The method determineNextState() is called from Grid when it steps through Cells and updates them all into a 'new' Grid instance. The method setNextState() is called from Grid when it is finished stepping through Cells and moves its 'next' contents into its 'current' contents. Because a Cell could take on many shapes and characteristics, repetitive could potentially occur. A solution to the problem is simply passing all configuration parameters from Grid as Grid uses them to update itself, instead of passing the simulation configuration from Sim, which connects a link which breaks the interactions between Grid and Sim and makes them repetitive. 
 
 ##Design Considerations
 
@@ -121,14 +117,14 @@ Assumptions made during design include (1) the Grid will be two-dimensional but 
 
 ###Jiawei Zhang
 * Create test XML files with different starting configurations. 
-* Create the XML reader and pass the simulation configuration and data  to _____ to use in Sim and Grid. 
-* Work with Ankit Kayastha on the Grid getNext method.
+* Create the XML reader and pass the simulation configuration and data  to Ankit to use in Sim and Grid. 
+* Work with Ankit  on the Grid getNext method.
 
 ###Jaidev Satish
 * Create main boilerplate class with timeline and step method.
 * Create controls class including 'Start', 'Pause', 'Stop', 'Open XML', 'Speed Up', 'Slow Down'.
 * Create GUI that allows manipulation of all controls in addition to working with Jiawei to display XML validation messages.
-* Work with Ankit Kayastha to implement the Cells' appearance on the Grid. 
+* Work with Ankit  to implement the Cells' appearance on the Grid. 
 * Set up the Grid. 
 
 ###Ankit Kayastha
