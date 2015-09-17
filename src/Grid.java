@@ -1,46 +1,35 @@
 import java.util.*;
+
 public class Grid {
-	
+
 	private Cell[][] myGrid;
+	private Cell[][] oldGrid;
 	
+	private Reader myReader;
+
 	public Grid(Reader myReader) {
+		this.myReader = myReader;
 		myGrid = new Cell[myReader.getRows()][myReader.getCols()];
 		List<Map<String, Integer>> myData = myReader.getData();
-		
-		//populate the grid, interate through the cells
+
+		// populate the grid, iterate through the cells
 		for (int i = 0; i < myReader.getRows(); i++) {
 			for (int j = 0; j < myReader.getCols(); j++) {
-				Cell myCell = myGrid[i][j];
-				//myCell.setCurrentState(state);
+				Cell initCell = new Cell(myReader.getCell(i, j));
+				myGrid[i][j] = initCell;
 			}
 		}
 	}
 	
-	/*
-	 * returns cell at a specific location
-	 */
-	public Cell cellAtLocation(int m, int n) {
-		return myGrid[m][n];
-	}
-	
-	public List<Cell> findNeighbors(int m, int n, int numRows, int numCols) {
-		List<Cell> neighborsList = new ArrayList<Cell>();
-	//	Square mySquare = new Square(0, 1);
-		//neighborsList.add(mySquare);
-		int[] deltaX = {-1, 0, 0, 1};
-		int[] deltaY = {0, 1, -1, 0};
-		for (int i = 0; i < deltaX.length; i++) {
-			if (!isOutOfBounds(m + deltaX[i], n + deltaY[i], numRows, numCols))
-			 neighborsList.add(myGrid[m + deltaX[i]][n + deltaY[i]]);
+	public void step() {
+		oldGrid = myGrid;
+		for (int row=0; row< myReader.getRows(); row++) {
+			for (int col=0; col<myReader.getCols(); col++) {
+				Map<String, Integer> cellChars= oldGrid[row][col].getChars();
+				Cell tempCell = new Cell(cellChars);
+				tempCell.update(oldGrid, myGrid);
+				myGrid[row][col] = tempCell;
+			}
 		}
-		
-		return neighborsList;
-	}
-	
-	/*
-	 * m is row number, n is col number
-	 */
-	public boolean isOutOfBounds(int m, int n, int numRows, int numCols) {
-		return (m < 0 || m >= numRows || n < 0 || n >= numCols);
 	}
 }
