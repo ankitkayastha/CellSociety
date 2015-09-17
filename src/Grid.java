@@ -1,7 +1,7 @@
 import java.util.*;
 public class Grid {
 	
-	private Cell[][] myGrid;
+	//private Cell[][] myGrid;
 	
 	public Grid(Reader myReader) {
 		myGrid = new Cell[myReader.getRows()][myReader.getCols()];
@@ -23,24 +23,4 @@ public class Grid {
 		return myGrid[m][n];
 	}
 	
-	public List<Cell> findNeighbors(int m, int n, int numRows, int numCols) {
-		List<Cell> neighborsList = new ArrayList<Cell>();
-	//	Square mySquare = new Square(0, 1);
-		//neighborsList.add(mySquare);
-		int[] deltaX = {-1, 0, 0, 1};
-		int[] deltaY = {0, 1, -1, 0};
-		for (int i = 0; i < deltaX.length; i++) {
-			if (!isOutOfBounds(m + deltaX[i], n + deltaY[i], numRows, numCols))
-			 neighborsList.add(myGrid[m + deltaX[i]][n + deltaY[i]]);
-		}
-		
-		return neighborsList;
-	}
 	
-	/*
-	 * m is row number, n is col number
-	 */
-	public boolean isOutOfBounds(int m, int n, int numRows, int numCols) {
-		return (m < 0 || m >= numRows || n < 0 || n >= numCols);
-	}
-}
