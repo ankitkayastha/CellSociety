@@ -1,4 +1,3 @@
-package cellsociety_team06;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;

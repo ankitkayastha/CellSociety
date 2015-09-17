@@ -27,7 +27,7 @@ public class Reader extends Application {
 	private static TreeMap<String, Integer> globalChars = new TreeMap<String, Integer>();
 	private static ArrayList<TreeMap<String, Integer>> data = new ArrayList<TreeMap<String, Integer>>();
 
-	public static void main(String[] args) {
+	public Reader() {
 		launch();
 	}
 
@@ -37,17 +37,17 @@ public class Reader extends Application {
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
 		fileChooser.getExtensionFilters().add(extFilter);
 		inputFile = fileChooser.showOpenDialog(primaryStage);
-		if (inputFile==null) {
+		if (inputFile == null) {
 			return;
 		}
 		System.out.println(inputFile.getName());
-		
+
 		System.out.println(inputFile.getName().split("-")[0]);
-		
+
 		sim = inputFile.getName().split("-")[0];
 		parseXML();
 	}
-	
+
 	private void parseXML() {
 		try {
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

@@ -1,4 +1,3 @@
-package cellsociety_team06;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
