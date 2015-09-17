@@ -28,10 +28,14 @@ public class Grid {
 			for (int col=0; col<myReader.getCols(); col++) {
 				Map<String, Integer> cellChars= oldGrid[row][col].getChars();
 				Cell tempCell = new CellGameOfLife(cellChars);
-				tempCell.update(oldGrid, myGrid);
+				tempCell.update(oldGrid, myGrid, myReader);
 				myGrid[row][col] = tempCell;
 			}
 		}
-		myGui.display(myGrid);
+		//myGui.display(myGrid, myReader);
+	}
+	
+	public Cell getCell(int row, int col) {
+		return myGrid[row][col];
 	}
 }

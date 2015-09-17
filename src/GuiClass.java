@@ -3,17 +3,20 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Map;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 public class GuiClass {
 	
 	private final String TITLE = "CellSociety";
 	private Scene myScene;
 	private Group root;
+	private Grid myGrid;
 	
 	private ImageView play = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("play.png")));
 	private ImageView pause = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("pause.png")));
@@ -25,7 +28,11 @@ public class GuiClass {
 	private ImageView test;
 	private int width = 500;
 	private int height = 540;
+	private int heightWithoutToolbar = 500;
 	private int speed = 50;
+	
+	private double cellX;
+	private double cellY;
 	
 	//
 	public String getTitle(){
@@ -34,13 +41,14 @@ public class GuiClass {
 	
 	//step function for Timeline
 	public void step(double secondDelay) {
+		myGrid.step();
 		
-		if(test.getX() > width - test.getBoundsInLocal().getWidth()
+		/*if(test.getX() > width - test.getBoundsInLocal().getWidth()
 				|| test.getX() < 0){
 			speed = -speed;
 		}
 		test.setX(test.getX() + speed * secondDelay);
-		
+		*/
 	}
 	
 	//sets up the basic Scene
@@ -117,8 +125,29 @@ public class GuiClass {
 		testImg();
 	}
 	
-	public void display(Grid myGrid) {
-		
+	public void initDisplay(Grid myGrid, Reader myReader) {
+		this.myGrid = myGrid;
+		cellX = (double)heightWithoutToolbar/myReader.getRows();
+		cellY = (double)width/myReader.getCols();
+		for (int row = 0; row < myReader.getRows(); row++) {
+			for (int col = 0; col < myReader.getCols(); col++) {
+				Rectangle newRectangle = new Rectangle(col*cellX, row*cellY, cellX, cellY);
+				Color rectColor = myGrid.getCell(row, col).getColor();
+				newRectangle.setFill(rectColor);
+				root.getChildren().add(newRectangle);
+			}
+		}
 	}
+	
+	/*public void display(Grid myGrid, Reader myReader) {
+		for (int row = 0; row < myReader.getRows(); row++) {
+			for (int col = 0; col < myReader.getCols(); col++) {
+				Rectangle newRectangle = new Rectangle(col*cellX, row*cellY, cellX, cellY);
+				Color rectColor = myGrid.getCell(row, col).getColor();
+				newRectangle.setFill(rectColor);
+				root.getChildren().add(newRectangle);
+			}
+		}
+	}*/
 	
 }
