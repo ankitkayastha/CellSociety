@@ -2,28 +2,54 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import java.io.File;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
-public class Reader {
+public class Reader extends Application {
+	private static File inputFile;
 	private static String sim;
 	private static int globalRows;
 	private static int globalCols;
 	private static TreeMap<String, Integer> globalChars = new TreeMap<String, Integer>();
-	private static ArrayList<TreeMap<String, Integer>> data =  new ArrayList<TreeMap<String, Integer>>();
+	private static ArrayList<TreeMap<String, Integer>> data = new ArrayList<TreeMap<String, Integer>>();
 
 	public static void main(String[] args) {
-		openFile();
+		launch();
+	}
+
+	@Override
+	public void start(final Stage primaryStage) {
+		FileChooser fileChooser = new FileChooser();
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+		fileChooser.getExtensionFilters().add(extFilter);
+		inputFile = fileChooser.showOpenDialog(primaryStage);
+		if (inputFile==null) {
+			return;
+		}
+		System.out.println(inputFile.getName());
 		
+		System.out.println(inputFile.getName().split("-")[0]);
+		
+		sim = inputFile.getName().split("-")[0];
+		parseXML();
+	}
+	
+	private void parseXML() {
 		try {
-			File inputFile = new File("fire-5-5.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(inputFile);
@@ -38,20 +64,21 @@ public class Reader {
 
 			System.out.println("Rows: " + stringRows);
 			System.out.println("Cols: " + stringCols);
-			
+
 			NodeList globalCharList = doc.getElementsByTagName("chars");
-			for (int i=0; i< globalCharList.getLength(); i++) {
+			for (int i = 0; i < globalCharList.getLength(); i++) {
 				Node globalCharNode = globalCharList.item(i);
-				if (globalCharNode.getTextContent().length()==0) {
+				if (globalCharNode.getTextContent().length() == 0) {
 					break;
 				}
 				Element globalCharElement = (Element) globalCharNode;
 				Node stringGlobalCharName = globalCharElement.getElementsByTagName("name").item(0);
 				Node stringGlobalCharValue = globalCharElement.getElementsByTagName("value").item(0);
 				int globalCharValue = Integer.parseInt(stringGlobalCharValue.getTextContent());
-				
+
 				globalChars.put(stringGlobalCharName.getTextContent(), globalCharValue);
-				System.out.println("GlobalName: "+stringGlobalCharName.getTextContent() + ", GlobalValue: "+stringGlobalCharValue.getTextContent());
+				System.out.println("GlobalName: " + stringGlobalCharName.getTextContent() + ", GlobalValue: "
+						+ stringGlobalCharValue.getTextContent());
 			}
 
 			NodeList nList = doc.getElementsByTagName("square");
@@ -60,28 +87,28 @@ public class Reader {
 				Element eElement = (Element) square;
 				Node stringRow = eElement.getElementsByTagName("row").item(0);
 				Node stringCol = eElement.getElementsByTagName("col").item(0);
-				
+
 				int row = Integer.parseInt(stringRow.getTextContent());
 				int col = Integer.parseInt(stringRow.getTextContent());
-				
+
 				TreeMap<String, Integer> squareMap = new TreeMap<String, Integer>();
-				
+
 				squareMap.put("row", row);
 				squareMap.put("col", col);
-				
+
 				System.out.println("Row: " + stringRow.getTextContent() + ", Col: " + stringCol.getTextContent());
-				
+
 				NodeList charList = eElement.getElementsByTagName("characteristic");
 				for (int j = 0; j < charList.getLength(); j++) {
 					Node charch = charList.item(j);
 					Element charElement = (Element) charch;
 					Node charName = charElement.getElementsByTagName("name").item(0);
 					Node charValue = charElement.getElementsByTagName("value").item(0);
-					
+
 					int charValueInt = Integer.parseInt(charValue.getTextContent());
-					
+
 					squareMap.put(charName.getTextContent(), charValueInt);
-					
+
 					System.out.println("CharName: " + charName.getTextContent());
 					System.out.println("CharValue: " + charValue.getTextContent());
 				}
@@ -91,11 +118,7 @@ public class Reader {
 			e.printStackTrace();
 		}
 	}
-	
-	private static void openFile() {
-		
-	}
-	
+
 	public String getSim() {
 		return sim;
 	}
