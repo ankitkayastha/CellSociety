@@ -91,7 +91,7 @@ public class Reader {
 				Node stringCol = eElement.getElementsByTagName("col").item(0);
 
 				int row = Integer.parseInt(stringRow.getTextContent());
-				int col = Integer.parseInt(stringRow.getTextContent());
+				int col = Integer.parseInt(stringCol.getTextContent());
 
 				Map<String, Integer> squareMap = new TreeMap<String, Integer>();
 

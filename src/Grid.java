@@ -19,10 +19,10 @@ public class Grid {
 		for (int i = 0; i < myReader.getRows(); i++) {
 			for (int j = 0; j < myReader.getCols(); j++) {
 				Cell initCell = new CellGameOfLife(myReader.getCell(i, j));
-				System.out.println(initCell.getChars().get("life"));
+				System.out.println("myinit: "+i+" "+j+ " "+initCell.getChars().get("life"));
 				myGrid[i][j] = initCell;
 				Cell initOldCell = new CellGameOfLife(myReader.getCell(i, j));
-				System.out.println(initOldCell.getChars().get("life"));
+				System.out.println("olinit: "+i+" "+j+ " "+initOldCell.getChars().get("life"));
 				oldGrid[i][j] = initOldCell;
 			}
 		}
@@ -48,9 +48,13 @@ public class Grid {
 				System.out.printf("Ol : r%d c%d s%d\n", cellChars.get("row"), cellChars.get("col"), cellChars.get("life"));
 
 				myGrid = tempCell.update(oldGrid, myReader);
+				//myGrid = oldGrid;
 				
 				Map<String, Integer> cellChars2 = myGrid[row][col].getChars();
-				System.out.printf("Ne : r%d c%d s%d\n", row, col, cellChars2.get("life"));
+				System.out.printf("New: r%d c%d s%d\n", row, col, cellChars2.get("life"));
+				System.out.printf("Ne : r%d c%d s%d\n", cellChars2.get("row"), cellChars2.get("col"), cellChars2.get("life"));
+				System.out.println();
+				System.out.println();
 			}
 		}
 		myGui.display(this, myReader);

@@ -22,8 +22,8 @@ public class CellGameOfLife extends Cell {
 	
 	@Override
 	public List<Cell> findNeighbors(Cell[][] oldGrid, int numRows, int numCols) {
-		int cellRow = myCharacteristicMap.get(row);
-		int cellCol = myCharacteristicMap.get(col);
+		int cellRow = myCharacteristicMap.get("row");
+		int cellCol = myCharacteristicMap.get("col");
 		List<Cell> neighborsList = new ArrayList<Cell>();
 		int[] deltaX = {-1, 0, 0, 1, -1, -1, 1, 1};
 		int[] deltaY = {0, 1, -1, 0, 1, -1, -1, 1};
@@ -31,7 +31,7 @@ public class CellGameOfLife extends Cell {
 			if (!isOutOfBounds(cellRow + deltaX[i], cellCol + deltaY[i], numRows, numCols))
 				neighborsList.add(oldGrid[cellRow + deltaX[i]][ cellCol + deltaY[i]]);
 		}
-		
+		//System.out.println("neigh: "+neighborsList.size());
 		return neighborsList;
 	}	
 	
@@ -49,7 +49,6 @@ public class CellGameOfLife extends Cell {
 				if (myCharacteristicMap.get(characteristic) == ALIVE) {
 					if (numLiveNeighbors == 2 || numLiveNeighbors == 3) {
 						myCharacteristicMap.put(characteristic, ALIVE);
-						//myGrid.setNewCell(i, j, new CellGameOfLife(myCharacteristicMap));
 					}
 					else {
 						myCharacteristicMap.put(characteristic, DEAD);

@@ -2,11 +2,6 @@ import java.util.*;
 
 import javafx.scene.paint.Color;
 public abstract class Cell {
-	private int xLocation;
-	private int yLocation;
-	protected Color cellColor;
-	protected final String row = "row";
-	protected final String col = "col";
 	public Map<String, Integer> myCharacteristicMap;
 	// TODO change public
 	
@@ -18,16 +13,7 @@ public abstract class Cell {
 		return myCharacteristicMap;
 	}
 	
-
-	public int getXLocation() {
-		return xLocation;
-	}
-	public int getYLocation() {
-		return yLocation;
-	}
 	public abstract Cell[][] update(Cell[][] currentGrid, Reader myReader);
-	//public abstract List<Cell> findNeighbors(Grid myGrid, int m, int n, int rows, int cols);
-	
 	
 	public abstract Color getColor();
 	

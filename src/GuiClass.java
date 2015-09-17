@@ -139,7 +139,8 @@ public class GuiClass {
 		cellY = (double)width/myReader.getRows();
 		for (int row = 0; row < myReader.getRows(); row++) {
 			for (int col = 0; col < myReader.getCols(); col++) {
-				System.out.println("row: "+row+", col: "+col);
+				System.out.println("INDEX: row: "+row+", col: "+col);
+				System.out.println("DATAS: row: "+myGrid.getCell(row, col).getChars().get("row")+ ", col: "+myGrid.getCell(row,  col).getChars().get("col"));
 				Rectangle newRectangle = new Rectangle(col*cellX, row*cellY+TOOLBAR_HEIGHT, cellX, cellY);
 				Color rectColor = myGrid.getCell(row, col).getColor();
 				newRectangle.setFill(rectColor);
@@ -152,11 +153,10 @@ public class GuiClass {
 	public void display(Grid myGrid, Reader myReader) {
 		for (int row = 0; row < myReader.getRows(); row++) {
 			for (int col = 0; col < myReader.getCols(); col++) {
-				
 				Rectangle tempRect = rectList[row][col];
 				Color rectColor = myGrid.getCell(row, col).getColor();
 				tempRect.setFill(rectColor);
-				System.out.println(rectColor.toString());
+				System.out.printf("Color: %d %d %s\n", row, col,rectColor.toString());
 			}
 		}
 	}
