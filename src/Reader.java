@@ -1,51 +1,118 @@
 import java.io.File;
+import java.util.ArrayList;
+import java.util.TreeMap;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+
+import javafx.stage.FileChooser;
+
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 
 public class Reader {
-   public static void main(String[] args){
+	private static String sim;
+	private static int globalRows;
+	private static int globalCols;
+	private static TreeMap<String, Integer> globalChars = new TreeMap<String, Integer>();
+	private static ArrayList<TreeMap<String, Integer>> data =  new ArrayList<TreeMap<String, Integer>>();
 
-      try {	
-         File inputFile = new File("game_of_life-5-5.xml");
-         DocumentBuilderFactory dbFactory 
-            = DocumentBuilderFactory.newInstance();
-         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-         Document doc = dBuilder.parse(inputFile);
-         doc.getDocumentElement().normalize();
-         System.out.println("Root element: " 
-            + doc.getDocumentElement().getNodeName());
-        
-         String rows = doc.getElementsByTagName("rows").item(0).getTextContent();
-         String cols = doc.getElementsByTagName("cols").item(0).getTextContent();
-         
-         System.out.println("Rows: "+rows);
-         System.out.println("Cols: "+cols);
-         
-         NodeList nList = doc.getElementsByTagName("square");
-         for (int i=0; i<nList.getLength(); i++) {
-        	 Node square = nList.item(i);
-        	 Element eElement = (Element) square;
-        	 Node row = eElement.getElementsByTagName("row").item(0);
-        	 Node col = eElement.getElementsByTagName("col").item(0);
-        	 NodeList charList = eElement.getElementsByTagName("characteristic");
-        	 for (int j=0; j<charList.getLength(); j++) {
-        		 Node charch = charList.item(j);
-        		 Element charElement = (Element) charch;
-        		 Node charName = charElement.getElementsByTagName("name").item(0);
-        		 Node charValue = charElement.getElementsByTagName("value").item(0);
-        		 System.out.println("CharName: "+charName.getTextContent());
-        		 System.out.println("CharValue: "+charValue.getTextContent());
-        	 }
-        	 
-        	 System.out.println("Row: "+row.getTextContent() +", Col: "+col.getTextContent());
-         }
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-   }
+	public static void main(String[] args) {
+		openFile();
+		
+		try {
+			File inputFile = new File("fire-5-5.xml");
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(inputFile);
+			doc.getDocumentElement().normalize();
+			System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
+
+			String stringRows = doc.getElementsByTagName("rows").item(0).getTextContent();
+			String stringCols = doc.getElementsByTagName("cols").item(0).getTextContent();
+
+			globalRows = Integer.parseInt(stringRows);
+			globalCols = Integer.parseInt(stringCols);
+
+			System.out.println("Rows: " + stringRows);
+			System.out.println("Cols: " + stringCols);
+			
+			NodeList globalCharList = doc.getElementsByTagName("chars");
+			for (int i=0; i< globalCharList.getLength(); i++) {
+				Node globalCharNode = globalCharList.item(i);
+				if (globalCharNode.getTextContent().length()==0) {
+					break;
+				}
+				Element globalCharElement = (Element) globalCharNode;
+				Node stringGlobalCharName = globalCharElement.getElementsByTagName("name").item(0);
+				Node stringGlobalCharValue = globalCharElement.getElementsByTagName("value").item(0);
+				int globalCharValue = Integer.parseInt(stringGlobalCharValue.getTextContent());
+				
+				globalChars.put(stringGlobalCharName.getTextContent(), globalCharValue);
+				System.out.println("GlobalName: "+stringGlobalCharName.getTextContent() + ", GlobalValue: "+stringGlobalCharValue.getTextContent());
+			}
+
+			NodeList nList = doc.getElementsByTagName("square");
+			for (int i = 0; i < nList.getLength(); i++) {
+				Node square = nList.item(i);
+				Element eElement = (Element) square;
+				Node stringRow = eElement.getElementsByTagName("row").item(0);
+				Node stringCol = eElement.getElementsByTagName("col").item(0);
+				
+				int row = Integer.parseInt(stringRow.getTextContent());
+				int col = Integer.parseInt(stringRow.getTextContent());
+				
+				TreeMap<String, Integer> squareMap = new TreeMap<String, Integer>();
+				
+				squareMap.put("row", row);
+				squareMap.put("col", col);
+				
+				System.out.println("Row: " + stringRow.getTextContent() + ", Col: " + stringCol.getTextContent());
+				
+				NodeList charList = eElement.getElementsByTagName("characteristic");
+				for (int j = 0; j < charList.getLength(); j++) {
+					Node charch = charList.item(j);
+					Element charElement = (Element) charch;
+					Node charName = charElement.getElementsByTagName("name").item(0);
+					Node charValue = charElement.getElementsByTagName("value").item(0);
+					
+					int charValueInt = Integer.parseInt(charValue.getTextContent());
+					
+					squareMap.put(charName.getTextContent(), charValueInt);
+					
+					System.out.println("CharName: " + charName.getTextContent());
+					System.out.println("CharValue: " + charValue.getTextContent());
+				}
+				data.add(squareMap);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void openFile() {
+		
+	}
+	
+	public String getSim() {
+		return sim;
+	}
+
+	public int getRows() {
+		return globalRows;
+	}
+
+	public int getCols() {
+		return globalCols;
+	}
+
+	public TreeMap<String, Integer> getGlobalChars() {
+		return globalChars;
+	}
+
+	public ArrayList<TreeMap<String, Integer>> getData() {
+		return data;
+	}
 }
