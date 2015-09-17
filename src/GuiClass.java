@@ -1,4 +1,9 @@
 
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -14,6 +19,8 @@ public class GuiClass {
 	private ImageView pause = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("pause.png")));
 	private ImageView stop = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("stop.png")));
 	private ImageView ff = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("ff.png")));
+	private ImageView open = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("open.gif")));
+	
 	
 	private ImageView test;
 	private int width = 500;
@@ -65,6 +72,8 @@ public class GuiClass {
 			return 3;
 		if(ff.contains(x, y))
 			return 4;
+		if(open.contains(x,y))
+			return 5;
 		return 0;
 		
 	}
@@ -86,6 +95,10 @@ public class GuiClass {
         ff.setX(120);
 		ff.setY(0);
         root.getChildren().add(ff);
+        
+        open.setX(160);
+		open.setY(0);
+        root.getChildren().add(open);
 	}
 	
 	//sets up test image
@@ -104,5 +117,8 @@ public class GuiClass {
 		testImg();
 	}
 	
+	public void display(Grid myGrid) {
+		
+	}
 	
 }

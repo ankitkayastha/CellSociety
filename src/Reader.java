@@ -21,7 +21,7 @@ import javafx.stage.Window;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
-public class Reader extends Application {
+public class Reader {
 	private static File inputFile;
 	private static String sim;
 	private static int globalRows;
@@ -30,15 +30,15 @@ public class Reader extends Application {
 	private static List<Map<String, Integer>> data = new ArrayList<Map<String, Integer>>();
 
 	public Reader() {
-		launch();
+		openFile();
 	}
 
-	@Override
-	public void start(final Stage primaryStage) {
+	
+	public void openFile() {
 		FileChooser fileChooser = new FileChooser();
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
 		fileChooser.getExtensionFilters().add(extFilter);
-		inputFile = fileChooser.showOpenDialog(primaryStage);
+		inputFile = fileChooser.showOpenDialog(null);
 		if (inputFile == null) {
 			return;
 		}
@@ -136,9 +136,9 @@ public class Reader extends Application {
 	public Map<String, Integer> getGlobalChars() {
 		return globalChars;
 	}
-	
+
 	public Map<String, Integer> getCell(int row, int col) {
-		int index = row*globalCols + col;
+		int index = row * globalCols + col;
 		return data.get(index);
 	}
 

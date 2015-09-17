@@ -77,8 +77,15 @@ public class Main extends Application {
     		return;
     	case 4:
     		speedUp();
+    	case 5:
+    		initialize();
     	}
 	}
+    
+    private void initialize() {
+    	Reader myReader = new Reader();
+    	Grid myGrid = new Grid(myReader, gui);
+    }
 
     //Speeds up the framerate 
     private void speedUp(){
