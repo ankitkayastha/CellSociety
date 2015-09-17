@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -143,7 +141,7 @@ public class GuiClass {
 			for (int col = 0; col < myReader.getCols(); col++) {
 				System.out.println("row: "+row+", col: "+col);
 				Rectangle newRectangle = new Rectangle(col*cellX, row*cellY+TOOLBAR_HEIGHT, cellX, cellY);
-				Color rectColor = myGrid.getNewCell(row, col).getColor();
+				Color rectColor = myGrid.getCell(row, col).getColor();
 				newRectangle.setFill(rectColor);
 				root.getChildren().add(newRectangle);
 				rectList[row][col] = newRectangle;
@@ -156,7 +154,7 @@ public class GuiClass {
 			for (int col = 0; col < myReader.getCols(); col++) {
 				
 				Rectangle tempRect = rectList[row][col];
-				Color rectColor = myGrid.getNewCell(row, col).getColor();
+				Color rectColor = myGrid.getCell(row, col).getColor();
 				tempRect.setFill(rectColor);
 				System.out.println(rectColor.toString());
 			}
