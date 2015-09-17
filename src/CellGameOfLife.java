@@ -4,10 +4,12 @@ import javafx.scene.paint.Color;
 public class CellGameOfLife extends Cell {
 	private int DEAD = 0; //light blue
 	private int ALIVE = 1; //blue
-	private final String characteristic = "Life";
+	private final String characteristic = "life";
 	
 	public CellGameOfLife(Map<String, Integer> map) {
 		super(map);
+		System.out.println(map.toString());
+		System.out.println(map.keySet());
 	}
 	
 	
@@ -27,17 +29,19 @@ public class CellGameOfLife extends Cell {
 		int[] deltaY = {0, 1, -1, 0, 1, -1, -1, 1};
 		for (int i = 0; i < deltaX.length; i++) {
 			if (!isOutOfBounds(cellRow + deltaX[i], cellCol + deltaY[i], numRows, numCols))
-				neighborsList.add(currentGrid.getCell(cellRow + deltaX[i], cellCol + deltaY[i]));
+				neighborsList.add(currentGrid.getOldCell(cellRow + deltaX[i], cellCol + deltaY[i]));
 		}
 		
 		return neighborsList;
 	}	
 	
-	public void update(Grid currentGrid, Grid newGrid, Reader myReader) {
+	public void update(Grid myGrid, Reader myReader) {
+		Cell[][] currentGrid = myGrid.getOldGrid();
+		Cell[][] newGrid = myGrid.getNewGrid();
 		for (int i = 0; i < myReader.getRows(); i++) {
 			for (int j = 0; j < myReader.getCols();j++) {
-				Cell myCell = currentGrid.getCell(i, j);
-				List<Cell> cellNeighbors = myCell.findNeighbors(currentGrid, myReader.getRows(), myReader.getCols());
+				Cell myCell = myGrid.getOldCell(i, j);
+				List<Cell> cellNeighbors = myCell.findNeighbors(myGrid, myReader.getRows(), myReader.getCols());
 				int numLiveNeighbors = 0;
 				for (Cell cell: cellNeighbors) {
 					if (myCharacteristicMap.get(characteristic) == ALIVE)
@@ -47,23 +51,23 @@ public class CellGameOfLife extends Cell {
 					if (numLiveNeighbors == 2 || numLiveNeighbors == 3) {
 						myCell.setNextState(ALIVE);
 						myCharacteristicMap.put(characteristic, ALIVE);
-						newGrid.getCell(i, j) = new Cell(myCharacteristicMap);
+						myGrid.setNewCell(i, j, new CellGameOfLife(myCharacteristicMap));
 					}
 					else {
 						myCell.setNextState(DEAD);
-						newGrid.getCell(i, j) = new Cell(myCharacteristicMap);
+						myGrid.setNewCell(i, j, new CellGameOfLife(myCharacteristicMap));
 						myCharacteristicMap.put(characteristic, DEAD);
 					}
 				}
 				else {
 					if (numLiveNeighbors == 3) {
 						myCell.setNextState(ALIVE);
-						newGrid.getCell(i, j) = new Cell(myCharacteristicMap);
+						myGrid.setNewCell(i, j, new CellGameOfLife(myCharacteristicMap));
 						myCharacteristicMap.put(characteristic, ALIVE);
 					}
 					else {
 						myCell.setNextState(DEAD);
-						newGrid.getCell(i, j) = new Cell(myCharacteristicMap);
+						myGrid.setNewCell(i, j, new CellGameOfLife(myCharacteristicMap));
 						myCharacteristicMap.put(characteristic, DEAD);
 					}
 				}

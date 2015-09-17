@@ -14,6 +14,11 @@ public abstract class Cell {
 	public Cell(Map<String, Integer> map) {
 		myCharacteristicMap = map;
 	}
+	
+	public Map<String, Integer> getChars() {
+		return myCharacteristicMap;
+	}
+	
 	public int getCurrentState() {
 		return myCurrentState;
 	}
@@ -32,7 +37,7 @@ public abstract class Cell {
 	public int getYLocation() {
 		return yLocation;
 	}
-	public abstract void update(Grid currentGrid, Grid newGrid, Reader myReader);
+	public abstract void update(Grid currentGrid, Reader myReader);
 	//public abstract List<Cell> findNeighbors(Grid myGrid, int m, int n, int rows, int cols);
 	
 	

@@ -56,7 +56,7 @@ public class Reader {
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(inputFile);
 			doc.getDocumentElement().normalize();
-			System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
+			//System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
 
 			String stringRows = doc.getElementsByTagName("rows").item(0).getTextContent();
 			String stringCols = doc.getElementsByTagName("cols").item(0).getTextContent();
@@ -64,8 +64,8 @@ public class Reader {
 			globalRows = Integer.parseInt(stringRows);
 			globalCols = Integer.parseInt(stringCols);
 
-			System.out.println("Rows: " + stringRows);
-			System.out.println("Cols: " + stringCols);
+			//System.out.println("Rows: " + stringRows);
+			//System.out.println("Cols: " + stringCols);
 
 			NodeList globalCharList = doc.getElementsByTagName("chars");
 			for (int i = 0; i < globalCharList.getLength(); i++) {
@@ -79,8 +79,8 @@ public class Reader {
 				int globalCharValue = Integer.parseInt(stringGlobalCharValue.getTextContent());
 
 				globalChars.put(stringGlobalCharName.getTextContent(), globalCharValue);
-				System.out.println("GlobalName: " + stringGlobalCharName.getTextContent() + ", GlobalValue: "
-						+ stringGlobalCharValue.getTextContent());
+				//System.out.println("GlobalName: " + stringGlobalCharName.getTextContent() + ", GlobalValue: "
+						//+ stringGlobalCharValue.getTextContent());
 			}
 
 			NodeList nList = doc.getElementsByTagName("square");
@@ -98,7 +98,7 @@ public class Reader {
 				squareMap.put("row", row);
 				squareMap.put("col", col);
 
-				System.out.println("Row: " + stringRow.getTextContent() + ", Col: " + stringCol.getTextContent());
+				//System.out.println("Row: " + stringRow.getTextContent() + ", Col: " + stringCol.getTextContent());
 
 				NodeList charList = eElement.getElementsByTagName("characteristic");
 				for (int j = 0; j < charList.getLength(); j++) {
@@ -111,8 +111,8 @@ public class Reader {
 
 					squareMap.put(charName.getTextContent(), charValueInt);
 
-					System.out.println("CharName: " + charName.getTextContent());
-					System.out.println("CharValue: " + charValue.getTextContent());
+					//System.out.println("CharName: " + charName.getTextContent());
+					//System.out.println("CharValue: " + charValue.getTextContent());
 				}
 				data.add(squareMap);
 			}

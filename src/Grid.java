@@ -12,7 +12,7 @@ public class Grid {
 		this.myGui = myGui;
 		this.myReader = myReader;
 		myGrid = new Cell[myReader.getRows()][myReader.getCols()];
-		List<Map<String, Integer>> myData = myReader.getData();
+		//List<Map<String, Integer>> myData = myReader.getData();
 
 		// populate the grid, iterate through the cells
 		for (int i = 0; i < myReader.getRows(); i++) {
@@ -29,12 +29,29 @@ public class Grid {
 			for (int col = 0; col < myReader.getCols(); col++) {
 				Map<String, Integer> cellChars = oldGrid[row][col].getChars();
 				Cell tempCell = new CellGameOfLife(cellChars);
-				tempCell.update(oldGrid, myGrid, myReader);
+				tempCell.update(this, myReader);
 				myGrid[row][col] = tempCell;
 			}
 		}
 	}
 
-	public Cell getCell(int row, int col) {
+	public Cell getOldCell(int row, int col) {
+		return oldGrid[row][col];
+	}
+	
+	public Cell getNewCell(int row, int col) {
 		return myGrid[row][col];
 	}
+	
+	public Cell[][] getOldGrid() {
+		return oldGrid;
+	}
+	
+	public Cell[][] getNewGrid() {
+		return myGrid;
+	}
+	
+	public void setNewCell(int x, int y, Cell myCell) {
+		myGrid[x][y] = myCell;
+	}
+}

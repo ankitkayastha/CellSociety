@@ -1,10 +1,3 @@
-
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Map;
-
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -29,6 +22,7 @@ public class GuiClass {
 	private int width = 500;
 	private int height = 540;
 	private int heightWithoutToolbar = 500;
+	private final int TOOLBAR_HEIGHT = 40;
 	private int speed = 50;
 	
 	private double cellX;
@@ -41,7 +35,7 @@ public class GuiClass {
 	
 	//step function for Timeline
 	public void step(double secondDelay) {
-		myGrid.step();
+		//myGrid.step();
 		
 		/*if(test.getX() > width - test.getBoundsInLocal().getWidth()
 				|| test.getX() < 0){
@@ -127,12 +121,12 @@ public class GuiClass {
 	
 	public void initDisplay(Grid myGrid, Reader myReader) {
 		this.myGrid = myGrid;
-		cellX = (double)heightWithoutToolbar/myReader.getRows();
-		cellY = (double)width/myReader.getCols();
+		cellX = (double)heightWithoutToolbar/myReader.getCols();
+		cellY = (double)width/myReader.getRows();
 		for (int row = 0; row < myReader.getRows(); row++) {
 			for (int col = 0; col < myReader.getCols(); col++) {
-				Rectangle newRectangle = new Rectangle(col*cellX, row*cellY, cellX, cellY);
-				Color rectColor = myGrid.getCell(row, col).getColor();
+				Rectangle newRectangle = new Rectangle(col*cellX, row*cellY+TOOLBAR_HEIGHT, cellX, cellY);
+				Color rectColor = myGrid.getNewCell(row, col).getColor();
 				newRectangle.setFill(rectColor);
 				root.getChildren().add(newRectangle);
 			}
