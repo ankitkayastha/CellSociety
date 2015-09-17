@@ -8,7 +8,8 @@ public class Grid {
 	private Reader myReader;
 	private GuiClass myGui;
 
-	public Grid(Reader myReader) {
+	public Grid(Reader myReader, GuiClass myGui) {
+		this.myGui = myGui;
 		this.myReader = myReader;
 		myGrid = new Cell[myReader.getRows()][myReader.getCols()];
 		List<Map<String, Integer>> myData = myReader.getData();
