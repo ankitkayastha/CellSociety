@@ -1,5 +1,7 @@
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import java.io.File;
@@ -24,8 +26,8 @@ public class Reader extends Application {
 	private static String sim;
 	private static int globalRows;
 	private static int globalCols;
-	private static TreeMap<String, Integer> globalChars = new TreeMap<String, Integer>();
-	private static ArrayList<TreeMap<String, Integer>> data = new ArrayList<TreeMap<String, Integer>>();
+	private static Map<String, Integer> globalChars = new TreeMap<String, Integer>();
+	private static List<Map<String, Integer>> data = new ArrayList<Map<String, Integer>>();
 
 	public Reader() {
 		launch();
@@ -91,7 +93,7 @@ public class Reader extends Application {
 				int row = Integer.parseInt(stringRow.getTextContent());
 				int col = Integer.parseInt(stringRow.getTextContent());
 
-				TreeMap<String, Integer> squareMap = new TreeMap<String, Integer>();
+				Map<String, Integer> squareMap = new TreeMap<String, Integer>();
 
 				squareMap.put("row", row);
 				squareMap.put("col", col);
@@ -131,11 +133,16 @@ public class Reader extends Application {
 		return globalCols;
 	}
 
-	public TreeMap<String, Integer> getGlobalChars() {
+	public Map<String, Integer> getGlobalChars() {
 		return globalChars;
 	}
+	
+	public Map<String, Integer> getCell(int row, int col) {
+		int index = row*globalCols + col;
+		return data.get(index);
+	}
 
-	public ArrayList<TreeMap<String, Integer>> getData() {
+	public List<Map<String, Integer>> getData() {
 		return data;
 	}
 }
