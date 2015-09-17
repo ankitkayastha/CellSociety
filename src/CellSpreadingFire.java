@@ -1,6 +1,11 @@
-import java.util.*;
+import java.util.Random;
 
-public class SpreadingFire extends Simulation {
+public class CellSpreadingFire extends Cell {
+	public CellSpreadingFire(int currentState, int nextState) {
+		super(currentState, nextState);
+		// TODO Auto-generated constructor stub
+	}
+
 	//simulation ends when no burning tree left 
 	//diagonal neighbors do not affect state of current cell
 	//define the three states in terms of integers
@@ -9,21 +14,23 @@ public class SpreadingFire extends Simulation {
 	private final int BURNING = 2; //burning tree
 	private double probCatch = 0.15; //probability of a cell catching fire based on its neighbors
 	private Random myRandom = new Random();
+	private int numRows;
+	private int numCols;
 	
-	public void getNextState(Cell myCell) {
+	public void getNextState(Grid myGrid, Cell myCell) {
 		if (myCell.getCurrentState() == EMPTY) {
 			myCell.setNextState(EMPTY);
 		}
 		if (myCell.getCurrentState() == BURNING) {
 			myCell.setNextState(EMPTY);
 		}
-		for (Cell cell: getNeighbors()) {
+		for (Cell cell: myGrid.findNeighbors(myCell.getXLocation(), myCell.getYLocation(), numRows, numCols)) {
 			if (myCell.getCurrentState() == TREE && cell.getCurrentState() == BURNING) {
 				myCell.setNextState(generateProbCatchState());
 			}
 		}
 	}
-	
+		
 	public int generateProbCatchState() {
 		double prob = myRandom.nextDouble();
 		if (prob < probCatch) {
@@ -36,7 +43,7 @@ public class SpreadingFire extends Simulation {
 	/*
 	 * determines whether simulation has finished
 	 */
-	public boolean isFinished(Grid<Cell, Cell> myGrid) {
+	/*public boolean isFinished(Grid<Cell, Cell> myGrid) {
 		int numBurningTrees = 0;
 		for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLS; j++) {
@@ -47,5 +54,5 @@ public class SpreadingFire extends Simulation {
 				return true;
 			}
 		}
-	}
+	} */
 }

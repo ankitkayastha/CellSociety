@@ -1,19 +1,31 @@
-
-public class Cell {
-	private int currentState;
-	private int nextState;
-	
-	
+import java.util.*;
+public abstract class Cell {
+	private int myCurrentState;
+	private int myNextState;
+	private int xLocation;
+	private int yLocation;
+	public Cell(int currentState, int nextState) {
+		myCurrentState = currentState;
+		myNextState = nextState;
+	}
 	public int getCurrentState() {
-		return currentState;
+		return myCurrentState;
 	}
 	public void setCurrentState(int state) {
-		currentState = state;
+		myCurrentState = state;
 	}
 	public int getNextState() {
-		return nextState;
+		return myNextState;
 	}
 	public void setNextState(int state) {
-		nextState = state;
+		myNextState = state;
 	}
+	public int getXLocation() {
+		return xLocation;
+	}
+	public int getYLocation() {
+		return yLocation;
+	}
+	public abstract void getNextState(Grid myGrid, Cell myCell);
+	//public abstract List<Cell> findNeighbors(Grid myGrid, int m, int n, int rows, int cols);
 }
