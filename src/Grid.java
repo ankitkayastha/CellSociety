@@ -4,7 +4,7 @@ public class Grid {
 
 	private Cell[][] myGrid;
 	private Cell[][] oldGrid;
-	
+
 	private Reader myReader;
 	private GuiClass myGui;
 
@@ -22,21 +22,19 @@ public class Grid {
 			}
 		}
 	}
-	
+
 	public void step() {
 		oldGrid = myGrid;
-		for (int row=0; row< myReader.getRows(); row++) {
-			for (int col=0; col<myReader.getCols(); col++) {
-				Map<String, Integer> cellChars= oldGrid[row][col].getChars();
+		for (int row = 0; row < myReader.getRows(); row++) {
+			for (int col = 0; col < myReader.getCols(); col++) {
+				Map<String, Integer> cellChars = oldGrid[row][col].getChars();
 				Cell tempCell = new CellGameOfLife(cellChars);
 				tempCell.update(oldGrid, myGrid, myReader);
 				myGrid[row][col] = tempCell;
 			}
 		}
-		//myGui.display(myGrid, myReader);
 	}
-	
+
 	public Cell getCell(int row, int col) {
 		return myGrid[row][col];
 	}
-}
