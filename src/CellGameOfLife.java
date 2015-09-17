@@ -8,8 +8,8 @@ public class CellGameOfLife extends Cell {
 	
 	public CellGameOfLife(Map<String, Integer> map) {
 		super(map);
-		System.out.println(map.toString());
-		System.out.println(map.keySet());
+		//System.out.println(map.toString());
+		//System.out.println(map.keySet());
 	}
 	
 	
@@ -36,11 +36,10 @@ public class CellGameOfLife extends Cell {
 	}	
 	
 	public void update(Grid myGrid, Reader myReader) {
-		Cell[][] currentGrid = myGrid.getOldGrid();
-		Cell[][] newGrid = myGrid.getNewGrid();
+		System.out.println("Update");
 		for (int i = 0; i < myReader.getRows(); i++) {
 			for (int j = 0; j < myReader.getCols();j++) {
-				Cell myCell = myGrid.getOldCell(i, j);
+				Cell myCell = myGrid.getCurrentCell(i, j);
 				List<Cell> cellNeighbors = myCell.findNeighbors(myGrid, myReader.getRows(), myReader.getCols());
 				int numLiveNeighbors = 0;
 				for (Cell cell: cellNeighbors) {
@@ -51,7 +50,7 @@ public class CellGameOfLife extends Cell {
 					if (numLiveNeighbors == 2 || numLiveNeighbors == 3) {
 						myCell.setNextState(ALIVE);
 						myCharacteristicMap.put(characteristic, ALIVE);
-						myGrid.setNewCell(i, j, new CellGameOfLife(myCharacteristicMap));
+						//myGrid.setNewCell(i, j, new CellGameOfLife(myCharacteristicMap));
 					}
 					else {
 						myCell.setNextState(DEAD);

@@ -7,9 +7,10 @@ public abstract class Cell {
 	private int xLocation;
 	private int yLocation;
 	protected Color cellColor;
-	protected final String row = "ROW";
-	protected final String col = "COL";
-	protected Map<String, Integer> myCharacteristicMap;
+	protected final String row = "row";
+	protected final String col = "col";
+	public Map<String, Integer> myCharacteristicMap;
+	// TODO change public
 	
 	public Cell(Map<String, Integer> map) {
 		myCharacteristicMap = map;

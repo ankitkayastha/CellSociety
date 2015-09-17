@@ -13,7 +13,7 @@ public class Main extends Application {
 	
     private static final int FRAMES_PER_SECOND = 60;
     
-    private static int DM = 1000 / FRAMES_PER_SECOND;
+    private static int DM = 300000 / FRAMES_PER_SECOND;
     private static double DS = 1.0 / FRAMES_PER_SECOND;
     
     private static int MILLISECOND_DELAY = DM;
@@ -87,6 +87,7 @@ public class Main extends Application {
     	Reader myReader = new Reader();
     	Grid myGrid = new Grid(myReader, gui);
     	gui.initDisplay(myGrid, myReader);
+    	gui.setStatus(1);
     }
 
     //Speeds up the framerate 
