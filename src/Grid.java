@@ -2,6 +2,7 @@ import java.util.*;
 
 public class Grid {
 
+
 	private Cell[][] myGrid;
 	private Cell[][] oldGrid;
 	
@@ -21,15 +22,19 @@ public class Grid {
 		}
 	}
 	
-	public void step() {
-		oldGrid = myGrid;
-		for (int row=0; row< myReader.getRows(); row++) {
-			for (int col=0; col<myReader.getCols(); col++) {
-				Map<String, Integer> cellChars= oldGrid[row][col].getChars();
-				Cell tempCell = new Cell(cellChars);
-				tempCell.update(oldGrid, myGrid);
-				myGrid[row][col] = tempCell;
-			}
+
+	
+	public List<Cell> findNeighbors(int m, int n, int numRows, int numCols) {
+		List<Cell> neighborsList = new ArrayList<Cell>();
+	//	Square mySquare = new Square(0, 1);
+		//neighborsList.add(mySquare);
+		int[] deltaX = {-1, 0, 0, 1};
+		int[] deltaY = {0, 1, -1, 0};
+		for (int i = 0; i < deltaX.length; i++) {
+			if (!isOutOfBounds(m + deltaX[i], n + deltaY[i], numRows, numCols))
+			 neighborsList.add(myGrid[m + deltaX[i]][n + deltaY[i]]);
 		}
+		
+		return neighborsList;
 	}
-}
+	

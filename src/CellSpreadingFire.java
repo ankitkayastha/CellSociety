@@ -1,8 +1,8 @@
 import java.util.Random;
-
+import java.util.*;
 public class CellSpreadingFire extends Cell {
-	public CellSpreadingFire(int currentState, int nextState) {
-		super(currentState, nextState);
+	public CellSpreadingFire(Map<String, Integer> map) {
+		super(map);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -17,14 +17,14 @@ public class CellSpreadingFire extends Cell {
 	private int numRows;
 	private int numCols;
 	
-	public void getNextState(Grid myGrid, Cell myCell) {
+	public void update(Grid currentGrid, Grid newGrid) {
 		if (myCell.getCurrentState() == EMPTY) {
 			myCell.setNextState(EMPTY);
 		}
 		if (myCell.getCurrentState() == BURNING) {
 			myCell.setNextState(EMPTY);
 		}
-		for (Cell cell: myGrid.findNeighbors(myCell.getXLocation(), myCell.getYLocation(), numRows, numCols)) {
+		for (Cell cell: myCell.findNeighbors(myCell.getXLocation(), myCell.getYLocation(), numRows, numCols)) {
 			if (myCell.getCurrentState() == TREE && cell.getCurrentState() == BURNING) {
 				myCell.setNextState(generateProbCatchState());
 			}
