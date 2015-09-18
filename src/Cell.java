@@ -12,6 +12,6 @@ public class Cell {
 	public Map<String, Integer> getChars() {
 		return myCharacteristicMap;
 	}
-}
 
+}
 
