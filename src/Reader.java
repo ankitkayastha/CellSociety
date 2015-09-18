@@ -24,8 +24,7 @@ import org.w3c.dom.Element;
 public class Reader {
 	private static File inputFile;
 	private static String sim;
-	private static int globalRows;
-	private static int globalCols;
+	private static int globalIndex;
 	private static Map<String, Integer> globalChars = new TreeMap<String, Integer>();
 	private static List<Map<String, Integer>> data = new ArrayList<Map<String, Integer>>();
 
@@ -58,14 +57,11 @@ public class Reader {
 			doc.getDocumentElement().normalize();
 			//System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
 
-			String stringRows = doc.getElementsByTagName("rows").item(0).getTextContent();
-			String stringCols = doc.getElementsByTagName("cols").item(0).getTextContent();
+			String stringIndex = doc.getElementsByTagName("index").item(0).getTextContent();
 
-			globalRows = Integer.parseInt(stringRows);
-			globalCols = Integer.parseInt(stringCols);
+			globalIndex = Integer.parseInt(stringIndex);
 
-			//System.out.println("Rows: " + stringRows);
-			//System.out.println("Cols: " + stringCols);
+	
 
 			NodeList globalCharList = doc.getElementsByTagName("chars");
 			for (int i = 0; i < globalCharList.getLength(); i++) {
@@ -87,16 +83,13 @@ public class Reader {
 			for (int i = 0; i < nList.getLength(); i++) {
 				Node square = nList.item(i);
 				Element eElement = (Element) square;
-				Node stringRow = eElement.getElementsByTagName("row").item(0);
-				Node stringCol = eElement.getElementsByTagName("col").item(0);
+				Node stringIndexNode = eElement.getElementsByTagName("index").item(0);
 
-				int row = Integer.parseInt(stringRow.getTextContent());
-				int col = Integer.parseInt(stringCol.getTextContent());
+				int ind = Integer.parseInt(stringIndexNode.getTextContent());
 
 				Map<String, Integer> squareMap = new TreeMap<String, Integer>();
 
-				squareMap.put("row", row);
-				squareMap.put("col", col);
+				squareMap.put("row", ind);
 
 				//System.out.println("Row: " + stringRow.getTextContent() + ", Col: " + stringCol.getTextContent());
 
@@ -134,17 +127,9 @@ public class Reader {
 		}
 		return -1;
 	}
-
-	public int getRows() {
-		return globalRows;
-	}
-
-	public int getCols() {
-		return globalCols;
-	}
 	
 	public int getSize() {
-		return globalRows * globalCols;
+		return globalIndex;
 	}
 
 	public Map<String, Integer> getGlobalChars() {
