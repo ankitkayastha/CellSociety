@@ -1,7 +1,7 @@
 
-public class CellWaTor extends Cell {
+public class WaTor extends Simulation {
 
-	public CellWaTor(int currentState, int nextState) {
+	public WaTor(int currentState, int nextState) {
 		super(currentState, nextState);
 		// TODO Auto-generated constructor stub
 	}

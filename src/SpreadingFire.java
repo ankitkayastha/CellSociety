@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.util.*;
-public class CellSpreadingFire extends Cell {
-	public CellSpreadingFire(Map<String, Integer> map) {
+public class SpreadingFire extends Cell {
+	public SpreadingFire(Map<String, Integer> map) {
 		super(map);
 		// TODO Auto-generated constructor stub
 	}
