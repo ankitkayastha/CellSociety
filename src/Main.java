@@ -90,7 +90,7 @@ public class Main extends Application {
     	Reader myReader = new Reader();
     	Grid myGrid = new Grid(myReader, gui);
     	Simulation mySim = sims[myReader.getSimNum()];
-    	gui.initDisplay(myGrid, myReader, mySim);
+    	gui.initDisplay(myGrid, myReader, mySim, myReader.getSimNum());
     	gui.setStatus(1);
     }
 

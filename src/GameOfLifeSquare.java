@@ -37,7 +37,6 @@ public class GameOfLifeSquare extends GameOfLife {
 	}
 
 
-
 }
 
 

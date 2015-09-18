@@ -12,6 +12,10 @@ public class Cell {
 	public Map<String, Integer> getChars() {
 		return myCharacteristicMap;
 	}
+	
+	/*public void updateCell(Map<String, Integer> map) {
+		myCharacteristicMap = map;
+	}*/
 
 }
 

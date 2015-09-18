@@ -1,7 +1,8 @@
+import java.util.Map;
+
 public class Grid {
 
 	private Cell[] myGrid;
-
 
 	public Grid(Reader myReader, GuiClass myGui) {
 		myGrid = new Cell[myReader.getSize()];
@@ -12,10 +13,19 @@ public class Grid {
 			myGrid[i] = initCell;
 		}
 	}
+	
+	public Cell[] getGrid() {
+		return myGrid;
+	}
+	
 	public void setCell(Cell myCell, int index) {
 		myGrid[index] = myCell;
 	}
 	public Cell getCell(int i) {
 		return myGrid[i];
 	}
+	
+	/*public void setCell(int i, Map<String, Integer> myMap) {
+		myGrid[i].updateCell(myMap);
+	}*/
 }

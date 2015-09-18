@@ -22,6 +22,8 @@ public class GuiClass {
 	
 	private int status = 0;
 	private int simNum = 0;
+	private Simulation thisSim;
+	private Reader myReader;
 	private List<Shape> shapeList;
 	
 	private int width = 500;
@@ -43,7 +45,7 @@ public class GuiClass {
 		if (status != 1) {
 			return;
 		}
-		
+		thisSim.update(myGrid, myReader);
 		//myGrid.step();
 	}
 	
@@ -117,8 +119,11 @@ public class GuiClass {
 		toolbar();
 	}
 	
-	public void initDisplay(Grid myGrid, Reader myReader, Simulation mySim) {
+	public void initDisplay(Grid myGrid, Reader myReader, Simulation mySim, int simNum) {
 		this.myGrid = myGrid;
+		this.simNum = simNum;
+		this.myReader = myReader;
+		thisSim = mySim;
 		for (int i = 0; i < myReader.getSize(); i++) {
 			Shape newShape = mySim.getCellShape(i);
 			newShape.setFill(mySim.getCellColor(i));
