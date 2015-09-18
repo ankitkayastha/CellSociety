@@ -1,206 +1,191 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <file>
    <global>
-      <chars />
+      <chars>
+         <name>shape</name>
+         <value>4</value>
+      </chars>
+      <chars>
+         <name>rows</name>
+         <value>5</value>
+      </chars>
+      <chars>
+         <name>cols</name>
+         <value>5</value>
+      </chars>
    </global>
-   <rows>5</rows>
-   <cols>5</cols>
+   <index>25</index>
    <squares>
       <square>
-         <row>0</row>
-         <col>0</col>
+         <index>0</index>
          <characteristic>
             <name>life</name>
             <value>0</value>
          </characteristic>
       </square>
       <square>
-         <row>0</row>
-         <col>1</col>
+         <index>1</index>
          <characteristic>
             <name>life</name>
             <value>0</value>
          </characteristic>
       </square>
       <square>
-         <row>0</row>
-         <col>2</col>
+         <index>2</index>
+         <characteristic>
+            <name>life</name>
+            <value>1</value>
+         </characteristic>
+      </square>
+      <square>
+         <index>3</index>
+         <characteristic>
+            <name>life</name>
+            <value>1</value>
+         </characteristic>
+      </square>
+      <square>
+         <index>4</index>
+         <characteristic>
+            <name>life</name>
+            <value>1</value>
+         </characteristic>
+      </square>
+      <square>
+         <index>5</index>
+         <characteristic>
+            <name>life</name>
+            <value>1</value>
+         </characteristic>
+      </square>
+      <square>
+         <index>6</index>
          <characteristic>
             <name>life</name>
             <value>0</value>
          </characteristic>
       </square>
       <square>
-         <row>0</row>
-         <col>3</col>
+         <index>7</index>
          <characteristic>
             <name>life</name>
             <value>1</value>
          </characteristic>
       </square>
       <square>
-         <row>0</row>
-         <col>4</col>
+         <index>8</index>
          <characteristic>
             <name>life</name>
             <value>1</value>
          </characteristic>
       </square>
       <square>
-         <row>1</row>
-         <col>0</col>
-         <characteristic>
-            <name>life</name>
-            <value>1</value>
-         </characteristic>
-      </square>
-      <square>
-         <row>1</row>
-         <col>1</col>
-         <characteristic>
-            <name>life</name>
-            <value>1</value>
-         </characteristic>
-      </square>
-      <square>
-         <row>1</row>
-         <col>2</col>
-         <characteristic>
-            <name>life</name>
-            <value>1</value>
-         </characteristic>
-      </square>
-      <square>
-         <row>1</row>
-         <col>3</col>
+         <index>9</index>
          <characteristic>
             <name>life</name>
             <value>0</value>
          </characteristic>
       </square>
       <square>
-         <row>1</row>
-         <col>4</col>
+         <index>10</index>
          <characteristic>
             <name>life</name>
             <value>1</value>
          </characteristic>
       </square>
       <square>
-         <row>2</row>
-         <col>0</col>
+         <index>11</index>
          <characteristic>
             <name>life</name>
             <value>0</value>
          </characteristic>
       </square>
       <square>
-         <row>2</row>
-         <col>1</col>
+         <index>12</index>
+         <characteristic>
+            <name>life</name>
+            <value>0</value>
+         </characteristic>
+      </square>
+      <square>
+         <index>13</index>
          <characteristic>
             <name>life</name>
             <value>1</value>
          </characteristic>
       </square>
       <square>
-         <row>2</row>
-         <col>2</col>
+         <index>14</index>
          <characteristic>
             <name>life</name>
             <value>0</value>
          </characteristic>
       </square>
       <square>
-         <row>2</row>
-         <col>3</col>
+         <index>15</index>
          <characteristic>
             <name>life</name>
             <value>0</value>
          </characteristic>
       </square>
       <square>
-         <row>2</row>
-         <col>4</col>
-         <characteristic>
-            <name>life</name>
-            <value>0</value>
-         </characteristic>
-      </square>
-      <square>
-         <row>3</row>
-         <col>0</col>
+         <index>16</index>
          <characteristic>
             <name>life</name>
             <value>1</value>
          </characteristic>
       </square>
       <square>
-         <row>3</row>
-         <col>1</col>
-         <characteristic>
-            <name>life</name>
-            <value>1</value>
-         </characteristic>
-      </square>
-      <square>
-         <row>3</row>
-         <col>2</col>
+         <index>17</index>
          <characteristic>
             <name>life</name>
             <value>0</value>
          </characteristic>
       </square>
       <square>
-         <row>3</row>
-         <col>3</col>
+         <index>18</index>
          <characteristic>
             <name>life</name>
             <value>0</value>
          </characteristic>
       </square>
       <square>
-         <row>3</row>
-         <col>4</col>
-         <characteristic>
-            <name>life</name>
-            <value>1</value>
-         </characteristic>
-      </square>
-      <square>
-         <row>4</row>
-         <col>0</col>
-         <characteristic>
-            <name>life</name>
-            <value>1</value>
-         </characteristic>
-      </square>
-      <square>
-         <row>4</row>
-         <col>1</col>
+         <index>19</index>
          <characteristic>
             <name>life</name>
             <value>0</value>
          </characteristic>
       </square>
       <square>
-         <row>4</row>
-         <col>2</col>
+         <index>20</index>
          <characteristic>
             <name>life</name>
             <value>0</value>
          </characteristic>
       </square>
       <square>
-         <row>4</row>
-         <col>3</col>
+         <index>21</index>
+         <characteristic>
+            <name>life</name>
+            <value>0</value>
+         </characteristic>
+      </square>
+      <square>
+         <index>22</index>
          <characteristic>
             <name>life</name>
             <value>1</value>
          </characteristic>
       </square>
       <square>
-         <row>4</row>
-         <col>4</col>
+         <index>23</index>
+         <characteristic>
+            <name>life</name>
+            <value>0</value>
+         </characteristic>
+      </square>
+      <square>
+         <index>24</index>
          <characteristic>
             <name>life</name>
             <value>1</value>
