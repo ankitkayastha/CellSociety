@@ -12,7 +12,9 @@ public class Grid {
 			myGrid[i] = initCell;
 		}
 	}
-
+	public void setCell(Cell myCell, int index) {
+		myGrid[index] = myCell;
+	}
 	public Cell getCell(int i) {
 		return myGrid[i];
 	}

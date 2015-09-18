@@ -86,7 +86,7 @@ public class Main extends Application {
     
     private void initialize() {
     	sims[0] = new GameOfLifeSquare();
-    	sims[1] = new FireSquare();
+    	sims[1] = new SpreadingFireSquare();
     	Reader myReader = new Reader();
     	Grid myGrid = new Grid(myReader, gui);
     	Simulation mySim = sims[myReader.getSimNum()];

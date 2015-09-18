@@ -44,7 +44,7 @@ public class GuiClass {
 			return;
 		}
 		
-		myGrid.step();
+		//myGrid.step();
 	}
 	
 	//sets up the basic Scene

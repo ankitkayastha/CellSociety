@@ -1,10 +1,11 @@
 import java.util.Random;
+
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
+
 import java.util.*;
-public class SpreadingFire extends Cell {
-	public SpreadingFire(Map<String, Integer> map) {
-		super(map);
-		// TODO Auto-generated constructor stub
-	}
+public abstract class SpreadingFire extends Simulation {
+
 
 	//simulation ends when no burning tree left 
 	//diagonal neighbors do not affect state of current cell
@@ -16,18 +17,25 @@ public class SpreadingFire extends Cell {
 	private Random myRandom = new Random();
 	private int numRows;
 	private int numCols;
+	private final String characteristicFire = "fire";
 	
-	public void update(Grid currentGrid, Grid newGrid) {
-		if (myCell.getCurrentState() == EMPTY) {
-			myCell.setNextState(EMPTY);
+	@Override
+	public void update(Grid currentGrid, Grid newGrid, Reader myReader, int index) {
+		for (int i = 0; i < myReader.getSize(); i++) {
+			Cell myCurrentStateCell = currentGrid.getCell(i);
+			Cell myNextStateCell = newGrid.getCell(i);
+			if (myCurrentStateCell.getChars().get(characteristicFire) == EMPTY) {
+				myNextStateCell.getChars().put(characteristicFire, EMPTY);
 		}
-		if (myCell.getCurrentState() == BURNING) {
-			myCell.setNextState(EMPTY);
+		if (myCurrentStateCell.getChars().get(characteristicFire) == BURNING) {
+			myNextStateCell.getChars().put(characteristicFire, EMPTY);
 		}
-		for (Cell cell: myCell.findNeighbors(myCell.getXLocation(), myCell.getYLocation(), numRows, numCols)) {
-			if (myCell.getCurrentState() == TREE && cell.getCurrentState() == BURNING) {
-				myCell.setNextState(generateProbCatchState());
+		List<Cell> cellNeighbors = findNeighbors(currentGrid, index, myReader);
+		for (Cell cell: findNeighbors(currentGrid, index, myReader)) {
+			if (myCurrentStateCell.getChars().get(characteristicFire) == TREE && cell.getChars().get(characteristicFire) == BURNING) {
+				myNextStateCell.getChars().put(characteristicFire, generateProbCatchState());
 			}
+		}
 		}
 	}
 		
@@ -39,20 +47,16 @@ public class SpreadingFire extends Cell {
 		else
 			return TREE;
 	}
-	
-	/*
-	 * determines whether simulation has finished
-	 */
-	/*public boolean isFinished(Grid<Cell, Cell> myGrid) {
-		int numBurningTrees = 0;
-		for (int i = 0; i < ROWS; i++) {
-			for (int j = 0; j < COLS; j++) {
-				if (myGrid[ROW][COL].getCurrentState() != BURNING)
-					numBurningTrees++;
-			}
-			if (numBurningTrees == 0) {
-				return true;
-			}
-		}
-	} */
+	public abstract List<Cell> findNeighbors(Grid currentGrid, int index, Reader myReader);
+	public abstract Shape getCellShape(int i);
+
+	@Override
+	public Color getCellColor(Cell myCell) {
+		if (myCell.getChars().get(characteristicFire) == BURNING)
+			return Color.RED;
+		else if (myCell.getChars().get(characteristicFire) == EMPTY)
+			return Color.YELLOW;
+		else
+			return Color.GREEN;
+	}
 }
