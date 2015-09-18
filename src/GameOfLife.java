@@ -9,7 +9,8 @@ public abstract class GameOfLife extends Simulation {
 	protected final int ALIVE = 1;
 
 	@Override
-	public Color getCellColor(Cell myCell) {
+	public Color getCellColor(int index, Grid myGrid) {
+		Cell myCell = myGrid.getCell(index);
 		if (myCell.getChars().get(characteristic) == ALIVE)
 			return Color.BLUE;
 		else
@@ -20,6 +21,7 @@ public abstract class GameOfLife extends Simulation {
 	public void update(Grid myGrid, Reader myReader) {
 		Cell[] oldGrid = new Cell[myReader.getSize()];
 		Cell[] myGridGrid = myGrid.getGrid();
+
 		for (int i = 0; i < myReader.getSize(); i++) {
 			Cell currentCell = myGrid.getCell(i);
 			Map<String, Integer> myMap = currentCell.getChars();
@@ -37,6 +39,7 @@ public abstract class GameOfLife extends Simulation {
 			Cell oldCell = oldGrid[i];
 			Cell myCell = myGridGrid[i];
 			List<Cell> cellNeighbors = findNeighbors(oldGrid, i, myReader);
+
 			int numLiveNeighbors = 0;
 			for (Cell cell : cellNeighbors) {
 				if (cell.getChars().get(characteristic) == ALIVE) {
@@ -61,5 +64,5 @@ public abstract class GameOfLife extends Simulation {
 
 	public abstract Shape getCellShape(int index);
 
-	public abstract List<Cell> findNeighbors(Grid myGrid, int index, Reader myReader);
+	public abstract List<Cell> findNeighbors(Cell[] myArr, int index, Reader myReader);
 }

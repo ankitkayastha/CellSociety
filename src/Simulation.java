@@ -10,6 +10,8 @@ public abstract class Simulation {
 		return (m < 0 || m >= numRows || n < 0 || n >= numCols);
 	}
 	
-	public abstract Color getCellColor(Cell myCell);
+	public abstract Color getCellColor(int index, Grid myGrid);
 	
+	public abstract Shape getCellShape(int index);
+
 }

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.Group;
@@ -120,13 +121,15 @@ public class GuiClass {
 	}
 	
 	public void initDisplay(Grid myGrid, Reader myReader, Simulation mySim, int simNum) {
+		shapeList = new ArrayList<Shape>();
 		this.myGrid = myGrid;
 		this.simNum = simNum;
 		this.myReader = myReader;
 		thisSim = mySim;
+		System.out.println("Display Initialized");
 		for (int i = 0; i < myReader.getSize(); i++) {
-			Shape newShape = mySim.getCellShape(i);
-			newShape.setFill(mySim.getCellColor(i));
+			Shape newShape = mySim.getCellShape(i, width, heightWithoutToolbar, myReader.getGlobalChars().get("rows"), myReader.getGlobalChars().get("cols"));
+			newShape.setFill(mySim.getCellColor(i, myGrid));
 			root.getChildren().add(newShape);
 			shapeList.add(newShape);
 		}
@@ -135,7 +138,7 @@ public class GuiClass {
 	public void display(Grid myGrid, Reader myReader, Simulation mySim) {
 		for (int i = 0; i < myReader.getSize(); i++) {
 			Shape currentShape = shapeList.get(i);
-			currentShape.setFill(mySim.getCellColor(i));
+			currentShape.setFill(mySim.getCellColor(i, myGrid));
 		}
 	}
 	
