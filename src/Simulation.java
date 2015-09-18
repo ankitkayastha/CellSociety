@@ -25,4 +25,7 @@ public abstract class Simulation {
 		
 		return currentGrid;
 	}
+	
+	public abstract Shape getCellShape(int index);
+
 }
