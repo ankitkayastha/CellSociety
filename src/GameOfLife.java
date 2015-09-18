@@ -12,9 +12,9 @@ public abstract class GameOfLife extends Simulation {
 	public Color getCellColor(int index, Grid myGrid) {
 		Cell myCell = myGrid.getCell(index);
 		if (myCell.getChars().get(characteristic) == ALIVE)
-			return Color.BLUE;
+			return Color.LAWNGREEN;
 		else
-			return Color.CYAN;
+			return Color.BLACK;
 	}
 
 	@Override
@@ -61,8 +61,6 @@ public abstract class GameOfLife extends Simulation {
 			}
 		}
 	}
-
-	public abstract Shape getCellShape(int index);
 
 	public abstract List<Cell> findNeighbors(Cell[] myArr, int index, Reader myReader);
 }

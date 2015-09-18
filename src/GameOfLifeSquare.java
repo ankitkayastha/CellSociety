@@ -36,8 +36,15 @@ public class GameOfLifeSquare extends GameOfLife {
 	}
 
 	@Override
-	public Shape getCellShape(int index) {
-		return new Rectangle(5, 5);
+	public Shape getCellShape(int index, int width, int height, int rows, int cols) {
+		double ySize = (double) height / rows;
+		double xSize = (double) width / cols;
+		int colNum = index % cols;
+		int rowNum = index / cols;
+		Rectangle thisRect = new Rectangle(colNum*xSize, rowNum*ySize+40, xSize, ySize);
+		thisRect.setStrokeWidth(4);
+		thisRect.setStroke(Color.LIGHTGRAY);
+		return thisRect;
 	}
 
 }

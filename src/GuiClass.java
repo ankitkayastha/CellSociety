@@ -43,18 +43,18 @@ public class GuiClass {
 	//step function for Timeline
 	public void step(double secondDelay) {
 		System.out.println(secondDelay);
-		if (status != 1) {
+		/*if (status != 1) {
 			return;
-		}
+		}*/
 		thisSim.update(myGrid, myReader);
-		//myGrid.step();
+		display(myGrid, myReader, thisSim);
 	}
 	
 	//sets up the basic Scene
 	public Scene init (){
 		
 		rootCreate();
-        myScene = new Scene(root, width, height, Color.WHITE);
+        myScene = new Scene(root, width, height, Color.ALICEBLUE);
         
 		return myScene;	
 	}
@@ -130,6 +130,7 @@ public class GuiClass {
 		for (int i = 0; i < myReader.getSize(); i++) {
 			Shape newShape = mySim.getCellShape(i, width, heightWithoutToolbar, myReader.getGlobalChars().get("rows"), myReader.getGlobalChars().get("cols"));
 			newShape.setFill(mySim.getCellColor(i, myGrid));
+			System.out.println(newShape.toString());
 			root.getChildren().add(newShape);
 			shapeList.add(newShape);
 		}

@@ -12,6 +12,6 @@ public abstract class Simulation {
 	
 	public abstract Color getCellColor(int index, Grid myGrid);
 	
-	public abstract Shape getCellShape(int index);
+	public abstract Shape getCellShape(int index, int width, int height, int rows, int cols); 
 
 }

@@ -11,9 +11,9 @@ import javafx.util.Duration;
  */
 public class Main extends Application {
 	
-    private static final int FRAMES_PER_SECOND = 1;
+    private static final int FRAMES_PER_SECOND = 60;
     
-    private static int DM = 3000 / FRAMES_PER_SECOND;
+    private static int DM = 60000 / FRAMES_PER_SECOND;
     private static double DS = 1.0 / FRAMES_PER_SECOND;
     
     private static int MILLISECOND_DELAY = DM;
@@ -54,6 +54,7 @@ public class Main extends Application {
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
+        animation.pause();
         
         scene.setOnMouseClicked(e -> click(e.getX(), e.getY()));
         
