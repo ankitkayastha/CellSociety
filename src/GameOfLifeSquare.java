@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -8,6 +5,11 @@ import javafx.scene.shape.Shape;
 import java.util.*;
 
 public class GameOfLifeSquare extends GameOfLife {
+	public GameOfLifeSquare(Map<String, Integer> globalChars) {
+		super(globalChars);
+		// TODO Auto-generated constructor stub
+	}
+
 	private final String cols = "cols";
 	private final String rows = "rows";
 	private final String characteristic = "life";

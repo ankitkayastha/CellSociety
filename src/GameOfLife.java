@@ -4,6 +4,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
 public abstract class GameOfLife extends Simulation {
+	public GameOfLife(Map<String, Integer> globalChars) {
+		super(globalChars);
+		// TODO Auto-generated constructor stub
+	}
+
 	private final String characteristic = "life";
 	protected final int DEAD = 0;
 	protected final int ALIVE = 1;

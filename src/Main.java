@@ -86,9 +86,13 @@ public class Main extends Application {
 	}
     
     private void initialize() {
-    	sims[0] = new GameOfLifeSquare();
-    	sims[1] = new SpreadingFireSquare();
     	Reader myReader = new Reader();
+    	Simulation gameOfLife = new GameOfLifeSquare(myReader.getGlobalChars());
+    	sims[0] = gameOfLife;
+    	Simulation spreadingFire = new SpreadingFireSquare(myReader.getGlobalChars());
+    	sims[1] = spreadingFire;
+    	//sims[0] = new GameOfLifeSquare(myReader.getGlobalChars());
+    	//sims[1] = new SpreadingFireSquare(myReader.getGlobalChars());
     	Grid myGrid = new Grid(myReader, gui);
     	Simulation mySim = sims[myReader.getSimNum()];
     	gui.initDisplay(myGrid, myReader, mySim, myReader.getSimNum());

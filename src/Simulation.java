@@ -1,7 +1,15 @@
+import java.util.Map;
+
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
 public abstract class Simulation {
+	protected Map<String, Integer> glob;
+	
+	public Simulation(Map<String, Integer> globalChars) {
+		glob = globalChars;
+		System.out.println(glob.toString());
+	}
 	
 	
 	public abstract void update(Grid currentGrid, Reader myReader);
