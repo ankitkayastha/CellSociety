@@ -23,6 +23,7 @@ public class Main extends Application {
     private Timeline animation;
     
     private GuiClass gui;
+    private Simulation[] sims = new Simulation[4];
 
     /**
      * Set things up at the beginning.
@@ -84,9 +85,12 @@ public class Main extends Application {
 	}
     
     private void initialize() {
+    	sims[0] = new GameOfLifeSquare();
+    	sims[1] = new FireSquare();
     	Reader myReader = new Reader();
     	Grid myGrid = new Grid(myReader, gui);
-    	gui.initDisplay(myGrid, myReader);
+    	Simulation mySim = sims[myReader.getSimNum()];
+    	gui.initDisplay(myGrid, myReader, mySim);
     	gui.setStatus(1);
     }
 

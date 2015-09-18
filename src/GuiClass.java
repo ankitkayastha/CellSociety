@@ -1,9 +1,12 @@
+import java.util.List;
+
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 public class GuiClass {
 	
 	private final String TITLE = "CellSociety";
@@ -19,6 +22,7 @@ public class GuiClass {
 	
 	private int status = 0;
 	private int simNum = 0;
+	private List<Shape> shapeList;
 	
 	private int width = 500;
 	private int height = 540;
@@ -39,6 +43,7 @@ public class GuiClass {
 		if (status != 1) {
 			return;
 		}
+		
 		myGrid.step();
 	}
 	
@@ -112,31 +117,20 @@ public class GuiClass {
 		toolbar();
 	}
 	
-	public void initDisplay(Grid myGrid, Reader myReader) {
+	public void initDisplay(Grid myGrid, Reader myReader, Simulation mySim) {
 		this.myGrid = myGrid;
-		cellX = (double)heightWithoutToolbar/myReader.getCols();
-		cellY = (double)width/myReader.getRows();
-		for (int row = 0; row < myReader.getRows(); row++) {
-			for (int col = 0; col < myReader.getCols(); col++) {
-				System.out.println("INDEX: row: "+row+", col: "+col);
-				System.out.println("DATAS: row: "+myGrid.getCell(row, col).getChars().get("row")+ ", col: "+myGrid.getCell(row,  col).getChars().get("col"));
-				Rectangle newRectangle = new Rectangle(col*cellX, row*cellY+TOOLBAR_HEIGHT, cellX, cellY);
-				Color rectColor = myGrid.getCell(row, col).getColor();
-				newRectangle.setFill(rectColor);
-				root.getChildren().add(newRectangle);
-				rectList[row][col] = newRectangle;
-			}
+		for (int i = 0; i < myReader.getSize(); i++) {
+			Shape newShape = mySim.getCellShape(i);
+			newShape.setFill(mySim.getCellColor(i));
+			root.getChildren().add(newShape);
+			shapeList.add(newShape);
 		}
 	}
-	
-	public void display(Grid myGrid, Reader myReader) {
-		for (int row = 0; row < myReader.getRows(); row++) {
-			for (int col = 0; col < myReader.getCols(); col++) {
-				Rectangle tempRect = rectList[row][col];
-				Color rectColor = myGrid.getCell(row, col).getColor();
-				tempRect.setFill(rectColor);
-				System.out.printf("Color: %d %d %s\n", row, col,rectColor.toString());
-			}
+
+	public void display(Grid myGrid, Reader myReader, Simulation mySim) {
+		for (int i = 0; i < myReader.getSize(); i++) {
+			Shape currentShape = shapeList.get(i);
+			currentShape.setFill(mySim.getCellColor(i));
 		}
 	}
 	

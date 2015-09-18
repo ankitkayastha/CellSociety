@@ -124,6 +124,16 @@ public class Reader {
 	public String getSim() {
 		return sim;
 	}
+	
+	public int getSimNum() {
+		if (sim.equals("game_of_life")) {
+			return 0;
+		}
+		else if (sim.equals("fire")) {
+			return 1;
+		}
+		return -1;
+	}
 
 	public int getRows() {
 		return globalRows;
