@@ -1,9 +1,12 @@
+import java.util.List;
+
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 public class GuiClass {
 	
 	private final String TITLE = "CellSociety";
@@ -18,9 +21,9 @@ public class GuiClass {
 	private ImageView open = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("open.gif")));
 	
 	private int status = 0;
-	private Rectangle[][] rectList;
+	private int simNum = 0;
+	private List<Shape> shapeList;
 	
-	private ImageView test;
 	private int width = 500;
 	private int height = 540;
 	private int heightWithoutToolbar = 500;
@@ -40,14 +43,8 @@ public class GuiClass {
 		if (status != 1) {
 			return;
 		}
-		myGrid.step();
 		
-		/*if(test.getX() > width - test.getBoundsInLocal().getWidth()
-				|| test.getX() < 0){
-			speed = -speed;
-		}
-		test.setX(test.getX() + speed * secondDelay);
-		*/
+		myGrid.step();
 	}
 	
 	//sets up the basic Scene
@@ -57,14 +54,13 @@ public class GuiClass {
         myScene = new Scene(root, width, height, Color.WHITE);
         
 		return myScene;	
-		
 	}
 	
 	//basic reset method (TO BE REMADE)
 	public void reset(){
 		
-		test.setX(width / 2 - test.getBoundsInLocal().getWidth() / 2);
-        test.setY(height / 2  - test.getBoundsInLocal().getHeight() / 2);
+		//test.setX(width / 2 - test.getBoundsInLocal().getWidth() / 2);
+        //test.setY(height / 2  - test.getBoundsInLocal().getHeight() / 2);
         
 	}
 	
@@ -116,48 +112,25 @@ public class GuiClass {
         root.getChildren().add(open);
 	}
 	
-	//sets up test image
-	public void testImg(){
-		Image image = new Image(getClass().getClassLoader().getResourceAsStream("jmetempat.gif"));
-        test = new ImageView(image);
-        // x and y represent the top left corner, so center it
-        test.setX(width / 2 - test.getBoundsInLocal().getWidth() / 2);
-        test.setY(height / 2  - test.getBoundsInLocal().getHeight() / 2);
-        root.getChildren().add(test);
-	}
-	
 	public void rootCreate(){
 		root = new Group();
 		toolbar();
-		testImg();
 	}
 	
-	public void initDisplay(Grid myGrid, Reader myReader) {
-		rectList = new Rectangle[myReader.getRows()][myReader.getCols()];
+	public void initDisplay(Grid myGrid, Reader myReader, Simulation mySim) {
 		this.myGrid = myGrid;
-		cellX = (double)heightWithoutToolbar/myReader.getCols();
-		cellY = (double)width/myReader.getRows();
-		for (int row = 0; row < myReader.getRows(); row++) {
-			for (int col = 0; col < myReader.getCols(); col++) {
-				System.out.println("INDEX: row: "+row+", col: "+col);
-				System.out.println("DATAS: row: "+myGrid.getCell(row, col).getChars().get("row")+ ", col: "+myGrid.getCell(row,  col).getChars().get("col"));
-				Rectangle newRectangle = new Rectangle(col*cellX, row*cellY+TOOLBAR_HEIGHT, cellX, cellY);
-				Color rectColor = myGrid.getCell(row, col).getColor();
-				newRectangle.setFill(rectColor);
-				root.getChildren().add(newRectangle);
-				rectList[row][col] = newRectangle;
-			}
+		for (int i = 0; i < myReader.getSize(); i++) {
+			Shape newShape = mySim.getCellShape(i);
+			newShape.setFill(mySim.getCellColor(i));
+			root.getChildren().add(newShape);
+			shapeList.add(newShape);
 		}
 	}
-	
-	public void display(Grid myGrid, Reader myReader) {
-		for (int row = 0; row < myReader.getRows(); row++) {
-			for (int col = 0; col < myReader.getCols(); col++) {
-				Rectangle tempRect = rectList[row][col];
-				Color rectColor = myGrid.getCell(row, col).getColor();
-				tempRect.setFill(rectColor);
-				System.out.printf("Color: %d %d %s\n", row, col,rectColor.toString());
-			}
+
+	public void display(Grid myGrid, Reader myReader, Simulation mySim) {
+		for (int i = 0; i < myReader.getSize(); i++) {
+			Shape currentShape = shapeList.get(i);
+			currentShape.setFill(mySim.getCellColor(i));
 		}
 	}
 	
