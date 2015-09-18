@@ -132,13 +132,16 @@ public class Reader {
 	public int getCols() {
 		return globalCols;
 	}
+	
+	public int getSize() {
+		return globalRows * globalCols;
+	}
 
 	public Map<String, Integer> getGlobalChars() {
 		return globalChars;
 	}
 
-	public Map<String, Integer> getCell(int row, int col) {
-		int index = row * globalCols + col;
+	public Map<String, Integer> getCell(int index) {
 		return data.get(index);
 	}
 

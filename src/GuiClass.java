@@ -18,9 +18,8 @@ public class GuiClass {
 	private ImageView open = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("open.gif")));
 	
 	private int status = 0;
-	private Rectangle[][] rectList;
+	private int simNum = 0;
 	
-	private ImageView test;
 	private int width = 500;
 	private int height = 540;
 	private int heightWithoutToolbar = 500;
@@ -41,13 +40,6 @@ public class GuiClass {
 			return;
 		}
 		myGrid.step();
-		
-		/*if(test.getX() > width - test.getBoundsInLocal().getWidth()
-				|| test.getX() < 0){
-			speed = -speed;
-		}
-		test.setX(test.getX() + speed * secondDelay);
-		*/
 	}
 	
 	//sets up the basic Scene
@@ -57,14 +49,13 @@ public class GuiClass {
         myScene = new Scene(root, width, height, Color.WHITE);
         
 		return myScene;	
-		
 	}
 	
 	//basic reset method (TO BE REMADE)
 	public void reset(){
 		
-		test.setX(width / 2 - test.getBoundsInLocal().getWidth() / 2);
-        test.setY(height / 2  - test.getBoundsInLocal().getHeight() / 2);
+		//test.setX(width / 2 - test.getBoundsInLocal().getWidth() / 2);
+        //test.setY(height / 2  - test.getBoundsInLocal().getHeight() / 2);
         
 	}
 	
@@ -116,24 +107,12 @@ public class GuiClass {
         root.getChildren().add(open);
 	}
 	
-	//sets up test image
-	public void testImg(){
-		Image image = new Image(getClass().getClassLoader().getResourceAsStream("jmetempat.gif"));
-        test = new ImageView(image);
-        // x and y represent the top left corner, so center it
-        test.setX(width / 2 - test.getBoundsInLocal().getWidth() / 2);
-        test.setY(height / 2  - test.getBoundsInLocal().getHeight() / 2);
-        root.getChildren().add(test);
-	}
-	
 	public void rootCreate(){
 		root = new Group();
 		toolbar();
-		testImg();
 	}
 	
 	public void initDisplay(Grid myGrid, Reader myReader) {
-		rectList = new Rectangle[myReader.getRows()][myReader.getCols()];
 		this.myGrid = myGrid;
 		cellX = (double)heightWithoutToolbar/myReader.getCols();
 		cellY = (double)width/myReader.getRows();
