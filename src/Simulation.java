@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 
 import javafx.scene.paint.Color;
@@ -20,6 +21,9 @@ public abstract class Simulation {
 	
 	public abstract Color getCellColor(int index, Grid myGrid);
 	
-	public abstract Shape getCellShape(int index, int width, int height, int rows, int cols); 
+	public abstract Shape getCellShape(int index, int width, int height, int rows, int cols);
+
+
+	public abstract List<Cell> findNeighbors(Cell[] myArr, int index, Reader myReader);
 
 }

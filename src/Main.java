@@ -87,9 +87,9 @@ public class Main extends Application {
     
     private void initialize() {
     	Reader myReader = new Reader();
-    	Simulation gameOfLife = new GameOfLifeSquare(myReader.getGlobalChars());
+    	Simulation gameOfLife = new GameOfLife(myReader.getGlobalChars());
     	sims[0] = gameOfLife;
-    	Simulation spreadingFire = new SpreadingFireSquare(myReader.getGlobalChars());
+    	Simulation spreadingFire = new SpreadingFire(myReader.getGlobalChars());
     	sims[1] = spreadingFire;
     	//sims[0] = new GameOfLifeSquare(myReader.getGlobalChars());
     	//sims[1] = new SpreadingFireSquare(myReader.getGlobalChars());
