@@ -7,6 +7,7 @@ public class Cell {
 	
 	public Cell(Map<String, Integer> map) {
 		myCharacteristicMap = map;
+		System.out.println(myCharacteristicMap.toString());
 	}
 	
 	public Map<String, Integer> getChars() {
