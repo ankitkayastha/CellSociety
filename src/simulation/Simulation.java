@@ -12,11 +12,7 @@ import model.Grid;
 import model.Reader;
 
 public abstract class Simulation {
-	protected Map<String, Integer> glob;
-	
-	public Simulation(Map<String, Integer> globalChars) {
-		glob = globalChars;
-	}
+	public Simulation(Map<String, Integer> globalChars) {}
 	
 	
 	public abstract void update(Grid currentGrid, Reader myReader);
