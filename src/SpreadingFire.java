@@ -14,13 +14,12 @@ public class SpreadingFire extends Simulation {
 	private double probCatch; // probability of a cell catching fire based on
 								// its neighbors
 	private Random myRandom = new Random();
-	private int numRows;
-	private int numCols;
 	private final String characteristicFire = "fire";
 
 	public SpreadingFire(Map<String, Integer> globalChars) {
 		super(globalChars);
-		probCatch = globalChars.get("prob");
+		System.out.println("fire" +globalChars.toString());
+		probCatch = globalChars.get("prob")/100.0;
 
 	}
 

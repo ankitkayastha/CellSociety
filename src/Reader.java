@@ -122,7 +122,7 @@ public class Reader {
 		if (sim.equals("game_of_life")) {
 			return 0;
 		}
-		else if (sim.equals("fire")) {
+		else if (sim.equals("spreading_fire")) {
 			return 1;
 		}
 		return -1;
