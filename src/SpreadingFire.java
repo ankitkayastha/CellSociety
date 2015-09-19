@@ -46,20 +46,30 @@ public class SpreadingFire extends Simulation {
 			Cell myCell = myGridGrid[i];
 			List<Cell> cellNeighbors = findNeighbors(oldGrid, i, myReader);
 
-			for (Cell cell : cellNeighbors) {
-				if (oldCell.getChars().get(characteristicFire) == TREE
-						&& cell.getChars().get(characteristicFire) == BURNING) {
+			if (oldCell.getChars().get(characteristicFire) == TREE
+					&& areNeighborsBurning(cellNeighbors)) {
 					myCell.getChars().put(characteristicFire, generateProbCatchState());
 				}
-			}
+			
 			if (oldCell.getChars().get(characteristicFire) == BURNING) {
 				myCell.getChars().put(characteristicFire, EMPTY);
 			}
-
+			if (oldCell.getChars().get(characteristicFire) == EMPTY) {
+				myCell.getChars().put(characteristicFire, EMPTY);
+			}
 		}
 	}
-
-	public int generateProbCatchState() {
+	
+	private boolean areNeighborsBurning(List<Cell> cellNeighbors) {
+		int numBurningNeighbors = 0;
+		for (Cell cell: cellNeighbors) {
+			if (cell.getChars().get(characteristicFire) == BURNING)
+				numBurningNeighbors++;
+		}
+		return numBurningNeighbors > 0;
+	}
+	
+	private int generateProbCatchState() {
 		double prob = myRandom.nextDouble();
 		if (prob < probCatch) {
 			return BURNING;
@@ -91,11 +101,10 @@ public class SpreadingFire extends Simulation {
 		int numRows = myMap.get("rows");
 		int rowNum = index / numCols; // row number of cell
 		int colNum = index % numCols; // col number of cell
-		// System.out.printf("Row: %d, Col: %d\n", rowNum, colNum);
 		List<Cell> neighborsList = new ArrayList<Cell>();
-		int[] deltaRow = { -1, 0, 0, 1, 1, -1, -1, 1 };
-		int[] deltaCol = { 0, 1, -1, 0, 1, 1, -1, -1 };
-		int[] arrDelta = { -numCols, 1, -1, numCols, numCols + 1, -numCols + 1, -numCols - 1, numCols - 1 };
+		int[] deltaRow = { -1, 0, 0, 1};
+		int[] deltaCol = { 0, 1, -1, 0};
+		int[] arrDelta = { -numCols, 1, -1, numCols};
 		for (int i = 0; i < arrDelta.length; i++) {
 			if (!isOutOfBounds(rowNum + deltaRow[i], colNum + deltaCol[i], numRows, numCols)) {
 				neighborsList.add(myArr[index + arrDelta[i]]);
