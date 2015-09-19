@@ -1,9 +1,17 @@
+package simulation.spreading_fire;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-
-import java.util.*;
-
+import model.Cell;
+import model.Grid;
+import model.Reader;
+import simulation.Simulation;
 public class SpreadingFire extends Simulation {
 	// simulation ends when no burning tree left
 	// diagonal neighbors do not affect state of current cell
@@ -18,11 +26,9 @@ public class SpreadingFire extends Simulation {
 
 	public SpreadingFire(Map<String, Integer> globalChars) {
 		super(globalChars);
-		System.out.println("fire globals: " +globalChars.toString());
 		if (globalChars.keySet().contains("prob")) {
 			probCatch = globalChars.get("prob")/100.0;
 		}
-		System.out.println("prob: " + probCatch);
 	}
 
 	@Override
@@ -107,9 +113,6 @@ public class SpreadingFire extends Simulation {
 		for (int i = 0; i < arrDelta.length; i++) {
 			if (!isOutOfBounds(rowNum + deltaRow[i], colNum + deltaCol[i], numRows, numCols)) {
 				neighborsList.add(myArr[index + arrDelta[i]]);
-			} else {
-				// System.out.printf("InsideRow: %d, InsideCol: %d\n", rowNum +
-				// deltaRow[i], colNum + deltaCol[i]);
 			}
 		}
 		return neighborsList;

@@ -1,4 +1,7 @@
+package model;
 import java.util.Map;
+
+import view.GuiClass;
 
 public class Grid {
 

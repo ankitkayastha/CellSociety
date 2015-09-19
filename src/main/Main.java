@@ -1,3 +1,6 @@
+package main;
+
+
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -5,7 +8,14 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
+import model.Grid;
+import model.Reader;
+import simulation.Simulation;
+import simulation.game_of_life.GameOfLife;
+import simulation.segregation.Segregation;
+import simulation.spreading_fire.SpreadingFire;
+import simulation.wator.WaTor;
+import view.GuiClass;
 /**
  * Pretty much identical to example Main.java. Used in the same way, to initialize the Game example.
  */

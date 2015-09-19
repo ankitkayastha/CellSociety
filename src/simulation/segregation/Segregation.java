@@ -1,13 +1,18 @@
+package simulation.segregation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Random;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import java.util.*;
+import model.Cell;
+import model.Grid;
+import model.Reader;
+import simulation.Simulation;
+
 public class Segregation extends Simulation {
 	
 	private final int EMPTY = 0; //if cell is empty
