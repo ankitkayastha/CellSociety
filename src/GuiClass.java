@@ -36,10 +36,6 @@ public class GuiClass {
 	
 	//step function for Timeline
 	public void step(double secondDelay) {
-		System.out.println(secondDelay);
-		/*if (status != 1) {
-			return;
-		}*/
 		thisSim.update(myGrid, myReader);
 		display(myGrid, myReader, thisSim);
 	}

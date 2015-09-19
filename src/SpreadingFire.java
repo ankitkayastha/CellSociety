@@ -38,7 +38,6 @@ public class SpreadingFire extends Simulation {
 			}
 			Cell oldCell = new Cell(oldMap);
 			oldGrid[i] = oldCell;
-
 		}
 
 		for (int i = 0; i < myReader.getSize(); i++) {
@@ -46,15 +45,12 @@ public class SpreadingFire extends Simulation {
 			Cell myCell = myGridGrid[i];
 			List<Cell> cellNeighbors = findNeighbors(oldGrid, i, myReader);
 
-			if (oldCell.getChars().get(characteristicFire) == TREE
-					&& areNeighborsBurning(cellNeighbors)) {
-					myCell.getChars().put(characteristicFire, generateProbCatchState());
+			if (oldCell.getChars().get(characteristicFire) == TREE) {
+				if (areNeighborsBurning(cellNeighbors)) {
+						myCell.getChars().put(characteristicFire, generateProbCatchState());
 				}
-			
+			}			
 			if (oldCell.getChars().get(characteristicFire) == BURNING) {
-				myCell.getChars().put(characteristicFire, EMPTY);
-			}
-			if (oldCell.getChars().get(characteristicFire) == EMPTY) {
 				myCell.getChars().put(characteristicFire, EMPTY);
 			}
 		}
@@ -71,6 +67,7 @@ public class SpreadingFire extends Simulation {
 	
 	private int generateProbCatchState() {
 		double prob = myRandom.nextDouble();
+		System.out.println(prob);
 		if (prob < probCatch) {
 			return BURNING;
 		} else
