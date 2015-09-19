@@ -13,21 +13,21 @@ public class Segregation extends Simulation {
 	private final int EMPTY = 0; //if cell is empty
 	private double threshold;
 	private String thresh = "threshold";
-	private List<Color> listColor = new ArrayList<>();
-	private List<Integer> vacantCells;
 	private Color[] myColors;
 	private Random myRandom;
-	private String numRows = "rows";
-	private String numCols = "cols";
 	private String agents = "agents";
 	private final String characteristicSegregation = "agent";
 
 	public Segregation(Map<String, Integer> globalChars) {
 		super(globalChars);
-		threshold = globalChars.get(thresh);
-		vacantCells = new ArrayList<Integer>(); //contains indices from array where empty cells are
+		if (globalChars.keySet().contains(thresh)){
+			threshold = globalChars.get(thresh);
+		}
 		myRandom = new Random(1234);
-		int numAgents = globalChars.get(agents);
+		int numAgents = 0;
+		if (globalChars.keySet().contains(agents)){
+			numAgents = globalChars.get(agents);
+		}
 		myColors = new Color[numAgents + 1];
 		addColors(numAgents);
 	}
@@ -64,41 +64,23 @@ public class Segregation extends Simulation {
 			Map<String, Integer> myMap = currentCell.getChars();
 			Map<String, Integer> oldMap = new HashMap<String, Integer>();
 			for (String s : myMap.keySet()) {
-				// maybe make string/integer primitive
-				oldMap.put(s, myMap.get(s));
+				String tempS = new String(s);
+				int tempInt = myMap.get(s);
+				oldMap.put(tempS, tempInt);
 			}
 			Cell oldCell = new Cell(oldMap);
 			oldGrid[i] = oldCell;
-		}
-		for (int i = 0; i < myGridGrid.length; i++) {
-			Cell cell = myGridGrid[i];
-			if (cell.getChars().get(characteristicSegregation) == EMPTY) {
-				vacantCells.add(i);
-				//System.out.println("Adding to vacant cells at index" + i);
-			}
-		}
-		
+		}		
 		
 		//System.out.println("Vacant cells added and size is " + vacantCells.size());
 		//moves all dissatisfied cells
 		for (int i = 0; i < myReader.getSize(); i++) {
-			Cell oldCell = oldGrid[i];
-			Cell myCell = myGridGrid[i];
-			List<Cell> cellNeighbors = findNeighbors(oldGrid, i, myReader);
-			if (!isSatisfied(oldGrid, i, myReader, threshold)) {
-				System.out.println("Cell at index" + i + " is not satisfied");
-				moveDissatisfiedCell(myGridGrid, i); }
+			if ((oldGrid[i].getChars().get(characteristicSegregation)!=EMPTY) & !isSatisfied(oldGrid, i, myReader, threshold)) {
+				if (hasEmpty(myGridGrid)) {
+					moveDissatisfiedCell(myGridGrid, i);
+				}
+			}
 		}
-		//reset vacant cells
-		//System.out.println(vacantCells.size());
-		//for (int i = 0; i < vacantCells.size(); i++) {
-			//System.out.println("Removing index " + i + " from vacant cells");
-		//	vacantCells.remove(i);
-		//}
-		vacantCells.clear();
-		//System.out.println("Vacant cells size after clearing is " + vacantCells.size());
-		//System.out.println("After removing vacant cells" + vacantCells.size());
-		
 	}
 	
 
@@ -114,10 +96,11 @@ public class Segregation extends Simulation {
 		int[] deltaCol = { 0, 1, -1, 0, 1, 1, -1, -1 };
 		int[] arrDelta = { -numCols, 1, -1, numCols, numCols + 1, -numCols + 1, -numCols - 1, numCols - 1 };
 		for (int i = 0; i < arrDelta.length; i++) {
-			if (!isOutOfBounds(rowNum + deltaRow[i], colNum + deltaCol[i], numRows, numCols) && (!(myArr[i].getChars().get(characteristicSegregation) == EMPTY))) {
-				neighborsList.add(myArr[index + arrDelta[i]]);
-			}
-			
+			if (!isOutOfBounds(rowNum + deltaRow[i], colNum + deltaCol[i], numRows, numCols)){
+				if ((myArr[index+arrDelta[i]].getChars().get(characteristicSegregation) != EMPTY)) {
+					neighborsList.add(myArr[index+arrDelta[i]]);
+				}
+			}			
 		}
 		return neighborsList;
 	}
@@ -135,21 +118,39 @@ public class Segregation extends Simulation {
 	}
 	
 	
-	public void moveDissatisfiedCell(Cell[] myArr, int index) {
-		int indexVacantList = myRandom.nextInt(vacantCells.size()) ; //random number between 0 and size of list
-		int indexGrid = vacantCells.get(indexVacantList);
+	private void moveDissatisfiedCell(Cell[] myArr, int index) {
+		
+		Cell moveCell = findEmpty(myArr);
 		int agentType = myArr[index].getChars().get(characteristicSegregation);
-		myArr[index].getChars().put(characteristicSegregation, EMPTY); //update dissatisfied cell's original location
-		//vacantCells.add(index);
-		System.out.println("Moving cell from index " + index + " to " + indexGrid);
-		myArr[indexGrid].getChars().put(characteristicSegregation, agentType); //update empty cell to dissatisfied cell's agent type
+		// may have to add in from old
+		moveCell.getChars().put(characteristicSegregation, agentType);
+
+		myArr[index].getChars().put(characteristicSegregation, EMPTY);
+		System.out.printf("Moved index %d\n", index);
 	}
 	
-	public boolean isSatisfied(Cell[] myArr, int index, Reader myReader, double threshold) {
-		boolean boolToReturn = false;
+	private Cell findEmpty(Cell[] myArr) {
+		List<Cell> returnCell = new ArrayList<Cell>();
+		for (int i=0; i<myArr.length; i++) {
+			if (myArr[i].getChars().get(characteristicSegregation)==EMPTY) {
+				returnCell.add(myArr[i]);
+			}
+		}
+		return returnCell.get(myRandom.nextInt(returnCell.size()));
+	}
+	
+	private boolean hasEmpty(Cell[] myArr) {
+		for (int i=0; i<myArr.length; i++) {
+			if (myArr[i].getChars().get(characteristicSegregation)==EMPTY) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean isSatisfied(Cell[] myArr, int index, Reader myReader, double threshold) {
 		int numSameNeighbors = 0;
 		List<Cell> myNeighborList = findNeighbors(myArr, index, myReader);
-		//System.out.println(myNeighborList.size());
 		int selectedCellState = myArr[index].getChars().get(characteristicSegregation); 
 		
 		for (Cell cell: myNeighborList) {
@@ -158,8 +159,12 @@ public class Segregation extends Simulation {
 		}
 		//System.out.println("index " + index + " has " + numSameNeighbors);
 		double percentageSame = (double) numSameNeighbors / myNeighborList.size();
-		//System.out.println(threshold);
-		return percentageSame >= (threshold / 100);
+		//System.out.printf("index: %d, threshold: %f, percsame: %f\n",index, threshold, percentageSame);
+		if (percentageSame<(threshold/100.0)) {
+			//System.out.println("Cell at index" + index + " is not satisfied");
+			//System.out.printf("Length of neighbors: %d\n", myNeighborList.size());
+		}
+		return percentageSame >= (threshold / 100.0);
 	}
 
 }
