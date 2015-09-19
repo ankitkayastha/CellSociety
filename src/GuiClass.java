@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 public class GuiClass {
 	
@@ -22,7 +21,6 @@ public class GuiClass {
 	private ImageView open = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("open.gif")));
 	
 	private int status = 0;
-	private int simNum = 0;
 	private Simulation thisSim;
 	private Reader myReader;
 	private List<Shape> shapeList;
@@ -32,11 +30,7 @@ public class GuiClass {
 	private int heightWithoutToolbar = 500;
 	private final int TOOLBAR_HEIGHT = 40;
 	
-	private double cellX;
-	private double cellY;
-	
-	//
-	public String getTitle(){
+		public String getTitle(){
 		return TITLE;
 	}
 	
@@ -123,14 +117,13 @@ public class GuiClass {
 	public void initDisplay(Grid myGrid, Reader myReader, Simulation mySim, int simNum) {
 		shapeList = new ArrayList<Shape>();
 		this.myGrid = myGrid;
-		this.simNum = simNum;
 		this.myReader = myReader;
 		thisSim = mySim;
 		System.out.println("Display Initialized");
 		for (int i = 0; i < myReader.getSize(); i++) {
 			Shape newShape = mySim.getCellShape(i, width, heightWithoutToolbar, myReader.getGlobalChars().get("rows"), myReader.getGlobalChars().get("cols"));
 			newShape.setFill(mySim.getCellColor(i, myGrid));
-			System.out.println(newShape.toString());
+			//System.out.println(newShape.toString());
 			root.getChildren().add(newShape);
 			shapeList.add(newShape);
 		}

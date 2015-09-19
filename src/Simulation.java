@@ -9,7 +9,6 @@ public abstract class Simulation {
 	
 	public Simulation(Map<String, Integer> globalChars) {
 		glob = globalChars;
-		System.out.println(glob.toString());
 	}
 	
 	

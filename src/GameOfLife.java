@@ -7,10 +7,6 @@ import javafx.scene.shape.Shape;
 public class GameOfLife extends Simulation {
 	public GameOfLife(Map<String, Integer> globalChars) {
 		super(globalChars);
-		System.out.println(glob.toString());
-		System.out.println();
-		//System.out.println(globalChars.toString());
-		// TODO Auto-generated constructor stub
 	}
 
 	private final String characteristic = "life";
