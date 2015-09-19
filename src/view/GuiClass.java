@@ -13,7 +13,6 @@ import model.Reader;
 import simulation.Simulation;
 public class GuiClass {
 	
-	private final String TITLE = "CellSociety";
 	private Scene myScene;
 	private Group root;
 	private Grid myGrid;
@@ -35,10 +34,6 @@ public class GuiClass {
 	private int height = 540;
 	private int heightWithoutToolbar = 500;
 	private final int TOOLBAR_HEIGHT = 40;
-	
-		public String getTitle(){
-		return TITLE;
-	}
 	
 	//step function for Timeline
 	public void step(double secondDelay) {
