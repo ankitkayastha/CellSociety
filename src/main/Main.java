@@ -19,6 +19,8 @@ import view.GuiClass;
 public class Main extends Application {
 
 	private static final int FRAMES_PER_SECOND = 60;
+	
+    private double rate = 1;
 
 	private static int DM = 60000 / FRAMES_PER_SECOND;
 	private static double DS = 1.0 / FRAMES_PER_SECOND;
@@ -61,26 +63,35 @@ public class Main extends Application {
 
 	// talks to the GuiClass to see what button was clicked
 	private void click(double x, double y) {
-		switch (gui.handleMouseInput(x, y)) {
-		case 0:
-			return;
-		case 1:
-			animation.play();
-			return;
-		case 2:
-			animation.pause();
-			return;
-		case 3:
-			gui.reset();
-			slowDown();
-			animation.pause();
-			return;
-		case 4:
-			speedUp();
-			return;
-		case 5:
-			initialize();
-		}
+		switch(gui.handleMouseInput(x, y)){
+    	case 0:
+    		return;
+    	case 1:
+    		animation.play();
+    		return;
+    	case 2:
+    		animation.pause();
+    		return;
+    	case 3:
+    		gui.setStatus(0);
+    		rate = 1;
+        	animation.setRate(rate);
+    		animation.pause();
+    		reset();
+    		return;
+    	case 4:
+    		speedUp();
+    		return;
+    	case 5:
+    		initialize();
+    		return;
+    	case 6:
+    		gui.step(0);
+    		return;
+    	case 7:
+    		slowDown();
+    		return;
+    	}
 	}
 
 	private void initialize() {
@@ -98,20 +109,24 @@ public class Main extends Application {
 		gui.initDisplay(myGrid, myReader, mySim, myReader.getSimNum());
 		gui.setStatus(1);
 	}
-
-	// Speeds up the framerate
-	private void speedUp() {
-		if (MILLISECOND_DELAY < DM * 8) {
-			MILLISECOND_DELAY *= 2;
-			SECOND_DELAY *= 2;
-		}
+	
+	private void reset() {
+		// reset here
 	}
 
-	// returns framerate to default
-	private void slowDown() {
-		MILLISECOND_DELAY = DM;
-		SECOND_DELAY = DS;
-	}
+	//Speeds up the framerate 
+    private void speedUp(){
+    	if(rate<=64)
+    		rate *= 2;
+    	animation.setRate(rate);
+    }
+    
+    //returns framerate to default
+    private void slowDown(){
+    	if(rate>=1/64.0)
+    		rate /=2;
+    	animation.setRate(rate);
+    }
 
 	public static void main(String[] args) {
 		launch(args);

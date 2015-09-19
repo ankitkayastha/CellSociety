@@ -22,7 +22,9 @@ public class GuiClass {
 	private ImageView pause = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("pause.png")));
 	private ImageView stop = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("stop.png")));
 	private ImageView ff = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("ff.png")));
+	private ImageView sd = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("sd.png")));
 	private ImageView open = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("open.gif")));
+	private ImageView step = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("step.png")));
 	
 	private int status = 0;
 	private Simulation thisSim;
@@ -74,9 +76,13 @@ public class GuiClass {
 			return 4;
 		if(open.contains(x,y))
 			return 5;
+		if(step.contains(x,y))
+			return 6;
+		if(sd.contains(x,y))
+			return 7;
 		return 0;
-		
 	}
+		
 	
 	public void setStatus(int status) {
 		this.status = status;
@@ -92,21 +98,30 @@ public class GuiClass {
 		play.setY(0);
         root.getChildren().add(play);
         
-        pause.setX(40);
+        pause.setX(70);
 		pause.setY(0);
         root.getChildren().add(pause);
         
-        stop.setX(80);
+        stop.setX(140);
 		stop.setY(0);
         root.getChildren().add(stop);
         
-        ff.setX(120);
+        ff.setX(210);
 		ff.setY(0);
         root.getChildren().add(ff);
         
-        open.setX(160);
+        sd.setX(280);
+		sd.setY(0);
+        root.getChildren().add(sd);
+       
+        step.setX(350);
+        step.setY(0);
+        root.getChildren().add(step);
+        
+        open.setX(420);
 		open.setY(0);
         root.getChildren().add(open);
+        
 	}
 	
 	public void rootCreate(){

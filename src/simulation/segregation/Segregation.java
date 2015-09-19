@@ -126,5 +126,4 @@ public class Segregation extends Simulation {
 		}
 		return neighborsList;
 	}
-
 }
