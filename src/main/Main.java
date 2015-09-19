@@ -1,5 +1,7 @@
 package main;
 
+import java.util.ResourceBundle;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -21,6 +23,8 @@ public class Main extends Application {
 	private static final int FRAMES_PER_SECOND = 60;
 	
     private double rate = 1;
+    private final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+    public static final String GET_TITLE = "Title";
 
 	private static int DM = 60000 / FRAMES_PER_SECOND;
 	private static double DS = 1.0 / FRAMES_PER_SECOND;
@@ -30,7 +34,7 @@ public class Main extends Application {
 	private Scene scene;
 	private Stage stage;
 	private Timeline animation;
-
+	private ResourceBundle myResources;
 	private GuiClass gui;
 	private Simulation[] sims = new Simulation[4];
 
@@ -43,7 +47,8 @@ public class Main extends Application {
 	// initializes the stage and the basic Timeline
 	private void setStage() {
 		gui = new GuiClass();
-		stage.setTitle(gui.getTitle());
+        ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "text");
+		stage.setTitle(myResources.getString("Title"));
 
 		scene = gui.init();
 		stage.setScene(scene);
