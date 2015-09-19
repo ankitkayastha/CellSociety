@@ -1,3 +1,4 @@
+package view;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
+import model.Grid;
+import model.Reader;
+import simulation.Simulation;
 public class GuiClass {
 	
 	private final String TITLE = "CellSociety";

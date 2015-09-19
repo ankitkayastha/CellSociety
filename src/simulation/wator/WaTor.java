@@ -1,12 +1,16 @@
+package simulation.wator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import javafx.scene.paint.Color;
+import model.Cell;
+import model.Grid;
+import model.Reader;
+import simulation.Simulation;
 
 public class WaTor extends Simulation {
-
 	protected final int KELP = 0;
 	protected final int FISH = 1;
 	protected final int SHARK = 2;

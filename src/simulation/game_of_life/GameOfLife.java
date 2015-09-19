@@ -1,6 +1,14 @@
-import java.util.*;
+package simulation.game_of_life;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javafx.scene.paint.Color;
+import model.Cell;
+import model.Grid;
+import model.Reader;
+import simulation.Simulation;
 
 public class GameOfLife extends Simulation {
 	public GameOfLife(Map<String, Integer> globalChars) {

@@ -1,9 +1,15 @@
+package simulation.segregation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javafx.scene.paint.Color;
-import java.util.*;
+import model.Cell;
+import model.Grid;
+import model.Reader;
+import simulation.Simulation;
+
 public class Segregation extends Simulation {
 	private final int EMPTY = 0; 
 	private double threshold;

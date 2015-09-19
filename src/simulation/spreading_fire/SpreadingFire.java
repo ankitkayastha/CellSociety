@@ -1,16 +1,20 @@
-import javafx.scene.paint.Color;
+package simulation.spreading_fire;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
-import java.util.*;
+import javafx.scene.paint.Color;
+import model.Cell;
+import model.Grid;
+import model.Reader;
+import simulation.Simulation;
 
 public class SpreadingFire extends Simulation {
-	// simulation ends when no burning tree left
-	// diagonal neighbors do not affect state of current cell
-	// define the three states in terms of integers
 	private final int EMPTY = 0; // empty ground or burnt tree
 	private final int TREE = 1; // non burning tree
 	private final int BURNING = 2; // burning tree
 	private double probCatch; // probability of a cell catching fire based on
-								// its neighbors
 	private Random myRandom = new Random();
 	private final String characteristicFire = "fire";
 
@@ -83,7 +87,7 @@ public class SpreadingFire extends Simulation {
 		for (int i = 0; i < arrDelta.length; i++) {
 			if (!isOutOfBounds(rowNum + deltaRow[i], colNum + deltaCol[i], numRows, numCols)) {
 				neighborsList.add(myArr[index + arrDelta[i]]);
-			} 
+			}
 		}
 		return neighborsList;
 	}
