@@ -66,6 +66,9 @@ public class SpreadingFire extends Simulation {
 	@Override
 	public Color getCellColor(int index, Grid myGrid) {
 		Cell myCell = myGrid.getCell(index);
+		if (!myCell.getChars().keySet().contains(characteristicFire)) {
+			return Color.WHITE;
+		}
 		if (myCell.getChars().get(characteristicFire) == BURNING)
 			return Color.RED;
 		else if (myCell.getChars().get(characteristicFire) == EMPTY)

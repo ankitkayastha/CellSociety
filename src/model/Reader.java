@@ -19,15 +19,17 @@ public class Reader {
 	private static File inputFile;
 	private static String sim;
 	private static int globalIndex;
-	private static Map<String, Integer> globalChars = new TreeMap<String, Integer>();
-	private static List<Map<String, Integer>> data = new ArrayList<Map<String, Integer>>();
+	private static Map<String, Integer> globalChars;
+	private static List<Map<String, Integer>> data;
 
 	public Reader() {
+		globalChars = new TreeMap<String, Integer>();;
+		data = new ArrayList<Map<String, Integer>>();;
 		openFile();
 	}
 
 	
-	public void openFile() {
+	private void openFile() {
 		FileChooser fileChooser = new FileChooser();
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
 		fileChooser.getExtensionFilters().add(extFilter);

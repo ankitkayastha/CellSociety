@@ -48,7 +48,7 @@ public class GuiClass {
 	//step function for Timeline
 	public void step() {
 		thisSim.update(myGrid, myReader);
-		display(myGrid, myReader, thisSim);
+		display();
 	}
 	
 	//sets up the basic Scene
@@ -117,15 +117,19 @@ public class GuiClass {
 		sims[2] = segregation;
 		Simulation waTor = new WaTor(myReader.getGlobalChars());
 		sims[3] = waTor;
-		myGrid = new Grid(myReader, this);
+		myGrid = new Grid(myReader);
 		thisSim = sims[myReader.getSimNum()];
-		initDisplay(myGrid, myReader, thisSim, myReader.getSimNum());
+		System.out.println(myReader.getGlobalChars().toString());
+		System.out.printf("About to initialize Sim: %d\n", myReader.getSimNum());
+		initDisplay();
 	}
 	
 	public void reset(Timeline animation){
 		animation.stop();
-		myReader = null;
-		myGrid = null;
+		rate = 1;
+		for (Shape thisShape : shapeList) {
+			root.getChildren().remove(thisShape);
+		}
 	}
 	
 	//Speeds up the framerate 
@@ -144,24 +148,21 @@ public class GuiClass {
     	System.out.printf("Rate: %f\n", rate);
     }
 	
-	public void initDisplay(Grid myGrid, Reader myReader, Simulation mySim, int simNum) {
+	public void initDisplay() {
 		shapeList = new ArrayList<Shape>();
-		this.myGrid = myGrid;
-		this.myReader = myReader;
-		thisSim = mySim;
 		for (int i = 0; i < myReader.getSize(); i++) {
-			Shape newShape = mySim.getCellShape(i, width, heightWithoutToolbar, myReader.getGlobalChars().get("rows"), myReader.getGlobalChars().get("cols"));
-			newShape.setFill(mySim.getCellColor(i, myGrid));
+			Shape newShape = thisSim.getCellShape(i, width, heightWithoutToolbar, myReader.getGlobalChars().get("rows"), myReader.getGlobalChars().get("cols"));
+			newShape.setFill(thisSim.getCellColor(i, myGrid));
 			root.getChildren().add(newShape);
 			shapeList.add(newShape);
 		}
 		System.out.println("Display Initialized");
 	}
 
-	public void display(Grid myGrid, Reader myReader, Simulation mySim) {
+	public void display() {
 		for (int i = 0; i < myReader.getSize(); i++) {
 			Shape currentShape = shapeList.get(i);
-			currentShape.setFill(mySim.getCellColor(i, myGrid));
+			currentShape.setFill(thisSim.getCellColor(i, myGrid));
 		}
 	}
 	

@@ -6,7 +6,7 @@ public class Grid {
 
 	private Cell[] myGrid;
 
-	public Grid(Reader myReader, GuiClass myGui) {
+	public Grid(Reader myReader) {
 		myGrid = new Cell[myReader.getSize()];
 
 		// populate the grid, iterate through the cells

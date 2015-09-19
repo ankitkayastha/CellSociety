@@ -50,19 +50,25 @@ public class GameOfLife extends Simulation {
 			}
 		}
 	}
-	
+
 	@Override
 	public Color getCellColor(int index, Grid myGrid) {
 		Cell myCell = myGrid.getCell(index);
-		if (myCell.getChars().get(characteristic) == ALIVE)
-			return Color.LAWNGREEN;
-		else
-			return Color.BLACK;
+		Color returnColor = Color.WHITE;
+		if (!myCell.getChars().keySet().contains(characteristic)) {
+			return returnColor;
+		}
+		if (myCell.getChars().get(characteristic) == ALIVE) {
+			returnColor = Color.LAWNGREEN;
+		} else {
+			returnColor =  Color.BLACK;
+		}
+		return returnColor;
 	}
 
 	@Override
 	public List<Cell> findNeighbors(Cell[] myArr, int index, Reader myReader) {
-		int numCols = myReader.getGlobalChars().get("cols"); 
+		int numCols = myReader.getGlobalChars().get("cols");
 		int numRows = myReader.getGlobalChars().get("rows");
 		int rowNum = index / numCols; // row number of cell
 		int colNum = index % numCols; // col number of cell

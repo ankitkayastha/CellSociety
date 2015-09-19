@@ -168,6 +168,9 @@ public class WaTor extends Simulation {
 	@Override
 	public Color getCellColor(int index, Grid myGrid) {
 		Cell myCell = myGrid.getCell(index);
+		if (!myCell.getChars().keySet().contains(ANIMAL)) {
+			return Color.WHITE;
+		}
 		if (myCell.getChars().get(ANIMAL) == KELP)
 			return Color.GREEN;
 		else if (myCell.getChars().get(ANIMAL) == FISH)

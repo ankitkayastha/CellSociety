@@ -104,6 +104,9 @@ public class Segregation extends Simulation {
 	@Override
 	public Color getCellColor(int index, Grid myGrid) {
 		Cell myCell = myGrid.getCell(index);
+		if (!myCell.getChars().keySet().contains(agent)) {
+			return Color.WHITE;
+		}
 		return myColors[myCell.getChars().get(agent)];
 	}
 	
