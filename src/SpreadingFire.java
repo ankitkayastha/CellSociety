@@ -23,19 +23,8 @@ public class SpreadingFire extends Simulation {
 
 	@Override
 	public void update(Grid myGrid, Reader myReader) {
-		Cell[] oldGrid = new Cell[myReader.getSize()];
+		Cell[] oldGrid = super.copyGrid(myGrid, myReader);
 		Cell[] myGridGrid = myGrid.getGrid();
-
-		for (int i = 0; i < myReader.getSize(); i++) {
-			Cell currentCell = myGrid.getCell(i);
-			Map<String, Integer> myMap = currentCell.getChars();
-			Map<String, Integer> oldMap = new HashMap<String, Integer>();
-			for (String s : myMap.keySet()) {
-				oldMap.put(s, myMap.get(s));
-			}
-			Cell oldCell = new Cell(oldMap);
-			oldGrid[i] = oldCell;
-		}
 
 		for (int i = 0; i < myReader.getSize(); i++) {
 			Cell oldCell = oldGrid[i];
@@ -64,7 +53,6 @@ public class SpreadingFire extends Simulation {
 	
 	private int generateProbCatchState() {
 		double prob = myRandom.nextDouble();
-		System.out.println(prob);
 		if (prob < probCatch) {
 			return BURNING;
 		} else
@@ -84,9 +72,8 @@ public class SpreadingFire extends Simulation {
 
 	@Override
 	public List<Cell> findNeighbors(Cell[] myArr, int index, Reader myReader) {
-		Map<String, Integer> myMap = myReader.getGlobalChars();
-		int numCols = myMap.get("cols"); // returns number of columns
-		int numRows = myMap.get("rows");
+		int numCols = myReader.getGlobalChars().get("cols"); 
+		int numRows = myReader.getGlobalChars().get("rows");
 		int rowNum = index / numCols; // row number of cell
 		int colNum = index % numCols; // col number of cell
 		List<Cell> neighborsList = new ArrayList<Cell>();
@@ -96,10 +83,7 @@ public class SpreadingFire extends Simulation {
 		for (int i = 0; i < arrDelta.length; i++) {
 			if (!isOutOfBounds(rowNum + deltaRow[i], colNum + deltaCol[i], numRows, numCols)) {
 				neighborsList.add(myArr[index + arrDelta[i]]);
-			} else {
-				// System.out.printf("InsideRow: %d, InsideCol: %d\n", rowNum +
-				// deltaRow[i], colNum + deltaCol[i]);
-			}
+			} 
 		}
 		return neighborsList;
 	}

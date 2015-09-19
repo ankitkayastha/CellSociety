@@ -1,18 +1,17 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javafx.scene.paint.Color;
 import java.util.*;
 public class Segregation extends Simulation {
-	private final int EMPTY = 0; //if cell is empty
+	private final int EMPTY = 0; 
 	private double threshold;
 	private String thresh = "threshold";
 	private Color[] myColors;
 	private Random myRandom;
 	private String agents = "agents";
-	private final String characteristicSegregation = "agent";
+	private final String agent = "agent";
 
 	public Segregation(Map<String, Integer> globalChars) {
 		super(globalChars);
@@ -28,7 +27,7 @@ public class Segregation extends Simulation {
 		addColors(numAgents);
 	}
 	
-	public void addColors(int numAgents) {
+	private void addColors(int numAgents) {
 		System.out.println(numAgents);
 		myColors[0] = Color.WHITE;
 		for (int i = 1; i <= numAgents; i++) {
@@ -38,82 +37,35 @@ public class Segregation extends Simulation {
 			double o = myRandom.nextDouble();
 			myColors[i] = new Color(r, g, b, o);
 		}
-		for (int i = 0; i < myColors.length; i++) {
-			//System.out.println(myColors[i].toString());
-		}
-	}
-	@Override
-	public Color getCellColor(int index, Grid myGrid) {
-		Cell myCell = myGrid.getCell(index);
-		//System.out.println("index is " + myCell.getChars().get(characteristicSegregation));
-		return myColors[myCell.getChars().get(characteristicSegregation)];
 	}
 
 	@Override
 	public void update(Grid myGrid, Reader myReader) {
-		Cell[] oldGrid = new Cell[myReader.getSize()];
+		Cell[] oldGrid = super.copyGrid(myGrid, myReader);
 		Cell[] myGridGrid = myGrid.getGrid();
-		//copy new grid to old grid
-		//System.out.println(vacantCells.)
-		for (int i = 0; i < myReader.getSize(); i++) {
-			Cell currentCell = myGrid.getCell(i);
-			Map<String, Integer> myMap = currentCell.getChars();
-			Map<String, Integer> oldMap = new HashMap<String, Integer>();
-			for (String s : myMap.keySet()) {
-				oldMap.put(s, myMap.get(s));
-			}
-			Cell oldCell = new Cell(oldMap);
-			oldGrid[i] = oldCell;
-		}		
 		
-		//System.out.println("Vacant cells added and size is " + vacantCells.size());
 		//moves all dissatisfied cells
 		for (int i = 0; i < myReader.getSize(); i++) {
-			if ((oldGrid[i].getChars().get(characteristicSegregation)!=EMPTY) & !isSatisfied(oldGrid, i, myReader, threshold)) {
+			if ((oldGrid[i].getChars().get(agent)!=EMPTY) & !isSatisfied(oldGrid, i, myReader, threshold)) {
 				if (hasEmpty(myGridGrid)) {
-					moveDissatisfiedCell(myGridGrid, i);
+					move(myGridGrid, i);
 				}
 			}
 		}
 	}
-	
 
-	@Override
-	public List<Cell> findNeighbors(Cell[] myArr, int index, Reader myReader) {
-		Map<String, Integer> myMap = myReader.getGlobalChars();
-		int numCols = myMap.get("cols"); // returns number of columns
-		int numRows = myMap.get("rows");
-		int rowNum = index / numCols; // row number of cell
-		int colNum = index % numCols; // col number of cell
-		List<Cell> neighborsList = new ArrayList<Cell>();
-		int[] deltaRow = { -1, 0, 0, 1, 1, -1, -1, 1 };
-		int[] deltaCol = { 0, 1, -1, 0, 1, 1, -1, -1 };
-		int[] arrDelta = { -numCols, 1, -1, numCols, numCols + 1, -numCols + 1, -numCols - 1, numCols - 1 };
-		for (int i = 0; i < arrDelta.length; i++) {
-			if (!isOutOfBounds(rowNum + deltaRow[i], colNum + deltaCol[i], numRows, numCols)){
-				if ((myArr[index+arrDelta[i]].getChars().get(characteristicSegregation) != EMPTY)) {
-					neighborsList.add(myArr[index+arrDelta[i]]);
-				}
-			}			
-		}
-		return neighborsList;
-	}
-
-	private void moveDissatisfiedCell(Cell[] myArr, int index) {
-		
+	private void move(Cell[] myArr, int index) {
 		Cell moveCell = findEmpty(myArr);
-		int agentType = myArr[index].getChars().get(characteristicSegregation);
-		// may have to add in from old
-		moveCell.getChars().put(characteristicSegregation, agentType);
+		int agentType = myArr[index].getChars().get(agent);
+		moveCell.getChars().put(agent, agentType);
 
-		myArr[index].getChars().put(characteristicSegregation, EMPTY);
-		System.out.printf("Moved index %d\n", index);
+		myArr[index].getChars().put(agent, EMPTY);
 	}
 	
 	private Cell findEmpty(Cell[] myArr) {
 		List<Cell> returnCell = new ArrayList<Cell>();
 		for (int i=0; i<myArr.length; i++) {
-			if (myArr[i].getChars().get(characteristicSegregation)==EMPTY) {
+			if (myArr[i].getChars().get(agent)==EMPTY) {
 				returnCell.add(myArr[i]);
 			}
 		}
@@ -122,7 +74,7 @@ public class Segregation extends Simulation {
 	
 	private boolean hasEmpty(Cell[] myArr) {
 		for (int i=0; i<myArr.length; i++) {
-			if (myArr[i].getChars().get(characteristicSegregation)==EMPTY) {
+			if (myArr[i].getChars().get(agent)==EMPTY) {
 				return true;
 			}
 		}
@@ -132,20 +84,41 @@ public class Segregation extends Simulation {
 	private boolean isSatisfied(Cell[] myArr, int index, Reader myReader, double threshold) {
 		int numSameNeighbors = 0;
 		List<Cell> myNeighborList = findNeighbors(myArr, index, myReader);
-		int selectedCellState = myArr[index].getChars().get(characteristicSegregation); 
+		int selectedCellState = myArr[index].getChars().get(agent); 
 		
 		for (Cell cell: myNeighborList) {
-			if (cell.getChars().get(characteristicSegregation) == selectedCellState)
+			if (cell.getChars().get(agent) == selectedCellState) {
 				numSameNeighbors++;
+			}
 		}
-		//System.out.println("index " + index + " has " + numSameNeighbors);
 		double percentageSame = (double) numSameNeighbors / myNeighborList.size();
-		//System.out.printf("index: %d, threshold: %f, percsame: %f\n",index, threshold, percentageSame);
-		if (percentageSame<(threshold/100.0)) {
-			//System.out.println("Cell at index" + index + " is not satisfied");
-			//System.out.printf("Length of neighbors: %d\n", myNeighborList.size());
-		}
 		return percentageSame >= (threshold / 100.0);
+	}
+	
+	@Override
+	public Color getCellColor(int index, Grid myGrid) {
+		Cell myCell = myGrid.getCell(index);
+		return myColors[myCell.getChars().get(agent)];
+	}
+	
+	@Override
+	public List<Cell> findNeighbors(Cell[] myArr, int index, Reader myReader) {
+		int numCols = myReader.getGlobalChars().get("cols"); 
+		int numRows = myReader.getGlobalChars().get("rows");
+		int rowNum = index / numCols; // row number of cell
+		int colNum = index % numCols; // col number of cell
+		List<Cell> neighborsList = new ArrayList<Cell>();
+		int[] deltaRow = { -1, 0, 0, 1, 1, -1, -1, 1 };
+		int[] deltaCol = { 0, 1, -1, 0, 1, 1, -1, -1 };
+		int[] arrDelta = { -numCols, 1, -1, numCols, numCols + 1, -numCols + 1, -numCols - 1, numCols - 1 };
+		for (int i = 0; i < arrDelta.length; i++) {
+			if (!isOutOfBounds(rowNum + deltaRow[i], colNum + deltaCol[i], numRows, numCols)){
+				if ((myArr[index+arrDelta[i]].getChars().get(agent) != EMPTY)) {
+					neighborsList.add(myArr[index+arrDelta[i]]);
+				}
+			}			
+		}
+		return neighborsList;
 	}
 
 }
