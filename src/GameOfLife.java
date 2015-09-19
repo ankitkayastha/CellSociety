@@ -100,4 +100,5 @@ public class GameOfLife extends Simulation {
 		thisRect.setStrokeWidth(4);
 		thisRect.setStroke(Color.LIGHTGRAY);
 		return thisRect;
-	}}
+	}
+}

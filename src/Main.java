@@ -91,6 +91,10 @@ public class Main extends Application {
     	sims[0] = gameOfLife;
     	Simulation spreadingFire = new SpreadingFire(myReader.getGlobalChars());
     	sims[1] = spreadingFire;
+    	Simulation segregation = new Segregation(myReader.getGlobalChars());
+    	sims[2] = segregation;
+    	Simulation waTor = new WaTor(myReader.getGlobalChars());
+    	sims[3] = waTor;
     	//sims[0] = new GameOfLifeSquare(myReader.getGlobalChars());
     	//sims[1] = new SpreadingFireSquare(myReader.getGlobalChars());
     	Grid myGrid = new Grid(myReader, gui);
