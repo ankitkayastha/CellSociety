@@ -3,13 +3,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import java.util.*;
 public class Segregation extends Simulation {
-	
 	private final int EMPTY = 0; //if cell is empty
 	private double threshold;
 	private String thresh = "threshold";
@@ -64,9 +60,7 @@ public class Segregation extends Simulation {
 			Map<String, Integer> myMap = currentCell.getChars();
 			Map<String, Integer> oldMap = new HashMap<String, Integer>();
 			for (String s : myMap.keySet()) {
-				String tempS = new String(s);
-				int tempInt = myMap.get(s);
-				oldMap.put(tempS, tempInt);
+				oldMap.put(s, myMap.get(s));
 			}
 			Cell oldCell = new Cell(oldMap);
 			oldGrid[i] = oldCell;
@@ -105,19 +99,6 @@ public class Segregation extends Simulation {
 		return neighborsList;
 	}
 
-	@Override
-	public Shape getCellShape(int index, int width, int height, int rows, int cols) {
-		double ySize = (double) height / rows;
-		double xSize = (double) width / cols;
-		int colNum = index % cols;
-		int rowNum = index / cols;
-		Rectangle thisRect = new Rectangle(colNum*xSize, rowNum*ySize+40, xSize, ySize);
-		thisRect.setStrokeWidth(4);
-		thisRect.setStroke(Color.LIGHTGRAY);
-		return thisRect;
-	}
-	
-	
 	private void moveDissatisfiedCell(Cell[] myArr, int index) {
 		
 		Cell moveCell = findEmpty(myArr);

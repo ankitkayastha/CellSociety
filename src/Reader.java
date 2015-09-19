@@ -4,19 +4,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import java.io.File;
-
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;

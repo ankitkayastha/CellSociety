@@ -5,8 +5,6 @@ import java.util.Map;
 import java.util.Random;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 
 public class WaTor extends Simulation {
 
@@ -54,15 +52,10 @@ public class WaTor extends Simulation {
 			Map<String, Integer> myMap = currentCell.getChars();
 			Map<String, Integer> oldMap = new HashMap<String, Integer>();
 			for (String s : myMap.keySet()) {
-				String tempS = new String(s);
-				int tempInt = myMap.get(s);
-				// maybe make string/integer primitive
-				oldMap.put(tempS, tempInt);
+				oldMap.put(s, myMap.get(s));
 			}
 			Cell oldCell = new Cell(oldMap);
 			oldGrid[i] = oldCell;
-			//System.out.printf("Animal: %d, at Index %d\n", currentCell.getChars().get("animal"), currentCell.getChars().get("index"));
-
 		}
 		
 		for (int i = 0; i < myReader.getSize(); i++) {
@@ -70,16 +63,14 @@ public class WaTor extends Simulation {
 			Cell myCell = myGridGrid[i];
 
 			if (oldCell.getChars().get("animal") == FISH) {
-				System.out.printf("Actual Animal: %d, at Index %d\n", myCell.getChars().get("animal"), i);
-
 				if (oldCell.getChars().get("breed") >= fishBreed) {
-					if (hasKelp(i, myGridGrid, myReader)) {
-						createFish(i, myGridGrid, myReader);
+					if (has(i, myGridGrid, myReader, KELP)) {
+						create(i, myGridGrid, myReader, FISH);
 					}
 				}
-				if (hasKelp(i, myGridGrid, myReader)) {
+				if (has(i, myGridGrid, myReader, KELP)) {
 					myCell.getChars().put("breed", myCell.getChars().get("breed") + 1);
-					eatKelp(i, myGridGrid, myReader);
+					eat(i, myGridGrid, myReader, FISH, KELP);
 				} else {
 					myCell.getChars().put("breed", myCell.getChars().get("breed") + 1);
 				}
@@ -91,8 +82,6 @@ public class WaTor extends Simulation {
 			Cell myCell = myGridGrid[i];
 
 			if (oldCell.getChars().get("animal") == SHARK) {
-				System.out.printf("Actual Animal: %d, at Index %d\n", myCell.getChars().get("animal"), i);
-
 				if (oldCell.getChars().get("health") <= 0) {
 					myCell.getChars().put("animal", KELP);
 					myCell.getChars().put("breed", 0);
@@ -100,148 +89,60 @@ public class WaTor extends Simulation {
 				} else if (oldCell.getChars().get("breed") >= sharkBreed) {
 					myCell.getChars().put("health", myCell.getChars().get("health") - 1);
 					myCell.getChars().put("breed", myCell.getChars().get("breed") + 1);
-					if (hasKelp(i, myGridGrid, myReader)) {
-						createShark(i, myGridGrid, myReader);
+					if (has(i, myGridGrid, myReader, KELP)) {
+						create(i, myGridGrid, myReader, SHARK);
 					}
-				} else if (hasFish(i, myGridGrid, myReader)) {
-					//System.out.printf("Fish exists for shark at %d\n", i);
+				} else if (has(i, myGridGrid, myReader, FISH)) {
 					myCell.getChars().put("breed", myCell.getChars().get("breed") + 1);
-					eatFish(i, myGridGrid, myReader);
-				} else if (hasKelp(i, myGridGrid, myReader)) {
+					eat(i, myGridGrid, myReader, SHARK, FISH);
+				} else if (has(i, myGridGrid, myReader, KELP)) {
 					myCell.getChars().put("health", myCell.getChars().get("health") - 1);
 					myCell.getChars().put("breed", myCell.getChars().get("breed") + 1);
-					move(i, myGridGrid, myReader);
+					eat(i, myGridGrid, myReader, SHARK, KELP);
 				}
 			}
 		}
-		
 	}
-
-	private void createFish(int index, Cell[] grid, Reader myReader) {
+	
+	private List<Cell> generateNeighbors(Cell[] grid, int index, Reader myReader, int animal) {
 		List<Cell> neighbors = findNeighbors(grid, index, myReader);
 		List<Cell> emptyNeighbors = new ArrayList<Cell>();
 		for (int i = 0; i < neighbors.size(); i++) {
-			if (neighbors.get(i).getChars().get("animal") == KELP) {
+			if (neighbors.get(i).getChars().get("animal") == animal) {
 				emptyNeighbors.add(neighbors.get(i));
 			}
 		}
-		int randIndex = myRandom.nextInt(emptyNeighbors.size());
-		Cell createCell = emptyNeighbors.get(randIndex);
-		createCell.getChars().put("animal", FISH);
-		createCell.getChars().put("breed", 0);
-
-		grid[index].getChars().put("breed", 0);
-		System.out.printf("Fish %d bred fish at %d\n", index, createCell.getChars().get("index"),index);
-
-		return;
+		return emptyNeighbors;
 	}
 
-	private void createShark(int index, Cell[] grid, Reader myReader) {
-		List<Cell> neighbors = findNeighbors(grid, index, myReader);
-
-		List<Cell> emptyNeighbors = new ArrayList<Cell>();
-		for (int i = 0; i < neighbors.size(); i++) {
-			if (neighbors.get(i).getChars().get("animal") == KELP) {
-				emptyNeighbors.add(neighbors.get(i));
-			}
-		}
+	private void create(int index, Cell[] grid, Reader myReader, int animal) {
+		List<Cell> emptyNeighbors = generateNeighbors(grid, index, myReader, KELP);
 		int randIndex = myRandom.nextInt(emptyNeighbors.size());
 		Cell createCell = emptyNeighbors.get(randIndex);
-		createCell.getChars().put("animal", SHARK);
+		createCell.getChars().put("animal", animal);
 		createCell.getChars().put("breed", 0);
 		createCell.getChars().put("health", sharkLife);
 
 		grid[index].getChars().put("breed", 0);
-		System.out.printf("Shark %d bred shark at %d\n", index, createCell.getChars().get("index"),index);
-
-		return;
 	}
 
-	private void eatKelp(int index, Cell[] grid, Reader myReader) {
-		List<Cell> neighbors = findNeighbors(grid, index, myReader);
-
-		List<Cell> kelpNeighbors = new ArrayList<Cell>();
-		for (int i = 0; i < neighbors.size(); i++) {
-			if (neighbors.get(i).getChars().get("animal") == KELP) {
-				kelpNeighbors.add(neighbors.get(i));
-			}
-		}
-		if (index==12) {
-			System.out.println(kelpNeighbors.toString());
-		}
+	private void eat(int index, Cell[] grid, Reader myReader, int animal, int eaten) {
+		List<Cell> kelpNeighbors = generateNeighbors(grid, index, myReader, eaten);
 		int randIndex = myRandom.nextInt(kelpNeighbors.size());
 		Cell kelpCell = kelpNeighbors.get(randIndex);
-		kelpCell.getChars().put("animal", FISH);
-		kelpCell.getChars().put("breed", grid[index].getChars().get("breed")+0);
-		kelpCell.getChars().put("health", grid[index].getChars().get("health")+0);
+		kelpCell.getChars().put("animal", animal);
+		kelpCell.getChars().put("breed", grid[index].getChars().get("breed"));
+		kelpCell.getChars().put("health", grid[index].getChars().get("health"));
 
 		grid[index].getChars().put("animal", KELP);
 		grid[index].getChars().put("breed", 0);
 		grid[index].getChars().put("health", 0);
-		System.out.printf("Fish %d ate kelp at %d\n", index, kelpCell.getChars().get("index"));
 	}
 
-	private void eatFish(int index, Cell[] grid, Reader myReader) {
-		List<Cell> neighbors = findNeighbors(grid, index, myReader);
-
-		List<Cell> fishNeighbors = new ArrayList<Cell>();
-		for (int i = 0; i < neighbors.size(); i++) {
-			if (neighbors.get(i).getChars().get("animal") == FISH) {
-				fishNeighbors.add(neighbors.get(i));
-			}
-		}
-		int randIndex = myRandom.nextInt(fishNeighbors.size());
-		Cell fishCell = fishNeighbors.get(randIndex);
-		fishCell.getChars().put("animal", SHARK);
-		fishCell.getChars().put("breed", grid[index].getChars().get("breed")+0);
-		fishCell.getChars().put("health", grid[index].getChars().get("health")+0);
-
-		grid[index].getChars().put("animal", KELP);
-		grid[index].getChars().put("breed", 0);
-		grid[index].getChars().put("health", 0);
-		System.out.printf("Shark %d ate fish at %d\n", index, fishCell.getChars().get("index"));
-
-		return;
-	}
-
-	private void move(int index, Cell[] grid, Reader myReader) {
-		List<Cell> neighbors = findNeighbors(grid, index, myReader);
-
-		List<Cell> emptyNeighbors = new ArrayList<Cell>();
-		for (int i = 0; i < neighbors.size(); i++) {
-			if (neighbors.get(i).getChars().get("animal") == KELP) {
-				emptyNeighbors.add(neighbors.get(i));
-			}
-		}
-		int randIndex = myRandom.nextInt(emptyNeighbors.size());
-		Cell moveCell = emptyNeighbors.get(randIndex);
-		moveCell.getChars().put("animal", SHARK);
-		moveCell.getChars().put("breed", grid[index].getChars().get("breed")+0);
-		moveCell.getChars().put("health", grid[index].getChars().get("health")+0);
-
-		grid[index].getChars().put("animal", KELP);
-		grid[index].getChars().put("breed", 0);
-		grid[index].getChars().put("health", 0);
-		System.out.printf("Shark %d moved to %d\n", index, moveCell.getChars().get("index"));
-
-		return;
-	}
-
-	private boolean hasFish(int index, Cell[] grid, Reader myReader) {
+	private boolean has(int index, Cell[] grid, Reader myReader, int animal) {
 		List<Cell> neighbors = findNeighbors(grid, index, myReader);
 		for (int i = 0; i < neighbors.size(); i++) {
-			if (neighbors.get(i).getChars().get("animal") == FISH) {
-				System.out.printf("%d's FISH neighbors: %d\n", index, neighbors.get(i).getChars().get("index"));
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean hasKelp(int index, Cell[] grid, Reader myReader) {
-		List<Cell> neighbors = findNeighbors(grid, index, myReader);
-		for (int i = 0; i < neighbors.size(); i++) {
-			if (neighbors.get(i).getChars().get("animal") == KELP) {
+			if (neighbors.get(i).getChars().get("animal") == animal) {
 				return true;
 			}
 		}
@@ -262,24 +163,8 @@ public class WaTor extends Simulation {
 		for (int i = 0; i < arrDelta.length; i++) {
 			if (!isOutOfBounds(rowNum + deltaRow[i], colNum + deltaCol[i], numRows, numCols)) {
 				neighborsList.add(myArr[index + arrDelta[i]]);
-			} else {
-				// System.out.printf("InsideRow: %d, InsideCol: %d\n", rowNum +
-				// deltaRow[i], colNum + deltaCol[i]);
-			}
+			} 
 		}
 		return neighborsList;
 	}
-
-	@Override
-	public Shape getCellShape(int index, int width, int height, int rows, int cols) {
-		double ySize = (double) height / rows;
-		double xSize = (double) width / cols;
-		int colNum = index % cols;
-		int rowNum = index / cols;
-		Rectangle thisRect = new Rectangle(colNum * xSize, rowNum * ySize + 40, xSize, ySize);
-		thisRect.setStrokeWidth(4);
-		thisRect.setStroke(Color.LIGHTGRAY);
-		return thisRect;
-	}
-
 }

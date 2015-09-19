@@ -1,8 +1,6 @@
 import java.util.*;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 
 public class GameOfLife extends Simulation {
 	public GameOfLife(Map<String, Integer> globalChars) {
@@ -88,17 +86,5 @@ public class GameOfLife extends Simulation {
 			}
 		}
 		return neighborsList;
-	}
-
-	@Override
-	public Shape getCellShape(int index, int width, int height, int rows, int cols) {
-		double ySize = (double) height / rows;
-		double xSize = (double) width / cols;
-		int colNum = index % cols;
-		int rowNum = index / cols;
-		Rectangle thisRect = new Rectangle(colNum*xSize, rowNum*ySize+40, xSize, ySize);
-		thisRect.setStrokeWidth(4);
-		thisRect.setStroke(Color.LIGHTGRAY);
-		return thisRect;
 	}
 }

@@ -1,6 +1,4 @@
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 
 import java.util.*;
 
@@ -18,11 +16,9 @@ public class SpreadingFire extends Simulation {
 
 	public SpreadingFire(Map<String, Integer> globalChars) {
 		super(globalChars);
-		System.out.println("fire globals: " +globalChars.toString());
 		if (globalChars.keySet().contains("prob")) {
 			probCatch = globalChars.get("prob")/100.0;
 		}
-		System.out.println("prob: " + probCatch);
 	}
 
 	@Override
@@ -35,7 +31,6 @@ public class SpreadingFire extends Simulation {
 			Map<String, Integer> myMap = currentCell.getChars();
 			Map<String, Integer> oldMap = new HashMap<String, Integer>();
 			for (String s : myMap.keySet()) {
-				// maybe make string/integer primitive
 				oldMap.put(s, myMap.get(s));
 			}
 			Cell oldCell = new Cell(oldMap);
@@ -88,12 +83,6 @@ public class SpreadingFire extends Simulation {
 	}
 
 	@Override
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see SpreadingFire#findNeighbors(Grid, int, Reader) Finds neighbors,
-	 * which for spreading fire are up, down, left, right
-	 */
 	public List<Cell> findNeighbors(Cell[] myArr, int index, Reader myReader) {
 		Map<String, Integer> myMap = myReader.getGlobalChars();
 		int numCols = myMap.get("cols"); // returns number of columns
@@ -113,17 +102,5 @@ public class SpreadingFire extends Simulation {
 			}
 		}
 		return neighborsList;
-	}
-
-	@Override
-	public Shape getCellShape(int index, int width, int height, int rows, int cols) {
-		double ySize = (double) height / rows;
-		double xSize = (double) width / cols;
-		int colNum = index % cols;
-		int rowNum = index / cols;
-		Rectangle thisRect = new Rectangle(colNum * xSize, rowNum * ySize + 40, xSize, ySize);
-		thisRect.setStrokeWidth(4);
-		thisRect.setStroke(Color.LIGHTGRAY);
-		return thisRect;
 	}
 }

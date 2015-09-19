@@ -15,15 +15,15 @@
       </chars>
       <chars>
          <name>sharkBreed</name>
-         <value>9</value>
+         <value>5</value>
       </chars>
       <chars>
          <name>fishBreed</name>
-         <value>10</value>
+         <value>4</value>
       </chars>
       <chars>
          <name>sharkLife</name>
-         <value>5</value>
+         <value>3</value>
       </chars>
    </global>
    <index>900</index>
