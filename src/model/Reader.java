@@ -29,13 +29,13 @@ public class Reader {
 	}
 
 	
-	private void openFile() {
+	private boolean openFile() {
 		FileChooser fileChooser = new FileChooser();
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
 		fileChooser.getExtensionFilters().add(extFilter);
 		inputFile = fileChooser.showOpenDialog(null);
 		if (inputFile == null) {
-			return;
+			return false;
 		}
 		System.out.println(inputFile.getName());
 
@@ -43,6 +43,7 @@ public class Reader {
 
 		sim = inputFile.getName().split("-")[0];
 		parseXML();
+		return true;
 	}
 
 	private void parseXML() {

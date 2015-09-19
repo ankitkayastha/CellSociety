@@ -160,7 +160,6 @@ public class GuiClass {
 
 	private void initializeGrid() {
 		myReader = new Reader();
-		System.out.println("this");
 		Simulation gameOfLife = new GameOfLife(myReader.getGlobalChars());
 		sims[0] = gameOfLife;
 		Simulation spreadingFire = new SpreadingFire(myReader.getGlobalChars());
@@ -169,7 +168,6 @@ public class GuiClass {
 		sims[2] = segregation;
 		Simulation waTor = new WaTor(myReader.getGlobalChars());
 		sims[3] = waTor;
-		System.out.println("after");
 		myGrid = new Grid(myReader);
 		thisSim = sims[myReader.getSimNum()];
 		System.out.println(myReader.getGlobalChars().toString());
@@ -180,12 +178,12 @@ public class GuiClass {
 	public void reset(Timeline animation) {
 		animation.stop();
 		rate = 1;
+		animation.setRate(rate);
 		for (Shape thisShape : shapeList) {
 			root.getChildren().remove(thisShape);
 		}
 	}
 
-	// Speeds up the framerate
 	private void speedUp(Timeline animation, Button ffButton) {
 		if (rate <= 32){
 			rate *= 2;
@@ -195,7 +193,6 @@ public class GuiClass {
 		System.out.printf("Rate: %f\n", rate);
 	}
 
-	// returns framerate to default
 	private void slowDown(Timeline animation, Button sdButton) {
 		if (rate >= 1 / 32.0)
 			rate /= 2;
@@ -207,7 +204,7 @@ public class GuiClass {
 	public void initDisplay() {
 		shapeList = new ArrayList<Shape>();
 		for (int i = 0; i < myReader.getSize(); i++) {
-			Shape newShape = thisSim.getCellShape(i, width, heightWithoutToolbar, myReader.getGlobalChars().get("rows"),
+			Shape newShape = thisSim.getCellShape(i, width, heightWithoutToolbar, TOOLBAR_HEIGHT, myReader.getGlobalChars().get("rows"),
 					myReader.getGlobalChars().get("cols"));
 			newShape.setFill(thisSim.getCellColor(i, myGrid));
 			root.getChildren().add(newShape);
@@ -222,5 +219,4 @@ public class GuiClass {
 			currentShape.setFill(thisSim.getCellColor(i, myGrid));
 		}
 	}
-
 }

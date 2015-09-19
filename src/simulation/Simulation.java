@@ -11,7 +11,7 @@ import model.Cell;
 import model.Grid;
 import model.Reader;
 
-public abstract class Simulation {
+public abstract class Simulation {	
 	public Simulation(Map<String, Integer> globalChars) {}
 		
 	public abstract void update(Grid currentGrid, Reader myReader);
@@ -22,12 +22,12 @@ public abstract class Simulation {
 	
 	public abstract Color getCellColor(int index, Grid myGrid);
 	
-	public Shape getCellShape(int index, int width, int height, int rows, int cols) {
+	public Shape getCellShape(int index, int width, int height, int toolbarHeight, int rows, int cols) {
 		double ySize = (double) height / rows;
 		double xSize = (double) width / cols;
 		int colNum = index % cols;
 		int rowNum = index / cols;
-		Rectangle thisRect = new Rectangle(colNum * xSize, rowNum * ySize + 40, xSize, ySize);
+		Rectangle thisRect = new Rectangle(colNum * xSize, rowNum * ySize + toolbarHeight, xSize, ySize);
 		thisRect.setStrokeWidth(1);
 		thisRect.setStroke(Color.LIGHTGRAY);
 		return thisRect;
