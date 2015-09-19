@@ -29,7 +29,7 @@ public abstract class Simulation {
 		int colNum = index % cols;
 		int rowNum = index / cols;
 		Rectangle thisRect = new Rectangle(colNum * xSize, rowNum * ySize + 40, xSize, ySize);
-		thisRect.setStrokeWidth(4);
+		thisRect.setStrokeWidth(1);
 		thisRect.setStroke(Color.LIGHTGRAY);
 		return thisRect;
 	}

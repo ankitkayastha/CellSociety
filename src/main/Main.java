@@ -116,16 +116,18 @@ public class Main extends Application {
 
 	//Speeds up the framerate 
     private void speedUp(){
-    	if(rate<=64)
+    	if(rate<=32)
     		rate *= 2;
     	animation.setRate(rate);
+    	System.out.printf("Rate: %f\n", rate);
     }
     
     //returns framerate to default
     private void slowDown(){
-    	if(rate>=1/64.0)
+    	if(rate>=1/32.0)
     		rate /=2;
     	animation.setRate(rate);
+    	System.out.printf("Rate: %f\n", rate);
     }
 
 	public static void main(String[] args) {

@@ -1,4 +1,5 @@
 package simulation.wator;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class WaTor extends Simulation {
 	private final String ANIMAL = "animal";
 	private final String BREED = "breed";
 	private final String HEALTH = "health";
-	
+
 	Random myRandom = new Random(1234);
 
 	public WaTor(Map<String, Integer> globalChars) {
@@ -40,11 +41,27 @@ public class WaTor extends Simulation {
 	public void update(Grid myGrid, Reader myReader) {
 		Cell[] oldGrid = super.copyGrid(myGrid, myReader);
 		Cell[] myGridGrid = myGrid.getGrid();
-		
+
 		doFish(oldGrid, myGridGrid, myReader);
 		doShark(oldGrid, myGridGrid, myReader);
+		
+		int numFish = 0;
+		int numShark  = 0;
+		int numEmpty = 0;
+		for (int i=0; i<myGridGrid.length; i++) {
+			if (myGridGrid[i].getChars().get(ANIMAL)==FISH) {
+				numFish++;
+			}
+			if (myGridGrid[i].getChars().get(ANIMAL)==SHARK) {
+				numShark++;
+			}
+			if (myGridGrid[i].getChars().get(ANIMAL)==KELP) {
+				numEmpty++;
+			}
+		}
+		System.out.printf("Fish: %4.0f, Shark: %4.0f, Kelp: %4.0f\n", numFish*100.0/myGridGrid.length, numShark*100.0/myGridGrid.length, numEmpty*100.0/myGridGrid.length);
 	}
-	
+
 	private void doFish(Cell[] oldGrid, Cell[] myGridGrid, Reader myReader) {
 		for (int i = 0; i < myReader.getSize(); i++) {
 			Cell oldCell = oldGrid[i];
@@ -53,10 +70,10 @@ public class WaTor extends Simulation {
 			if (oldCell.getChars().get(ANIMAL) == FISH) {
 				if (oldCell.getChars().get(BREED) >= fishBreed) {
 					if (has(i, myGridGrid, myReader, KELP)) {
-						create(i, myGridGrid, myReader, FISH);
-					}
+						create(i, myGridGrid, myReader, FISH, KELP);
+					} 
 				}
-				if (has(i, myGridGrid, myReader, KELP)) {
+				else if (has(i, myGridGrid, myReader, KELP)) {
 					myCell.getChars().put(BREED, myCell.getChars().get(BREED) + 1);
 					eat(i, myGridGrid, myReader, FISH, KELP);
 				} else {
@@ -65,7 +82,7 @@ public class WaTor extends Simulation {
 			}
 		}
 	}
-	
+
 	private void doShark(Cell[] oldGrid, Cell[] myGridGrid, Reader myReader) {
 		for (int i = 0; i < myReader.getSize(); i++) {
 			Cell oldCell = oldGrid[i];
@@ -76,24 +93,33 @@ public class WaTor extends Simulation {
 					myCell.getChars().put(ANIMAL, KELP);
 					myCell.getChars().put(BREED, 0);
 					myCell.getChars().put(HEALTH, 0);
-				} else if (oldCell.getChars().get(BREED) >= sharkBreed) {
-					myCell.getChars().put(HEALTH, myCell.getChars().get(HEALTH) - 1);
-					myCell.getChars().put(BREED, myCell.getChars().get(BREED) + 1);
-					if (has(i, myGridGrid, myReader, KELP)) {
-						create(i, myGridGrid, myReader, SHARK);
+				} else { 
+					if (oldCell.getChars().get(BREED) >= sharkBreed) {
+						myCell.getChars().put(HEALTH, myCell.getChars().get(HEALTH) - 1);
+						if (has(i, myGridGrid, myReader, KELP)) {
+							create(i, myGridGrid, myReader, SHARK, KELP);
+						}
+						else if (has(i, myGridGrid, myReader, FISH)) {
+							//create(i, myGridGrid, myReader, SHARK, FISH);
+							myCell.getChars().put(BREED, myCell.getChars().get(BREED) + 1);
+							myCell.getChars().put(HEALTH, myCell.getChars().get(HEALTH) + 1);
+							eat(i, myGridGrid, myReader, SHARK, FISH);
+						}
+					} 
+					else if (has(i, myGridGrid, myReader, FISH)) {
+						myCell.getChars().put(BREED, myCell.getChars().get(BREED) + 1);
+						myCell.getChars().put(HEALTH, myCell.getChars().get(HEALTH) + 1);
+						eat(i, myGridGrid, myReader, SHARK, FISH);
+					} else if (has(i, myGridGrid, myReader, KELP)) {
+						myCell.getChars().put(HEALTH, myCell.getChars().get(HEALTH) - 1);
+						myCell.getChars().put(BREED, myCell.getChars().get(BREED) + 1);
+						eat(i, myGridGrid, myReader, SHARK, KELP);
 					}
-				} else if (has(i, myGridGrid, myReader, FISH)) {
-					myCell.getChars().put(BREED, myCell.getChars().get(BREED) + 1);
-					eat(i, myGridGrid, myReader, SHARK, FISH);
-				} else if (has(i, myGridGrid, myReader, KELP)) {
-					myCell.getChars().put(HEALTH, myCell.getChars().get(HEALTH) - 1);
-					myCell.getChars().put(BREED, myCell.getChars().get(BREED) + 1);
-					eat(i, myGridGrid, myReader, SHARK, KELP);
 				}
 			}
 		}
 	}
-	
+
 	private List<Cell> generateNeighbors(Cell[] grid, int index, Reader myReader, int animal) {
 		List<Cell> neighbors = findNeighbors(grid, index, myReader);
 		List<Cell> emptyNeighbors = new ArrayList<Cell>();
@@ -105,8 +131,8 @@ public class WaTor extends Simulation {
 		return emptyNeighbors;
 	}
 
-	private void create(int index, Cell[] grid, Reader myReader, int animal) {
-		List<Cell> emptyNeighbors = generateNeighbors(grid, index, myReader, KELP);
+	private void create(int index, Cell[] grid, Reader myReader, int animal, int eaten) {
+		List<Cell> emptyNeighbors = generateNeighbors(grid, index, myReader, eaten);
 		int randIndex = myRandom.nextInt(emptyNeighbors.size());
 		Cell createCell = emptyNeighbors.get(randIndex);
 		createCell.getChars().put(ANIMAL, animal);
@@ -138,7 +164,7 @@ public class WaTor extends Simulation {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public Color getCellColor(int index, Grid myGrid) {
 		Cell myCell = myGrid.getCell(index);
@@ -152,7 +178,7 @@ public class WaTor extends Simulation {
 
 	@Override
 	public List<Cell> findNeighbors(Cell[] myArr, int index, Reader myReader) {
-		int numCols = myReader.getGlobalChars().get("cols"); 
+		int numCols = myReader.getGlobalChars().get("cols");
 		int numRows = myReader.getGlobalChars().get("rows");
 		int rowNum = index / numCols; // row number of cell
 		int colNum = index % numCols; // col number of cell
@@ -163,7 +189,7 @@ public class WaTor extends Simulation {
 		for (int i = 0; i < arrDelta.length; i++) {
 			if (!isOutOfBounds(rowNum + deltaRow[i], colNum + deltaCol[i], numRows, numCols)) {
 				neighborsList.add(myArr[index + arrDelta[i]]);
-			} 
+			}
 		}
 		return neighborsList;
 	}
