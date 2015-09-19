@@ -1,26 +1,20 @@
 package simulation.spreading_fire;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import model.Cell;
 import model.Grid;
 import model.Reader;
 import simulation.Simulation;
+
 public class SpreadingFire extends Simulation {
-	// simulation ends when no burning tree left
-	// diagonal neighbors do not affect state of current cell
-	// define the three states in terms of integers
 	private final int EMPTY = 0; // empty ground or burnt tree
 	private final int TREE = 1; // non burning tree
 	private final int BURNING = 2; // burning tree
 	private double probCatch; // probability of a cell catching fire based on
-								// its neighbors
 	private Random myRandom = new Random();
 	private final String characteristicFire = "fire";
 
@@ -33,20 +27,8 @@ public class SpreadingFire extends Simulation {
 
 	@Override
 	public void update(Grid myGrid, Reader myReader) {
-		Cell[] oldGrid = new Cell[myReader.getSize()];
+		Cell[] oldGrid = super.copyGrid(myGrid, myReader);
 		Cell[] myGridGrid = myGrid.getGrid();
-
-		for (int i = 0; i < myReader.getSize(); i++) {
-			Cell currentCell = myGrid.getCell(i);
-			Map<String, Integer> myMap = currentCell.getChars();
-			Map<String, Integer> oldMap = new HashMap<String, Integer>();
-			for (String s : myMap.keySet()) {
-				// maybe make string/integer primitive
-				oldMap.put(s, myMap.get(s));
-			}
-			Cell oldCell = new Cell(oldMap);
-			oldGrid[i] = oldCell;
-		}
 
 		for (int i = 0; i < myReader.getSize(); i++) {
 			Cell oldCell = oldGrid[i];
@@ -75,7 +57,6 @@ public class SpreadingFire extends Simulation {
 	
 	private int generateProbCatchState() {
 		double prob = myRandom.nextDouble();
-		System.out.println(prob);
 		if (prob < probCatch) {
 			return BURNING;
 		} else
@@ -94,16 +75,9 @@ public class SpreadingFire extends Simulation {
 	}
 
 	@Override
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see SpreadingFire#findNeighbors(Grid, int, Reader) Finds neighbors,
-	 * which for spreading fire are up, down, left, right
-	 */
 	public List<Cell> findNeighbors(Cell[] myArr, int index, Reader myReader) {
-		Map<String, Integer> myMap = myReader.getGlobalChars();
-		int numCols = myMap.get("cols"); // returns number of columns
-		int numRows = myMap.get("rows");
+		int numCols = myReader.getGlobalChars().get("cols"); 
+		int numRows = myReader.getGlobalChars().get("rows");
 		int rowNum = index / numCols; // row number of cell
 		int colNum = index % numCols; // col number of cell
 		List<Cell> neighborsList = new ArrayList<Cell>();
@@ -116,17 +90,5 @@ public class SpreadingFire extends Simulation {
 			}
 		}
 		return neighborsList;
-	}
-
-	@Override
-	public Shape getCellShape(int index, int width, int height, int rows, int cols) {
-		double ySize = (double) height / rows;
-		double xSize = (double) width / cols;
-		int colNum = index % cols;
-		int rowNum = index / cols;
-		Rectangle thisRect = new Rectangle(colNum * xSize, rowNum * ySize + 40, xSize, ySize);
-		thisRect.setStrokeWidth(4);
-		thisRect.setStroke(Color.LIGHTGRAY);
-		return thisRect;
 	}
 }

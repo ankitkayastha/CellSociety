@@ -1,5 +1,4 @@
 package model;
-import java.util.Map;
 
 import view.GuiClass;
 
@@ -27,8 +26,4 @@ public class Grid {
 	public Cell getCell(int i) {
 		return myGrid[i];
 	}
-	
-	/*public void setCell(int i, Map<String, Integer> myMap) {
-		myGrid[i].updateCell(myMap);
-	}*/
 }
