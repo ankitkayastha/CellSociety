@@ -18,7 +18,19 @@ public class SpreadingFire extends Simulation {
 
 	public SpreadingFire(Map<String, Integer> globalChars) {
 		super(globalChars);
+<<<<<<< HEAD
 		//probCatch = globalChars.get("prob")/100.0;
+||||||| merged common ancestors
+		System.out.println("fire globals: " +globalChars.toString());
+		probCatch = globalChars.get("prob")/100.0;
+		System.out.println("prob: " + probCatch);
+=======
+		System.out.println("fire globals: " +globalChars.toString());
+		if (globalChars.keySet().contains("prob")) {
+			probCatch = globalChars.get("prob")/100.0;
+		}
+		System.out.println("prob: " + probCatch);
+>>>>>>> master
 	}
 
 	@Override

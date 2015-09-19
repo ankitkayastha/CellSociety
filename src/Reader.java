@@ -89,7 +89,7 @@ public class Reader {
 
 				Map<String, Integer> squareMap = new TreeMap<String, Integer>();
 
-				squareMap.put("row", ind);
+				squareMap.put("index", ind);
 
 				//System.out.println("Row: " + stringRow.getTextContent() + ", Col: " + stringCol.getTextContent());
 
@@ -125,8 +125,12 @@ public class Reader {
 		else if (sim.equals("spreading_fire")) {
 			return 1;
 		}
-		else if (sim.equals("segregation"))
+		else if (sim.equals("segregation")) {
 			return 2;
+		}
+		else if (sim.equals("wa_tor")) {
+			return 3;
+		}
 		return -1;
 	}
 	

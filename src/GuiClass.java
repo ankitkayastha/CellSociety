@@ -115,14 +115,13 @@ public class GuiClass {
 		this.myGrid = myGrid;
 		this.myReader = myReader;
 		thisSim = mySim;
-		System.out.println("Display Initialized");
 		for (int i = 0; i < myReader.getSize(); i++) {
 			Shape newShape = mySim.getCellShape(i, width, heightWithoutToolbar, myReader.getGlobalChars().get("rows"), myReader.getGlobalChars().get("cols"));
 			newShape.setFill(mySim.getCellColor(i, myGrid));
-			//System.out.println(newShape.toString());
 			root.getChildren().add(newShape);
 			shapeList.add(newShape);
 		}
+		System.out.println("Display Initialized");
 	}
 
 	public void display(Grid myGrid, Reader myReader, Simulation mySim) {
