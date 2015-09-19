@@ -1,7 +1,5 @@
 package model;
 
-import view.GuiClass;
-
 public class Grid {
 
 	private Cell[] myGrid;
@@ -20,9 +18,6 @@ public class Grid {
 		return myGrid;
 	}
 	
-	public void setCell(Cell myCell, int index) {
-		myGrid[index] = myCell;
-	}
 	public Cell getCell(int i) {
 		return myGrid[i];
 	}

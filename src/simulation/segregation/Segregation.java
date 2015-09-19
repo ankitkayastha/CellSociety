@@ -34,7 +34,6 @@ public class Segregation extends Simulation {
 	}
 	
 	private void addColors(int numAgents) {
-		System.out.println(numAgents);
 		myColors[0] = Color.WHITE;
 		for (int i = 1; i <= numAgents; i++) {
 			double r = myRandom.nextDouble();

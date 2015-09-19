@@ -51,7 +51,6 @@ public class Reader {
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(inputFile);
 			doc.getDocumentElement().normalize();
-			//System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
 
 			String stringIndex = doc.getElementsByTagName("index").item(0).getTextContent();
 
@@ -71,8 +70,6 @@ public class Reader {
 				int globalCharValue = Integer.parseInt(stringGlobalCharValue.getTextContent());
 
 				globalChars.put(stringGlobalCharName.getTextContent(), globalCharValue);
-				//System.out.println("GlobalName: " + stringGlobalCharName.getTextContent() + ", GlobalValue: "
-						//+ stringGlobalCharValue.getTextContent());
 			}
 
 			NodeList nList = doc.getElementsByTagName("square");
@@ -87,8 +84,6 @@ public class Reader {
 
 				squareMap.put("index", ind);
 
-				//System.out.println("Row: " + stringRow.getTextContent() + ", Col: " + stringCol.getTextContent());
-
 				NodeList charList = eElement.getElementsByTagName("characteristic");
 				for (int j = 0; j < charList.getLength(); j++) {
 					Node charch = charList.item(j);
@@ -99,9 +94,6 @@ public class Reader {
 					int charValueInt = Integer.parseInt(charValue.getTextContent());
 
 					squareMap.put(charName.getTextContent(), charValueInt);
-
-					//System.out.println("CharName: " + charName.getTextContent());
-					//System.out.println("CharValue: " + charValue.getTextContent());
 				}
 				data.add(squareMap);
 			}

@@ -13,8 +13,7 @@ import model.Reader;
 
 public abstract class Simulation {
 	public Simulation(Map<String, Integer> globalChars) {}
-	
-	
+		
 	public abstract void update(Grid currentGrid, Reader myReader);
 	
 	public boolean isOutOfBounds(int m, int n, int numRows, int numCols) {
@@ -41,7 +40,6 @@ public abstract class Simulation {
 			Map<String, Integer> myMap = currentCell.getChars();
 			Map<String, Integer> oldMap = new HashMap<String, Integer>();
 			for (String s : myMap.keySet()) {
-				// maybe make string/integer primitive
 				oldMap.put(s, myMap.get(s));
 			}
 			Cell oldCell = new Cell(oldMap);
@@ -51,5 +49,4 @@ public abstract class Simulation {
 	}
 
 	public abstract List<Cell> findNeighbors(Cell[] myArr, int index, Reader myReader);
-
 }
