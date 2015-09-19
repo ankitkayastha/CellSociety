@@ -125,6 +125,8 @@ public class Reader {
 		else if (sim.equals("spreading_fire")) {
 			return 1;
 		}
+		else if (sim.equals("segregation"))
+			return 2;
 		return -1;
 	}
 	

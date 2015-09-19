@@ -18,9 +18,7 @@ public class SpreadingFire extends Simulation {
 
 	public SpreadingFire(Map<String, Integer> globalChars) {
 		super(globalChars);
-		System.out.println("fire globals: " +globalChars.toString());
-		probCatch = globalChars.get("prob")/100.0;
-		System.out.println("prob: " + probCatch);
+		//probCatch = globalChars.get("prob")/100.0;
 	}
 
 	@Override

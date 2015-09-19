@@ -17,6 +17,10 @@
          <name>threshold</name>
          <value>30</value>
       </chars>
+       <chars>
+         <name>agents</name>
+         <value>2</value>
+      </chars>
    </global>
    <index>25</index>
    <squares>
