@@ -59,7 +59,7 @@ public class WaTor extends Simulation {
 				numEmpty++;
 			}
 		}
-		System.out.printf("Fish: %4.0f, Shark: %4.0f, Kelp: %4.0f\n", numFish*100.0/myGridGrid.length, numShark*100.0/myGridGrid.length, numEmpty*100.0/myGridGrid.length);
+		System.out.printf("Fish: %6.2f%%, Shark: %6.2f%%, Kelp: %6.2f%%\n", numFish*100.0/myGridGrid.length, numShark*100.0/myGridGrid.length, numEmpty*100.0/myGridGrid.length);
 	}
 
 	private void doFish(Cell[] oldGrid, Cell[] myGridGrid, Reader myReader) {

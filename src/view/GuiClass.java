@@ -1,128 +1,148 @@
 package view;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
+import javafx.animation.Timeline;
+import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Button;
+import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
+import javafx.stage.Stage;
 import model.Grid;
 import model.Reader;
 import simulation.Simulation;
+import simulation.game_of_life.GameOfLife;
+import simulation.segregation.Segregation;
+import simulation.spreading_fire.SpreadingFire;
+import simulation.wator.WaTor;
+
 public class GuiClass {
 	
 	private Scene myScene;
 	private Group root;
 	private Grid myGrid;
 	
-	private ImageView play = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("play.png")));
-	private ImageView pause = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("pause.png")));
-	private ImageView stop = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("stop.png")));
-	private ImageView ff = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("ff.png")));
-	private ImageView sd = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("sd.png")));
-	private ImageView open = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("open.gif")));
-	private ImageView step = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("step.png")));
-	
-	private int status = 0;
 	private Simulation thisSim;
 	private Reader myReader;
 	private List<Shape> shapeList;
+	private Simulation[] sims = new Simulation[4];
+
+    private double rate = 1;
 	
 	private int width = 500;
 	private int height = 540;
 	private int heightWithoutToolbar = 500;
 	private final int TOOLBAR_HEIGHT = 40;
 	
+	private ResourceBundle myResources;
+
+	public GuiClass(ResourceBundle myResources) {
+		this.myResources = myResources;
+	}
+	
 	//step function for Timeline
-	public void step(double secondDelay) {
+	public void step() {
 		thisSim.update(myGrid, myReader);
 		display(myGrid, myReader, thisSim);
 	}
 	
 	//sets up the basic Scene
-	public Scene init (){
+	public Scene init (Stage stage, Timeline animation){
 		
-		rootCreate();
+		root = new Group();
         myScene = new Scene(root, width, height, Color.ALICEBLUE);
         
+        Button playButton = new Button(myResources.getString("PlayButtonText"));
+		playButton.setOnAction((event) -> {
+		    animation.play();
+		});
+               
+        Button pauseButton = new Button(myResources.getString("PauseButtonText"));
+        pauseButton.setOnAction((event) -> {
+		    animation.pause();
+		});
+        Button stopButton = new Button(myResources.getString("StopButtonText"));
+        stopButton.setOnAction((event) -> {
+        	reset(animation);
+		});
+        Button ffButton = new Button(myResources.getString("FFButtonText"));
+        ffButton.setOnAction((event) -> {
+		   	speedUp(animation);
+		});
+        Button sdButton = new Button(myResources.getString("SDButtonText"));
+        sdButton.setOnAction((event) -> {
+		    slowDown(animation);
+		});
+        Button stepButton = new Button(myResources.getString("StepButtonText"));
+        stepButton.setOnAction((event) -> {
+		    step();
+		});
+        Button openButton = new Button(myResources.getString("OpenButtonText"));
+        openButton.setOnAction((event) -> {
+		    initializeGrid();
+		});
+
+        //ffButton.setStyle("-fx-font-size: 15pt;");
+
+        playButton.setMaxSize(60, 30);
+        pauseButton.setMaxSize(60, 30);
+        stopButton.setMaxSize(60, 30);
+        ffButton.setMaxSize(60, 30);
+        sdButton.setMaxSize(60, 30);
+        stepButton.setMaxSize(60, 30);
+        openButton.setMaxSize(60,  30);
+
+        TilePane tileButtons = new TilePane(Orientation.HORIZONTAL);
+        tileButtons.setPrefColumns(7);
+        tileButtons.setPadding(new Insets(7.5, 0, 7.5, 7.5));
+        tileButtons.setHgap(20.0);
+        tileButtons.getChildren().addAll(playButton, pauseButton, stopButton, ffButton, sdButton, stepButton, openButton);
+    
+		root.getChildren().add(tileButtons);  
 		return myScene;	
 	}
 	
-	//basic reset method (TO BE REMADE)
-	public void reset(){
-		
-		//test.setX(width / 2 - test.getBoundsInLocal().getWidth() / 2);
-        //test.setY(height / 2  - test.getBoundsInLocal().getHeight() / 2);
-        
+	private void initializeGrid() {
+		myReader = new Reader();
+		Simulation gameOfLife = new GameOfLife(myReader.getGlobalChars());
+		sims[0] = gameOfLife;
+		Simulation spreadingFire = new SpreadingFire(myReader.getGlobalChars());
+		sims[1] = spreadingFire;
+		Simulation segregation = new Segregation(myReader.getGlobalChars());
+		sims[2] = segregation;
+		Simulation waTor = new WaTor(myReader.getGlobalChars());
+		sims[3] = waTor;
+		myGrid = new Grid(myReader, this);
+		thisSim = sims[myReader.getSimNum()];
+		initDisplay(myGrid, myReader, thisSim, myReader.getSimNum());
 	}
 	
-	//checks for clicked button and passes it to the main
-	public int handleMouseInput(double x, double y){
-		
-		if(play.contains(x, y))
-			return 1;
-		if(pause.contains(x, y))
-			return 2;
-		if(stop.contains(x, y))
-			return 3;
-		if(ff.contains(x, y))
-			return 4;
-		if(open.contains(x,y))
-			return 5;
-		if(step.contains(x,y))
-			return 6;
-		if(sd.contains(x,y))
-			return 7;
-		return 0;
-	}
-		
-	
-	public void setStatus(int status) {
-		this.status = status;
+	public void reset(Timeline animation){
+		animation.stop();
+		myReader = null;
+		myGrid = null;
 	}
 	
-	public int getStatus() {
-		return status;
-	}
-	
-	//sets up toolbar defaults
-	public void toolbar(){
-		play.setX(0);
-		play.setY(0);
-        root.getChildren().add(play);
-        
-        pause.setX(70);
-		pause.setY(0);
-        root.getChildren().add(pause);
-        
-        stop.setX(140);
-		stop.setY(0);
-        root.getChildren().add(stop);
-        
-        ff.setX(210);
-		ff.setY(0);
-        root.getChildren().add(ff);
-        
-        sd.setX(280);
-		sd.setY(0);
-        root.getChildren().add(sd);
-       
-        step.setX(350);
-        step.setY(0);
-        root.getChildren().add(step);
-        
-        open.setX(420);
-		open.setY(0);
-        root.getChildren().add(open);
-        
-	}
-	
-	public void rootCreate(){
-		root = new Group();
-		toolbar();
-	}
+	//Speeds up the framerate 
+    private void speedUp(Timeline animation){
+    	if(rate<=32)
+    		rate *= 2;
+    	animation.setRate(rate);
+    	System.out.printf("Rate: %f\n", rate);
+    }
+    
+    //returns framerate to default
+    private void slowDown(Timeline animation){
+    	if(rate>=1/32.0)
+    		rate /=2;
+    	animation.setRate(rate);
+    	System.out.printf("Rate: %f\n", rate);
+    }
 	
 	public void initDisplay(Grid myGrid, Reader myReader, Simulation mySim, int simNum) {
 		shapeList = new ArrayList<Shape>();
