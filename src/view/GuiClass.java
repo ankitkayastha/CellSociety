@@ -16,6 +16,7 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import model.Grid;
 import model.Reader;
+import model.Stats;
 import simulation.Simulation;
 import simulation.game_of_life.GameOfLife;
 import simulation.segregation.Segregation;
@@ -29,7 +30,7 @@ public class GuiClass {
 	private Grid myGrid;
 
 	private Simulation thisSim;
-	private Reader myReader;
+	private Stats myStats;
 	private List<Shape> shapeList;
 	private Simulation[] sims = new Simulation[4];
 
@@ -48,7 +49,7 @@ public class GuiClass {
 
 	// step function for Timeline
 	public void step() {
-		thisSim.update(myGrid, myReader);
+		thisSim.update(myGrid, myStats);
 		display();
 	}
 
@@ -159,19 +160,22 @@ public class GuiClass {
 	}
 
 	private void initializeGrid() {
-		myReader = new Reader();
-		Simulation gameOfLife = new GameOfLife(myReader.getGlobalChars());
+		Reader myReader = new Reader();
+		myStats = new Stats(myReader);
+		
+		Simulation gameOfLife = new GameOfLife(myStats.getGlobalChars());
 		sims[0] = gameOfLife;
-		Simulation spreadingFire = new SpreadingFire(myReader.getGlobalChars());
+		Simulation spreadingFire = new SpreadingFire(myStats.getGlobalChars());
 		sims[1] = spreadingFire;
-		Simulation segregation = new Segregation(myReader.getGlobalChars());
+		Simulation segregation = new Segregation(myStats.getGlobalChars());
 		sims[2] = segregation;
-		Simulation waTor = new WaTor(myReader.getGlobalChars());
+		Simulation waTor = new WaTor(myStats.getGlobalChars());
 		sims[3] = waTor;
-		myGrid = new Grid(myReader);
+		myGrid = new Grid(myStats);
 		thisSim = sims[myReader.getSimNum()];
 		System.out.println(myReader.getGlobalChars().toString());
-		System.out.printf("About to initialize Sim: %d\n", myReader.getSimNum());
+		System.out.printf("About to initialize Sim: %d\n", myStats.getGlobalChars().get("sim"));
+		// TODO: make sim a parameter
 		initDisplay();
 	}
 
@@ -203,10 +207,10 @@ public class GuiClass {
 
 	public void initDisplay() {
 		shapeList = new ArrayList<Shape>();
-		for (int i = 0; i < myReader.getSize(); i++) {
-			Shape newShape = thisSim.getCellShape(i, width, heightWithoutToolbar, TOOLBAR_HEIGHT, myReader.getGlobalChars().get("rows"),
-					myReader.getGlobalChars().get("cols"));
-			newShape.setFill(thisSim.getCellColor(i, myGrid));
+		for (int i = 0; i < myStats.getSize(); i++) {
+			Shape newShape = getCellShape(i, width, heightWithoutToolbar, TOOLBAR_HEIGHT, myStats.getGlobalChars().get("rows"),
+					myStats.getGlobalChars().get("cols"));
+			newShape.setFill(getCellColor(i, myGrid));
 			root.getChildren().add(newShape);
 			shapeList.add(newShape);
 		}
@@ -214,9 +218,9 @@ public class GuiClass {
 	}
 
 	public void display() {
-		for (int i = 0; i < myReader.getSize(); i++) {
+		for (int i = 0; i < myStats.getSize(); i++) {
 			Shape currentShape = shapeList.get(i);
-			currentShape.setFill(thisSim.getCellColor(i, myGrid));
+			currentShape.setFill(getCellColor(i, myGrid));
 		}
 	}
 }

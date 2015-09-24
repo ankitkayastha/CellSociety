@@ -7,7 +7,9 @@ import java.util.Random;
 import javafx.scene.paint.Color;
 import model.Cell;
 import model.Grid;
+import model.NeighborFactory;
 import model.Reader;
+import model.Stats;
 import simulation.Simulation;
 
 public class Segregation extends Simulation {
@@ -20,7 +22,7 @@ public class Segregation extends Simulation {
 	private final String agent = "agent";
 
 	public Segregation(Map<String, Integer> globalChars) {
-		super(globalChars);
+		super(globalChars, EMPTY, EMPTY);
 		if (globalChars.keySet().contains(thresh)){
 			threshold = globalChars.get(thresh);
 		}
@@ -45,13 +47,13 @@ public class Segregation extends Simulation {
 	}
 
 	@Override
-	public void update(Grid myGrid, Reader myReader) {
-		Cell[] oldGrid = super.copyGrid(myGrid, myReader);
+	public void update(Grid myGrid, Stats myStats) {
+		Cell[] oldGrid = super.copyGrid(myGrid, myStats);
 		Cell[] myGridGrid = myGrid.getGrid();
 		
 		//moves all dissatisfied cells
-		for (int i = 0; i < myReader.getSize(); i++) {
-			if ((oldGrid[i].getChars().get(agent)!=EMPTY) & !isSatisfied(oldGrid, i, myReader, threshold)) {
+		for (int i = 0; i < myStats.getSize(); i++) {
+			if ((oldGrid[i].getChars().get(agent)!=EMPTY) & !isSatisfied(oldGrid, i, myStats, threshold)) {
 				if (hasEmpty(myGridGrid)) {
 					move(myGridGrid, i);
 				}
@@ -86,46 +88,19 @@ public class Segregation extends Simulation {
 		return false;
 	}
 	
-	private boolean isSatisfied(Cell[] myArr, int index, Reader myReader, double threshold) {
+	private boolean isSatisfied(Cell[] myArr, int index, Stats myStats, double threshold) {
 		int numSameNeighbors = 0;
-		List<Cell> myNeighborList = findNeighbors(myArr, index, myReader);
+		NeighborFactory myNeighborFactory = new NeighborFactory(myStats, super.thisSim, super.thisShape);
+		
+		List<Cell> cellNeighbors = myNeighborFactory.getNeighbors(myArr, index);		
 		int selectedCellState = myArr[index].getChars().get(agent); 
 		
-		for (Cell cell: myNeighborList) {
+		for (Cell cell: cellNeighbors) {
 			if (cell.getChars().get(agent) == selectedCellState) {
 				numSameNeighbors++;
 			}
 		}
-		double percentageSame = (double) numSameNeighbors / myNeighborList.size();
+		double percentageSame = (double) numSameNeighbors / cellNeighbors.size();
 		return percentageSame >= (threshold / 100.0);
-	}
-	
-	@Override
-	public Color getCellColor(int index, Grid myGrid) {
-		Cell myCell = myGrid.getCell(index);
-		if (!myCell.getChars().keySet().contains(agent)) {
-			return Color.WHITE;
-		}
-		return myColors[myCell.getChars().get(agent)];
-	}
-	
-	@Override
-	public List<Cell> findNeighbors(Cell[] myArr, int index, Reader myReader) {
-		int numCols = myReader.getGlobalChars().get("cols"); 
-		int numRows = myReader.getGlobalChars().get("rows");
-		int rowNum = index / numCols; // row number of cell
-		int colNum = index % numCols; // col number of cell
-		List<Cell> neighborsList = new ArrayList<Cell>();
-		int[] deltaRow = { -1, 0, 0, 1, 1, -1, -1, 1 };
-		int[] deltaCol = { 0, 1, -1, 0, 1, 1, -1, -1 };
-		int[] arrDelta = { -numCols, 1, -1, numCols, numCols + 1, -numCols + 1, -numCols - 1, numCols - 1 };
-		for (int i = 0; i < arrDelta.length; i++) {
-			if (!isOutOfBounds(rowNum + deltaRow[i], colNum + deltaCol[i], numRows, numCols)){
-				if ((myArr[index+arrDelta[i]].getChars().get(agent) != EMPTY)) {
-					neighborsList.add(myArr[index+arrDelta[i]]);
-				}
-			}			
-		}
-		return neighborsList;
 	}
 }

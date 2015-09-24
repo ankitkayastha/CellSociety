@@ -10,32 +10,19 @@ import javafx.scene.shape.Shape;
 import model.Cell;
 import model.Grid;
 import model.Reader;
+import model.Stats;
 
 public abstract class Simulation {	
-	public Simulation(Map<String, Integer> globalChars) {}
+	protected int thisSim;
+	protected int thisShape;
+	
+	public Simulation(Map<String, Integer> globalChars, int thisSim, int thisShape){}
 		
-	public abstract void update(Grid currentGrid, Reader myReader);
+	public abstract void update(Grid currentGrid, Stats myStats);
 	
-	public boolean isOutOfBounds(int m, int n, int numRows, int numCols) {
-		return (m < 0 || m >= numRows || n < 0 || n >= numCols);
-	}
-	
-	public abstract Color getCellColor(int index, Grid myGrid);
-	
-	public Shape getCellShape(int index, int width, int height, int toolbarHeight, int rows, int cols) {
-		double ySize = (double) height / rows;
-		double xSize = (double) width / cols;
-		int colNum = index % cols;
-		int rowNum = index / cols;
-		Rectangle thisRect = new Rectangle(colNum * xSize, rowNum * ySize + toolbarHeight, xSize, ySize);
-		thisRect.setStrokeWidth(1);
-		thisRect.setStroke(Color.LIGHTGRAY);
-		return thisRect;
-	}
-	
-	protected Cell[] copyGrid(Grid myGrid, Reader myReader) {
-		Cell[] oldGrid = new Cell[myReader.getSize()];
-		for (int i = 0; i < myReader.getSize(); i++) {
+	protected Cell[] copyGrid(Grid myGrid, Stats myStats) {
+		Cell[] oldGrid = new Cell[myStats.getSize()];
+		for (int i = 0; i < myStats.getSize(); i++) {
 			Cell currentCell = myGrid.getCell(i);
 			Map<String, Integer> myMap = currentCell.getChars();
 			Map<String, Integer> oldMap = new HashMap<String, Integer>();
@@ -47,6 +34,4 @@ public abstract class Simulation {
 		}
 		return oldGrid;
 	}
-
-	public abstract List<Cell> findNeighbors(Cell[] myArr, int index, Reader myReader);
 }

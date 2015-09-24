@@ -8,7 +8,9 @@ import java.util.Random;
 import javafx.scene.paint.Color;
 import model.Cell;
 import model.Grid;
+import model.NeighborFactory;
 import model.Reader;
+import model.Stats;
 import simulation.Simulation;
 
 public class WaTor extends Simulation {
@@ -155,45 +157,14 @@ public class WaTor extends Simulation {
 		grid[index].getChars().put(HEALTH, 0);
 	}
 
-	private boolean has(int index, Cell[] grid, Reader myReader, int animal) {
-		List<Cell> neighbors = findNeighbors(grid, index, myReader);
-		for (int i = 0; i < neighbors.size(); i++) {
-			if (neighbors.get(i).getChars().get(ANIMAL) == animal) {
+	private boolean has(int index, Cell[] grid, Stats myStats, int animal) {
+		NeighborFactory myNeighborFactory = new NeighborFactory(myStats, super.thisSim, super.thisShape);
+		
+		List<Cell> cellNeighbors = myNeighborFactory.getNeighbors(grid, index);			for (int i = 0; i < cellNeighbors.size(); i++) {
+			if (cellNeighbors.get(i).getChars().get(ANIMAL) == animal) {
 				return true;
 			}
 		}
 		return false;
-	}
-
-	@Override
-	public Color getCellColor(int index, Grid myGrid) {
-		Cell myCell = myGrid.getCell(index);
-		if (!myCell.getChars().keySet().contains(ANIMAL)) {
-			return Color.WHITE;
-		}
-		if (myCell.getChars().get(ANIMAL) == KELP)
-			return Color.GREEN;
-		else if (myCell.getChars().get(ANIMAL) == FISH)
-			return Color.BLUE;
-		else
-			return Color.YELLOW;
-	}
-
-	@Override
-	public List<Cell> findNeighbors(Cell[] myArr, int index, Reader myReader) {
-		int numCols = myReader.getGlobalChars().get("cols");
-		int numRows = myReader.getGlobalChars().get("rows");
-		int rowNum = index / numCols; // row number of cell
-		int colNum = index % numCols; // col number of cell
-		List<Cell> neighborsList = new ArrayList<Cell>();
-		int[] deltaRow = { -1, 0, 0, 1 };
-		int[] deltaCol = { 0, 1, -1, 0 };
-		int[] arrDelta = { -numCols, 1, -1, numCols };
-		for (int i = 0; i < arrDelta.length; i++) {
-			if (!isOutOfBounds(rowNum + deltaRow[i], colNum + deltaCol[i], numRows, numCols)) {
-				neighborsList.add(myArr[index + arrDelta[i]]);
-			}
-		}
-		return neighborsList;
 	}
 }

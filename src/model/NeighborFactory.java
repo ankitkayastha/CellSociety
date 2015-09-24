@@ -7,7 +7,7 @@ import java.util.Map;
 
 import simulation.Simulation;
 
-public class Neighbors {
+public class NeighborFactory {
 	private List<Cell> neighbors;
 	private Map<Integer, Integer[]> deltaRowMap;
 	private Map<Integer, Integer[]> deltaColMap;
@@ -18,12 +18,29 @@ public class Neighbors {
 	private int currentSim;
 	
 		
-	public Neighbors(Reader myReader, int sim, int shape) {
+	public NeighborFactory(Stats myStats, int sim, int shape) {
 		currentShape = shape;
 		currentSim = sim;
 	}
 	
 	public List<Cell> getNeighbors(Cell[] myArr, int index) {
+		// whole lot of sims and shapes to determine everything
+		if (sim==) {
+			
+		} else if (sim==) {
+			
+		}
+		
+		if (shape==) {
+			
+		}
+		
+		
+		
+		
+		
+		
+		
 		int rowNum = index / numCols; // row number of cell
 		int colNum = index % numCols; // col number of cell
 		List<Cell> neighborsList = new ArrayList<Cell>();
@@ -40,18 +57,26 @@ public class Neighbors {
 	}
 	
 	private int[] getDeltaRow(int sim, int shape) {
-		
+		if (sim != xxxxx && shape==) {
+			
+		}
 	}
 	
 	private int[] getDeltaCol(int sim, int shape) {
-		
+		if (sim != xxxxx && shape==) {
+			
+		}
 	}
 	
 	private int[] getArrDelta(int sim, int shape) {
-		
+		if (sim != xxxxx && shape==) {
+			
+		}
 	}
 	
 	private boolean isOutOfBounds(int index) {
-		
+		if (sim != xxxx && shape==) {
+			
+		}
 	}
 }

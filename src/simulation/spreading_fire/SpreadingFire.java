@@ -7,6 +7,7 @@ import java.util.Random;
 import javafx.scene.paint.Color;
 import model.Cell;
 import model.Grid;
+import model.NeighborFactory;
 import model.Reader;
 import simulation.Simulation;
 
@@ -26,15 +27,16 @@ public class SpreadingFire extends Simulation {
 	}
 
 	@Override
-	public void update(Grid myGrid, Reader myReader) {
-		Cell[] oldGrid = super.copyGrid(myGrid, myReader);
+	public void update(Grid myGrid, Stats myStats) {
+		Cell[] oldGrid = super.copyGrid(myGrid, myStats);
 		Cell[] myGridGrid = myGrid.getGrid();
 
-		for (int i = 0; i < myReader.getSize(); i++) {
+		for (int i = 0; i < myStats.getSize(); i++) {
 			Cell oldCell = oldGrid[i];
 			Cell myCell = myGridGrid[i];
-			List<Cell> cellNeighbors = findNeighbors(oldGrid, i, myReader);
-
+			NeighborFactory myNeighborFactory = new NeighborFactory(myStats, super.thisSim, super.thisShape);
+			
+			List<Cell> cellNeighbors = myNeighborFactory.getNeighbors(oldGrid, i);
 			if (oldCell.getChars().get(characteristicFire) == TREE) {
 				if (areNeighborsBurning(cellNeighbors)) {
 						myCell.getChars().put(characteristicFire, generateProbCatchState());
@@ -61,37 +63,5 @@ public class SpreadingFire extends Simulation {
 			return BURNING;
 		} else
 			return TREE;
-	}
-
-	@Override
-	public Color getCellColor(int index, Grid myGrid) {
-		Cell myCell = myGrid.getCell(index);
-		if (!myCell.getChars().keySet().contains(characteristicFire)) {
-			return Color.WHITE;
-		}
-		if (myCell.getChars().get(characteristicFire) == BURNING)
-			return Color.RED;
-		else if (myCell.getChars().get(characteristicFire) == EMPTY)
-			return Color.YELLOW;
-		else
-			return Color.GREEN;
-	}
-
-	@Override
-	public List<Cell> findNeighbors(Cell[] myArr, int index, Reader myReader) {
-		int numCols = myReader.getGlobalChars().get("cols"); 
-		int numRows = myReader.getGlobalChars().get("rows");
-		int rowNum = index / numCols; // row number of cell
-		int colNum = index % numCols; // col number of cell
-		List<Cell> neighborsList = new ArrayList<Cell>();
-		int[] deltaRow = { -1, 0, 0, 1};
-		int[] deltaCol = { 0, 1, -1, 0};
-		int[] arrDelta = { -numCols, 1, -1, numCols};
-		for (int i = 0; i < arrDelta.length; i++) {
-			if (!isOutOfBounds(rowNum + deltaRow[i], colNum + deltaCol[i], numRows, numCols)) {
-				neighborsList.add(myArr[index + arrDelta[i]]);
-			}
-		}
-		return neighborsList;
 	}
 }
