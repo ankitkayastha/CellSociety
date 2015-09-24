@@ -4,12 +4,12 @@ public class Grid {
 
 	private Cell[] myGrid;
 
-	public Grid(Reader myReader) {
-		myGrid = new Cell[myReader.getSize()];
+	public Grid(Stats myStats) {
+		myGrid = new Cell[myStats.getSize()];
 
 		// populate the grid, iterate through the cells
-		for (int i = 0; i < myReader.getSize(); i++) {
-			Cell initCell = new Cell(myReader.getCell(i));
+		for (int i = 0; i < myStats.getSize(); i++) {
+			Cell initCell = new Cell(myStats.getCellData(i));
 			myGrid[i] = initCell;
 		}
 	}
