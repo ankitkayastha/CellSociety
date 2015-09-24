@@ -7,6 +7,7 @@ import java.util.Map;
 import javafx.scene.paint.Color;
 import model.Cell;
 import model.Grid;
+import model.Neighbors;
 import model.Reader;
 import simulation.Simulation;
 
@@ -27,6 +28,8 @@ public class GameOfLife extends Simulation {
 		for (int i = 0; i < myReader.getSize(); i++) {
 			Cell oldCell = oldGrid[i];
 			Cell myCell = myGridGrid[i];
+			Neighbors myNeighbors = new Neighbors(oldGrid, i, myReader);
+			
 			List<Cell> cellNeighbors = findNeighbors(oldGrid, i, myReader);
 
 			int numLiveNeighbors = 0;
