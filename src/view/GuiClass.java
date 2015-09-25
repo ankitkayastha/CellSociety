@@ -163,14 +163,14 @@ public class GuiClass {
 		Reader myReader = new Reader();
 		myStats = new Stats(myReader);
 		
-		Simulation gameOfLife = new GameOfLife(myStats.getGlobalChars());
+		Simulation gameOfLife = new GameOfLife(myStats);
 		sims[0] = gameOfLife;
-		Simulation spreadingFire = new SpreadingFire(myStats.getGlobalChars());
+		/*Simulation spreadingFire = new SpreadingFire(myStats.getGlobalChars());
 		sims[1] = spreadingFire;
 		Simulation segregation = new Segregation(myStats.getGlobalChars());
 		sims[2] = segregation;
 		Simulation waTor = new WaTor(myStats.getGlobalChars());
-		sims[3] = waTor;
+		sims[3] = waTor;*/
 		myGrid = new Grid(myStats);
 		thisSim = sims[myReader.getSimNum()];
 		System.out.println(myReader.getGlobalChars().toString());
