@@ -27,7 +27,7 @@ public abstract class Simulation {
 				oldMap.put(s, myMap.get(s));
 			}
 			CellFactory thisCellFactory = new CellFactory(myStats);
-			Cell oldCell = thisCellFactory.createCell(myStats.getCellData(i));
+			Cell oldCell = thisCellFactory.createCell(oldMap);
 			oldGrid[i] = oldCell;
 		}
 		return oldGrid;
