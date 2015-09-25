@@ -21,6 +21,6 @@ public abstract class Cell {
 	
 	public abstract void fillColorMap();
 
-	public abstract Color getCellColor(int state);
+	public abstract Color getCellColor();
 	
 }

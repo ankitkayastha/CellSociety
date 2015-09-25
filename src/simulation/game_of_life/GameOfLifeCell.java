@@ -19,8 +19,8 @@ public class GameOfLifeCell extends Cell {
 		getColorMap().put(ALIVE, Color.GREEN);
 	}
 	@Override
-	public Color getCellColor(int state) {
-		return getColorMap().get(state);
+	public Color getCellColor() {
+		return getColorMap().get(getChars().get("life"));
 	}
 
 
