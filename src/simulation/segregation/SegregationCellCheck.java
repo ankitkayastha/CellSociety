@@ -34,6 +34,7 @@ public class SegregationCellCheck {
 	public boolean hasEmpty(Cell[] myArr) {
 		for (int i=0; i<myArr.length; i++) {
 			if (myArr[i].getChars().get(agent)==EMPTY) {
+				return true;
 			}
 		}
 		return false;
@@ -46,11 +47,22 @@ public class SegregationCellCheck {
 		List<Cell> cellNeighbors = myNeighborFactory.getNeighbors(myArr, index);		
 		int selectedCellState = myArr[index].getChars().get(agent); 
 		
+		for (int i=cellNeighbors.size()-1; i>=0; i--) {
+			if (cellNeighbors.get(i).getChars().get(agent)==EMPTY) {
+				cellNeighbors.remove(i);
+				if (cellNeighbors.size()==0) {
+					return true;
+				}
+			}
+		}
+		
 		for (Cell cell: cellNeighbors) {
 			if (cell.getChars().get(agent) == selectedCellState) {
 				numSameNeighbors++;
 			}
 		}
+		System.out.printf("index: %d, numsame: %d\n", index, numSameNeighbors);
+
 		double percentageSame = (double) numSameNeighbors / cellNeighbors.size();
 		return percentageSame >= (threshold / 100.0);
 	}

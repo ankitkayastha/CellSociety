@@ -18,7 +18,7 @@ public class Square extends CellShape {
 		int colNum = index % cols;
 		int rowNum = index / cols;
 		Rectangle thisRect = new Rectangle(colNum * xSize, rowNum * ySize, xSize, ySize);
-		thisRect.setStrokeWidth(1);
+		thisRect.setStrokeWidth(2);
 		thisRect.setStroke(Color.LIGHTGRAY);
 		return thisRect;
 	}

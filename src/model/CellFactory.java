@@ -4,6 +4,7 @@ import java.util.Map;
 
 import data.Stats;
 import simulation.game_of_life.GameOfLifeCell;
+import simulation.segregation.SegregationCell;
 import simulation.spreading_fire.SpreadingFireCell;
 
 public class CellFactory {
@@ -18,6 +19,12 @@ public class CellFactory {
 		}
 		else if (myStats.getGlobalChars().get("sim")==1) {
 			return new SpreadingFireCell(charMap);
+		}
+		else if (myStats.getGlobalChars().get("sim")==2) {
+			return new SegregationCell(charMap);
+		}
+		else if (myStats.getGlobalChars().get("sim")==3) {
+			// return new TODO:
 		}
 		return null;
 	}

@@ -20,7 +20,9 @@ import shape.ShapeFactory;
 import data.Stats;
 import simulation.Simulation;
 import simulation.game_of_life.GameOfLife;
+import simulation.segregation.Segregation;
 import simulation.spreading_fire.SpreadingFire;
+import simulation.wator.WaTor;
 
 public class GuiClass {
 
@@ -168,10 +170,10 @@ public class GuiClass {
 		sims[0] = gameOfLife;
 		Simulation spreadingFire = new SpreadingFire(myStats);
 		sims[1] = spreadingFire;
-		/*Simulation segregation = new Segregation(myStats.getGlobalChars());
+		Simulation segregation = new Segregation(myStats);
 		sims[2] = segregation;
-		Simulation waTor = new WaTor(myStats.getGlobalChars());
-		sims[3] = waTor;*/
+		Simulation waTor = new WaTor(myStats);
+		sims[3] = waTor;
 		myGrid = new Grid(myStats);
 		thisSim = sims[myReader.getSimNum()];
 		System.out.println(myStats.getGlobalChars().toString());

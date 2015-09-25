@@ -34,10 +34,6 @@ public class Triangle extends CellShape{
 			y2 = y1;
 			x3 = (x1+x2)/2;
 			y3 = y1 + triangleHeight;
-			System.out.println(triangleHeight);
-			System.out.println(rowNum);
-			System.out.printf("index: %d, x1: %f, y1: %f\n", index, x1, y1);
-
 		}
 		else if (rowNum % 2 == 0 && index % 2 ==1) {
 			x3 = (((index-1)/2)*sideLength) % (cols * sideLength)+ (sideLength);
@@ -70,7 +66,7 @@ public class Triangle extends CellShape{
 			    x1, y1,
 			    x2, y2,
 			    x3, y3 });
-		thisTriangle.setStrokeWidth(1);
+		thisTriangle.setStrokeWidth(2);
 		thisTriangle.setStroke(Color.LIGHTGRAY);
 		return thisTriangle;
 	}

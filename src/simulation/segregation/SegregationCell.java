@@ -1,13 +1,11 @@
 package simulation.segregation;
 
 import java.util.Map;
-import java.util.Random;
 
 import javafx.scene.paint.Color;
 import model.Cell;
 
 public class SegregationCell extends Cell {
-	private Random myRandom;
 	private final String agent = "agent";
 	
 	public SegregationCell(Map<String, Integer> characteristicMap) {
@@ -16,21 +14,24 @@ public class SegregationCell extends Cell {
 
 	@Override
 	public void fillColorMap() {
-		if (!(getColorMap().containsKey(getChars().get(agent))))
-			getColorMap().put(getChars().get(agent), generateColor());
+		generateColor(getChars().get(agent));
 	}
 	
 	@Override
 	public Color getCellColor() {
-		return getColorMap().get(getChars().get(agent));
+		return generateColor(getChars().get(agent));
 	}
 	
-	public Color generateColor() {
-		double[] arr = new double[4];
-		for (int i = 0; i < arr.length; i++) {
-			arr[i] = myRandom.nextDouble();
+	
+	private Color generateColor(int agent) {
+		if (agent==0) {
+			return Color.WHITE;
 		}
-		return new Color(arr[0], arr[1], arr[2], arr[3]);
+		double one = (13.49289/(double) agent) %1;        
+		double two = (one * 13.429) %1;
+		double three = (two * 9.232) %1;
+		double four = (three * 12.042) %1;
+		return new Color(one, two, three, four);
 	}
 
 }
