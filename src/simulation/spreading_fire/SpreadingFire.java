@@ -9,6 +9,7 @@ import model.Cell;
 import model.Grid;
 import model.NeighborFactory;
 import model.Reader;
+import model.Stats;
 import simulation.Simulation;
 
 public class SpreadingFire extends Simulation {
@@ -19,10 +20,10 @@ public class SpreadingFire extends Simulation {
 	private Random myRandom = new Random();
 	private final String characteristicFire = "fire";
 
-	public SpreadingFire(Map<String, Integer> globalChars) {
-		super(globalChars);
-		if (globalChars.keySet().contains("prob")) {
-			probCatch = globalChars.get("prob")/100.0;
+	public SpreadingFire(Stats stats) {
+		super(stats);
+		if (stats.getGlobalChars().keySet().contains("prob")) {
+			probCatch = stats.getGlobalChars().get("prob")/100.0;
 		}
 	}
 

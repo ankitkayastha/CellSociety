@@ -13,10 +13,11 @@ import model.Reader;
 import model.Stats;
 
 public abstract class Simulation {	
-	protected int thisSim;
-	protected int thisShape;
+	protected Stats myStats;
 	
-	public Simulation(Map<String, Integer> globalChars, int thisSim, int thisShape){}
+	public Simulation(Stats stats){
+		myStats = stats;
+	}
 		
 	public abstract void update(Grid currentGrid, Stats myStats);
 	

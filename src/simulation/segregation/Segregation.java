@@ -11,28 +11,32 @@ import model.NeighborFactory;
 import model.Reader;
 import model.Stats;
 import simulation.Simulation;
+import simulation.spreading_fire.SpreadingFireCell;
 
 public class Segregation extends Simulation {
 	private final int EMPTY = 0; 
+	private final int simNumber;
 	private double threshold;
 	private String thresh = "threshold";
 	private Color[] myColors;
 	private Random myRandom;
 	private String agents = "agents";
 	private final String agent = "agent";
-
-	public Segregation(Map<String, Integer> globalChars) {
-		super(globalChars, EMPTY, EMPTY);
-		if (globalChars.keySet().contains(thresh)){
-			threshold = globalChars.get(thresh);
+	private SpreadingFireCell fireCellManager;
+	
+	public Segregation(Stats stats) {
+		super(stats);
+		if (stats.getGlobalChars().keySet().contains(thresh)){
+			threshold = stats.getGlobalChars().get(thresh);
 		}
 		myRandom = new Random(1234);
 		int numAgents = 0;
-		if (globalChars.keySet().contains(agents)){
-			numAgents = globalChars.get(agents);
+		if (stats.getGlobalChars().keySet().contains(agents)){
+			numAgents = stats.getGlobalChars().get(agents);
 		}
 		myColors = new Color[numAgents + 1];
 		addColors(numAgents);
+		fireCellManager = new SpreadingFireCell
 	}
 	
 	private void addColors(int numAgents) {
@@ -61,46 +65,6 @@ public class Segregation extends Simulation {
 		}
 	}
 
-	private void move(Cell[] myArr, int index) {
-		Cell moveCell = findEmpty(myArr);
-		int agentType = myArr[index].getChars().get(agent);
-		moveCell.getChars().put(agent, agentType);
 
-		myArr[index].getChars().put(agent, EMPTY);
-	}
 	
-	private Cell findEmpty(Cell[] myArr) {
-		List<Cell> returnCell = new ArrayList<Cell>();
-		for (int i=0; i<myArr.length; i++) {
-			if (myArr[i].getChars().get(agent)==EMPTY) {
-				returnCell.add(myArr[i]);
-			}
-		}
-		return returnCell.get(myRandom.nextInt(returnCell.size()));
 	}
-	
-	private boolean hasEmpty(Cell[] myArr) {
-		for (int i=0; i<myArr.length; i++) {
-			if (myArr[i].getChars().get(agent)==EMPTY) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	private boolean isSatisfied(Cell[] myArr, int index, Stats myStats, double threshold) {
-		int numSameNeighbors = 0;
-		NeighborFactory myNeighborFactory = new NeighborFactory(myStats, super.thisSim, super.thisShape);
-		
-		List<Cell> cellNeighbors = myNeighborFactory.getNeighbors(myArr, index);		
-		int selectedCellState = myArr[index].getChars().get(agent); 
-		
-		for (Cell cell: cellNeighbors) {
-			if (cell.getChars().get(agent) == selectedCellState) {
-				numSameNeighbors++;
-			}
-		}
-		double percentageSame = (double) numSameNeighbors / cellNeighbors.size();
-		return percentageSame >= (threshold / 100.0);
-	}
-}
