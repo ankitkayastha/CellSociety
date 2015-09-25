@@ -20,6 +20,7 @@ import shape.ShapeFactory;
 import data.Stats;
 import simulation.Simulation;
 import simulation.game_of_life.GameOfLife;
+import simulation.spreading_fire.SpreadingFire;
 
 public class GuiClass {
 
@@ -165,9 +166,9 @@ public class GuiClass {
 		
 		Simulation gameOfLife = new GameOfLife(myStats);
 		sims[0] = gameOfLife;
-		/*Simulation spreadingFire = new SpreadingFire(myStats.getGlobalChars());
+		Simulation spreadingFire = new SpreadingFire(myStats);
 		sims[1] = spreadingFire;
-		Simulation segregation = new Segregation(myStats.getGlobalChars());
+		/*Simulation segregation = new Segregation(myStats.getGlobalChars());
 		sims[2] = segregation;
 		Simulation waTor = new WaTor(myStats.getGlobalChars());
 		sims[3] = waTor;*/

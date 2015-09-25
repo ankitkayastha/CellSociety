@@ -42,6 +42,7 @@ public class NeighborFactory {
 				neighborsList.add(myArr[arrDelta[i]]);
 			}
 		}
+		//System.out.printf("index: %d, row: %d, col: %d, neighbors: %d\n", index, rowNum, colNum, neighborsList.size());
 		return neighborsList;
 	}
 
@@ -97,8 +98,8 @@ public class NeighborFactory {
 			return new int[] { index - numCols, ((index % 2) - 1) * numCols - 1, ((index % 2) - 1) * numCols + 1,
 					index + numCols, (index % 2) * numCols - 1, (index % 2) * numCols + 1 };
 		} else if (currentShape == SQUARE) {
-			return new int[] { index - numCols + 1, index - numCols, index - numCols + 2, index - 1, index + 1,
-					index + numCols - 1, index + numCols - 2, index + numCols };
+			return new int[] { index - numCols, index - numCols - 1, index - numCols + 1, index - 1, index + 1,
+					index + numCols, index + numCols - 1, index + numCols + 1 };
 		}
 		return null;
 	}
