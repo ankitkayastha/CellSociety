@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import data.Stats;
 import javafx.scene.paint.Color;
 import model.Cell;
 import model.NeighborFactory;
-import model.Stats;
 import simulation.Simulation;
 
 public class SegregationCell extends Cell {
@@ -20,8 +20,8 @@ public class SegregationCell extends Cell {
 	private String agents = "agents";
 	private final String agent = "agent";
 	
-	public SegregationCell(Map<String, Integer> characteristicMap, Map<Integer, Color> colorMap) {
-		super(characteristicMap, colorMap);
+	public SegregationCell(Map<String, Integer> characteristicMap) {
+		super(characteristicMap);
 	}
 
 	@Override
@@ -30,12 +30,11 @@ public class SegregationCell extends Cell {
 	}
 
 	@Override
-	public Color getCellColor(int state) {
-		// TODO Auto-generated method stub
+	public Color getCellColor() {
 		return null;
 	}
 	
-	private void move(Cell[] myArr, int index) {
+	public void move(Cell[] myArr, int index) {
 		Cell moveCell = findEmpty(myArr);
 		int agentType = myArr[index].getChars().get(agent);
 		moveCell.getChars().put(agent, agentType);
@@ -53,7 +52,7 @@ public class SegregationCell extends Cell {
 		return returnCell.get(myRandom.nextInt(returnCell.size()));
 	}
 	
-	private boolean hasEmpty(Cell[] myArr) {
+	public boolean hasEmpty(Cell[] myArr) {
 		for (int i=0; i<myArr.length; i++) {
 			if (myArr[i].getChars().get(agent)==EMPTY) {
 			}
@@ -61,9 +60,9 @@ public class SegregationCell extends Cell {
 		return false;
 	}
 	
-	private boolean isSatisfied(Cell[] myArr, int index, Stats myStats, double threshold) {
+	public boolean isSatisfied(Cell[] myArr, int index, Stats myStats, double threshold) {
 		int numSameNeighbors = 0;
-		NeighborFactory myNeighborFactory = new NeighborFactory(myStats, super.thisSim, super.thisShape);
+		NeighborFactory myNeighborFactory = new NeighborFactory(myStats);
 		
 		List<Cell> cellNeighbors = myNeighborFactory.getNeighbors(myArr, index);		
 		int selectedCellState = myArr[index].getChars().get(agent); 
