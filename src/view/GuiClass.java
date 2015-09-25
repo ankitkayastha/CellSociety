@@ -16,6 +16,7 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import model.Grid;
 import model.Reader;
+import model.ShapeFactory;
 import model.Stats;
 import simulation.Simulation;
 import simulation.game_of_life.GameOfLife;
@@ -37,9 +38,8 @@ public class GuiClass {
 	private double rate = 1;
 
 	private int width = 500;
-	private int height = 540;
-	private int heightWithoutToolbar = 500;
-	private final int TOOLBAR_HEIGHT = 40;
+	private int height = 500;
+	private int toolbar = 40;
 
 	private ResourceBundle myResources;
 
@@ -154,6 +154,8 @@ public class GuiClass {
 		tileButtons.setHgap(20.0);
 		tileButtons.getChildren().addAll(playButton, pauseButton, stopButton, ffButton, sdButton, stepButton,
 				openButton);
+		tileButtons.setLayoutX(0);
+		tileButtons.setLayoutY(height);
 
 		root.getChildren().add(tileButtons);
 		return myScene;
@@ -162,18 +164,19 @@ public class GuiClass {
 	private void initializeGrid() {
 		Reader myReader = new Reader();
 		myStats = new Stats(myReader);
+		myStats.putDimensions(height, width);
 		
-		Simulation gameOfLife = new GameOfLife(myStats.getGlobalChars());
+		Simulation gameOfLife = new GameOfLife(myStats);
 		sims[0] = gameOfLife;
-		Simulation spreadingFire = new SpreadingFire(myStats.getGlobalChars());
+		/*Simulation spreadingFire = new SpreadingFire(myStats.getGlobalChars());
 		sims[1] = spreadingFire;
 		Simulation segregation = new Segregation(myStats.getGlobalChars());
 		sims[2] = segregation;
 		Simulation waTor = new WaTor(myStats.getGlobalChars());
-		sims[3] = waTor;
+		sims[3] = waTor;*/
 		myGrid = new Grid(myStats);
 		thisSim = sims[myReader.getSimNum()];
-		System.out.println(myReader.getGlobalChars().toString());
+		System.out.println(myStats.getGlobalChars().toString());
 		System.out.printf("About to initialize Sim: %d\n", myStats.getGlobalChars().get("sim"));
 		// TODO: make sim a parameter
 		initDisplay();
@@ -207,10 +210,10 @@ public class GuiClass {
 
 	public void initDisplay() {
 		shapeList = new ArrayList<Shape>();
+		ShapeFactory myShapeFactory = new ShapeFactory(myStats);
 		for (int i = 0; i < myStats.getSize(); i++) {
-			Shape newShape = getCellShape(i, width, heightWithoutToolbar, TOOLBAR_HEIGHT, myStats.getGlobalChars().get("rows"),
-					myStats.getGlobalChars().get("cols"));
-			newShape.setFill(getCellColor(i, myGrid));
+			Shape newShape = myShapeFactory.getShape(i);
+			newShape.setFill(myGrid.getCell(i).getCellColor());
 			root.getChildren().add(newShape);
 			shapeList.add(newShape);
 		}
@@ -220,7 +223,7 @@ public class GuiClass {
 	public void display() {
 		for (int i = 0; i < myStats.getSize(); i++) {
 			Shape currentShape = shapeList.get(i);
-			currentShape.setFill(getCellColor(i, myGrid));
+			currentShape.setFill(myGrid.getCell(i).getCellColor());
 		}
 	}
 }

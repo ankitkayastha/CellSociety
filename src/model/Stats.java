@@ -27,4 +27,9 @@ public class Stats {
 	public List<Map<String, Integer>> getData() {
 		return data;
 	}
+	
+	public void putDimensions(int height, int width) {
+		globalChars.put("height", height);
+		globalChars.put("width",  width);
+	}
 }
