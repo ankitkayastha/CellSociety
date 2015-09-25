@@ -1,23 +1,13 @@
 package simulation.segregation;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import data.Stats;
 import javafx.scene.paint.Color;
 import model.Cell;
-import model.NeighborFactory;
-import simulation.Simulation;
 
 public class SegregationCell extends Cell {
-	private final int EMPTY = 0;
-	private double threshold;
-	private String thresh = "threshold";
-	private Color[] myColors;
 	private Random myRandom;
-	private String agents = "agents";
 	private final String agent = "agent";
 	
 	public SegregationCell(Map<String, Integer> characteristicMap) {
@@ -26,56 +16,21 @@ public class SegregationCell extends Cell {
 
 	@Override
 	public void fillColorMap() {
-		
+		if (!(getColorMap().containsKey(getChars().get(agent))))
+			getColorMap().put(getChars().get(agent), generateColor());
 	}
-
+	
 	@Override
 	public Color getCellColor() {
-		return null;
+		return getColorMap().get(getChars().get(agent));
 	}
 	
-	public void move(Cell[] myArr, int index) {
-		Cell moveCell = findEmpty(myArr);
-		int agentType = myArr[index].getChars().get(agent);
-		moveCell.getChars().put(agent, agentType);
-
-		myArr[index].getChars().put(agent, EMPTY);
-	}
-	
-	private Cell findEmpty(Cell[] myArr) {
-		List<Cell> returnCell = new ArrayList<Cell>();
-		for (int i=0; i<myArr.length; i++) {
-			if (myArr[i].getChars().get(agent)==EMPTY) {
-				returnCell.add(myArr[i]);
-			}
+	public Color generateColor() {
+		double[] arr = new double[4];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = myRandom.nextDouble();
 		}
-		return returnCell.get(myRandom.nextInt(returnCell.size()));
+		return new Color(arr[0], arr[1], arr[2], arr[3]);
 	}
-	
-	public boolean hasEmpty(Cell[] myArr) {
-		for (int i=0; i<myArr.length; i++) {
-			if (myArr[i].getChars().get(agent)==EMPTY) {
-			}
-		}
-		return false;
-	}
-	
-	public boolean isSatisfied(Cell[] myArr, int index, Stats myStats, double threshold) {
-		int numSameNeighbors = 0;
-		NeighborFactory myNeighborFactory = new NeighborFactory(myStats);
-		
-		List<Cell> cellNeighbors = myNeighborFactory.getNeighbors(myArr, index);		
-		int selectedCellState = myArr[index].getChars().get(agent); 
-		
-		for (Cell cell: cellNeighbors) {
-			if (cell.getChars().get(agent) == selectedCellState) {
-				numSameNeighbors++;
-			}
-		}
-		double percentageSame = (double) numSameNeighbors / cellNeighbors.size();
-		return percentageSame >= (threshold / 100.0);
-	}
-
-
 
 }
