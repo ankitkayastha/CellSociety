@@ -3,26 +3,28 @@ package model;
 import java.util.Map;
 
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import simulation.Simulation;
 
-public class Square extends Cell{
+public class Square extends CellShape {
 
-	public Square(Map<String, Integer> map) {
-		super(map);
-		// TODO Auto-generated constructor stub
-	}
+
 
 	@Override
-	public Color getCellColor(Simulation mySim) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Shape getCellShape() {
-		// TODO Auto-generated method stub
-		return null;
+	public Shape getCellShape(int index, Stats stats) {
+		int height = stats.getGlobalChars().get("height");
+		int width = stats.getGlobalChars().get("width");
+		int rows = stats.getGlobalChars().get("rows");
+		int cols = stats.getGlobalChars().get("cols");
+		double ySize = (double) height / rows;
+		double xSize = (double) width / cols;
+		int colNum = index % cols;
+		int rowNum = index / cols;
+		Rectangle thisRect = new Rectangle(colNum * xSize, rowNum * ySize, xSize, ySize);
+		thisRect.setStrokeWidth(1);
+		thisRect.setStroke(Color.LIGHTGRAY);
+		return thisRect;
 	}
 
 }
