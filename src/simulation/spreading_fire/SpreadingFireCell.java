@@ -16,7 +16,7 @@ public class SpreadingFireCell extends Cell {
 
 	@Override
 	public void fillColorMap() {
-		getColorMap().put(EMPTY, Color.WHITE);
+		getColorMap().put(EMPTY, Color.YELLOW);
 		getColorMap().put(TREE, Color.GREEN);
 		getColorMap().put(BURNING, Color.RED);
 	}

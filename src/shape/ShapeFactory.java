@@ -14,6 +14,10 @@ public class ShapeFactory {
 			CellShape thisCellShape = new Square();
 			return thisCellShape.getCellShape(index, myStats);
 		}
+		else if (myStats.getGlobalChars().get("shape")==3) {
+			CellShape thisCellShape = new Triangle();
+			return thisCellShape.getCellShape(index,  myStats);
+		}
 		return null;
 	}
 }
