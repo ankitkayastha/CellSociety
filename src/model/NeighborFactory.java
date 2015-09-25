@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import data.Stats;
+
 public class NeighborFactory {
 	private int numRows;
 	private int numCols;
@@ -21,7 +23,9 @@ public class NeighborFactory {
 	public NeighborFactory(Stats myStats) {
 		currentShape = myStats.getGlobalChars().get("shape");
 		currentSim = myStats.getGlobalChars().get("sim");
-		currentGridType = myStats.getGlobalChars().get("type");
+		numCols = myStats.getGlobalChars().get("cols");
+		numRows = myStats.getGlobalChars().get("rows");
+		//currentGridType = myStats.getGlobalChars().get("type");
 	}
 
 	public List<Cell> getNeighbors(Cell[] myArr, int index) {

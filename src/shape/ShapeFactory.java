@@ -1,5 +1,6 @@
-package model;
+package shape;
 
+import data.Stats;
 import javafx.scene.shape.Shape;
 
 public class ShapeFactory {
@@ -9,9 +10,10 @@ public class ShapeFactory {
 	}
 	
 	public Shape getShape(int index) {
-		CellShape thisCellShape = new CellShape();
 		if (myStats.getGlobalChars().get("shape")==4) {
+			CellShape thisCellShape = new Square();
 			return thisCellShape.getCellShape(index, myStats);
 		}
+		return null;
 	}
 }

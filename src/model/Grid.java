@@ -1,4 +1,5 @@
 package model;
+import data.Stats;
 
 public class Grid {
 

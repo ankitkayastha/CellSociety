@@ -15,14 +15,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import model.Grid;
-import model.Reader;
-import model.ShapeFactory;
-import model.Stats;
+import data.Reader;
+import shape.ShapeFactory;
+import data.Stats;
 import simulation.Simulation;
 import simulation.game_of_life.GameOfLife;
-import simulation.segregation.Segregation;
-import simulation.spreading_fire.SpreadingFire;
-import simulation.wator.WaTor;
 
 public class GuiClass {
 
@@ -57,7 +54,7 @@ public class GuiClass {
 	public Scene init(Stage stage, Timeline animation) {
 
 		root = new Group();
-		myScene = new Scene(root, width, height, Color.ALICEBLUE);
+		myScene = new Scene(root, width, height+toolbar, Color.ALICEBLUE);
 
 		Button playButton = new Button(myResources.getString("PlayButtonText"));
 		playButton.setDisable(true);
@@ -213,6 +210,7 @@ public class GuiClass {
 		ShapeFactory myShapeFactory = new ShapeFactory(myStats);
 		for (int i = 0; i < myStats.getSize(); i++) {
 			Shape newShape = myShapeFactory.getShape(i);
+			myGrid.getCell(i).fillColorMap();
 			newShape.setFill(myGrid.getCell(i).getCellColor());
 			root.getChildren().add(newShape);
 			shapeList.add(newShape);

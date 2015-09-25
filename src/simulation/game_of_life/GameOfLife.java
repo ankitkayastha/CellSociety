@@ -1,12 +1,11 @@
 package simulation.game_of_life;
 
 import java.util.List;
-import java.util.Map;
 
+import data.Stats;
 import model.Cell;
 import model.Grid;
 import model.NeighborFactory;
-import model.Stats;
 import simulation.Simulation;
 
 public class GameOfLife extends Simulation {

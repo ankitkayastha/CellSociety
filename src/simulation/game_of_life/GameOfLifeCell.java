@@ -16,7 +16,7 @@ public class GameOfLifeCell extends Cell {
 	@Override
 	public void fillColorMap() {
 		getColorMap().put(DEAD, Color.BLACK);
-		getColorMap().put(ALIVE, Color.GREEN);
+		getColorMap().put(ALIVE, Color.LAWNGREEN);
 	}
 	@Override
 	public Color getCellColor() {

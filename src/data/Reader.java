@@ -1,4 +1,4 @@
-package model;
+package data;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +42,18 @@ public class Reader {
 		System.out.println(inputFile.getName().split("-")[0]);
 
 		sim = inputFile.getName().split("-")[0];
+		if (sim.equals("game_of_life")) {
+			globalChars.put("sim", 0);
+		}
+		else if (sim.equals("spreading_fire")) {
+			globalChars.put("sim", 1);
+		}
+		else if (sim.equals("segregation")) {
+			globalChars.put("sim", 2);
+		}
+		else if (sim.equals("wa_tor")) {
+			globalChars.put("sim", 3);
+		}
 		parseXML();
 		return true;
 	}

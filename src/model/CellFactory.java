@@ -2,6 +2,9 @@ package model;
 
 import java.util.Map;
 
+import data.Stats;
+import simulation.game_of_life.GameOfLifeCell;
+
 public class CellFactory {
 	Stats myStats;
 	public CellFactory(Stats myStats) {

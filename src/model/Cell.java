@@ -9,6 +9,7 @@ public abstract class Cell {
 	
 	public Cell(Map<String, Integer> characteristicMap) {
 		myCharacteristicMap = characteristicMap;
+		myColorMap = new HashMap<Integer, Color>();
 	}
 	
 	public Map<Integer, Color> getColorMap() {

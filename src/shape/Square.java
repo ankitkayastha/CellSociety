@@ -1,15 +1,11 @@
-package model;
+package shape;
 
-import java.util.Map;
-
+import data.Stats;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import simulation.Simulation;
 
 public class Square extends CellShape {
-
-
 
 	@Override
 	public Shape getCellShape(int index, Stats stats) {
