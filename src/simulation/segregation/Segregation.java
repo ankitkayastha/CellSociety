@@ -4,12 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import data.Stats;
 import javafx.scene.paint.Color;
 import model.Cell;
 import model.Grid;
 import model.NeighborFactory;
-import model.Reader;
-import model.Stats;
 import simulation.Simulation;
 import simulation.spreading_fire.SpreadingFireCell;
 

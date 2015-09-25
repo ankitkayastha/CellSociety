@@ -1,15 +1,10 @@
 package simulation.spreading_fire;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
-import javafx.scene.paint.Color;
+import data.Stats;
 import model.Cell;
 import model.Grid;
 import model.NeighborFactory;
-import model.Reader;
-import model.Stats;
 import simulation.Simulation;
 
 public class SpreadingFire extends Simulation {
@@ -17,9 +12,10 @@ public class SpreadingFire extends Simulation {
 	private final int TREE = 1; // non burning tree
 	private final int BURNING = 2; // burning tree
 	private double probCatch; // probability of a cell catching fire based on
-	private Random myRandom = new Random();
 	private final String characteristicFire = "fire";
-
+	private SpreadingFireCellCheck myCheck = new SpreadingFireCellCheck();
+	
+	
 	public SpreadingFire(Stats stats) {
 		super(stats);
 		if (stats.getGlobalChars().keySet().contains("prob")) {
@@ -35,12 +31,12 @@ public class SpreadingFire extends Simulation {
 		for (int i = 0; i < myStats.getSize(); i++) {
 			Cell oldCell = oldGrid[i];
 			Cell myCell = myGridGrid[i];
-			NeighborFactory myNeighborFactory = new NeighborFactory(myStats, super.thisSim, super.thisShape);
+			NeighborFactory myNeighborFactory = new NeighborFactory(myStats);
 			
 			List<Cell> cellNeighbors = myNeighborFactory.getNeighbors(oldGrid, i);
 			if (oldCell.getChars().get(characteristicFire) == TREE) {
-				if (areNeighborsBurning(cellNeighbors)) {
-						myCell.getChars().put(characteristicFire, generateProbCatchState());
+				if (myCheck.areNeighborsBurning(cellNeighbors)) {
+						myCell.getChars().put(characteristicFire, myCheck.generateProbCatchState(probCatch));
 				}
 			}			
 			if (oldCell.getChars().get(characteristicFire) == BURNING) {
@@ -49,20 +45,5 @@ public class SpreadingFire extends Simulation {
 		}
 	}
 	
-	private boolean areNeighborsBurning(List<Cell> cellNeighbors) {
-		int numBurningNeighbors = 0;
-		for (Cell cell: cellNeighbors) {
-			if (cell.getChars().get(characteristicFire) == BURNING)
-				numBurningNeighbors++;
-		}
-		return numBurningNeighbors > 0;
-	}
-	
-	private int generateProbCatchState() {
-		double prob = myRandom.nextDouble();
-		if (prob < probCatch) {
-			return BURNING;
-		} else
-			return TREE;
-	}
+
 }
