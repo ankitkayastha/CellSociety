@@ -9,7 +9,8 @@ public class Grid {
 
 		// populate the grid, iterate through the cells
 		for (int i = 0; i < myStats.getSize(); i++) {
-			Cell initCell = new Cell(myStats.getCellData(i));
+			CellFactory thisCellFactory = new CellFactory(myStats);
+			Cell initCell = thisCellFactory.createCell(myStats.getCellData(i));
 			myGrid[i] = initCell;
 		}
 	}

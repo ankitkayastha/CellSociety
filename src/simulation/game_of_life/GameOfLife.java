@@ -26,7 +26,7 @@ public class GameOfLife extends Simulation {
 		for (int i = 0; i < myStats.getSize(); i++) {
 			Cell oldCell = oldGrid[i];
 			Cell myCell = myGridGrid[i];
-			NeighborFactory myNeighborFactory = new NeighborFactory(myStats, super.thisSim, super.thisShape);
+			NeighborFactory myNeighborFactory = new NeighborFactory(myStats);
 			
 			List<Cell> cellNeighbors = myNeighborFactory.getNeighbors(oldGrid, i);
 
