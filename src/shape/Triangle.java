@@ -28,37 +28,49 @@ public class Triangle extends CellShape{
 		double y3 = 0;
 		
 		if (rowNum % 2 == 0 && index % 2 == 0) {
-			x1 = (sideLength * (index / 2)) % (sideLength * cols);
-			y1 = triangleHeight * (rowNum);
-			x2 = x1+sideLength;
-			y2 = y1;
-			x3 = (x1+x2)/2;
-			y3 = y1 + triangleHeight;
+			int shiftIndex = index % cols;
+			// top shift
+			x1 = (sideLength * (shiftIndex /2))+ sideLength/2;
+			
+			//x1 = (sideLength * (index / 2)) % (sideLength * cols);
+			y1 = triangleHeight * (rowNum) +triangleHeight;
+			x2 = x1-sideLength/2;
+			y2 = y1-triangleHeight;
+			x3 = x1+sideLength/2;
+			y3 = y2;
 		}
 		else if (rowNum % 2 == 0 && index % 2 ==1) {
-			x3 = (((index-1)/2)*sideLength) % (cols * sideLength)+ (sideLength);
-			y3 = triangleHeight * (rowNum);
-			x1 = x3 - sideLength/2;
-			y1 = y3+triangleHeight;
-			x2 = x3+ sideLength/2;
-			y2 = y1;
+			int shiftIndex = (index-1) % cols;
+			
+			x2 = (sideLength * ((shiftIndex) /2))+ sideLength/2;
+			y2 = triangleHeight * (rowNum) + triangleHeight;
+			x1 = x2 + sideLength/2;
+			y1 = y2 - triangleHeight;
+			x3 = x2 + sideLength;
+			y3 = y2;
 		}
 		else if (rowNum % 2 == 1 && index % 2 == 0) {
+			int shiftIndex = index % (cols);
+			x1 = (sideLength * (shiftIndex /2))+ sideLength/2;
 			// bottom of second row
-			x1 = (sideLength * (index / 2)) % (cols * sideLength / 2);
-			y1 = (rowNum-1)*triangleHeight + 2*triangleHeight;
-			x2 = x1 + sideLength;
-			y2 = y1;
-			x3 = (x1+x2)/2;
-			y3 = y1-triangleHeight;
+			y1 = (rowNum-1)*triangleHeight + triangleHeight;
+			x2 = x1 - sideLength/2;
+			y2 = y1+triangleHeight;
+			x3 = x1 + sideLength/2;
+			y3 = y2;
 		}
 		else if (rowNum %2 == 1 && index % 2 == 1) {
-			x3 = (((index-1)/2)*sideLength) % (cols * sideLength / 2)+ (sideLength);
-			y3 = (rowNum-1)*triangleHeight + 2*triangleHeight;
-			x1 = x3 - sideLength/2;
-			y1 = y3 - triangleHeight;
-			x2 = x3 + sideLength/2;
-			y2 = y1;
+			int shiftIndex = (index-1) % cols;
+			
+			x2 = (sideLength * ((shiftIndex) /2))+ sideLength/2;
+
+			y2 = (rowNum-1)*triangleHeight + triangleHeight;	
+			
+			x1 = x2 + sideLength/2;
+			y1 = y2 + triangleHeight;
+			x3 = x2 + sideLength;
+			y3 = y2;
+			
 		}
 		
 		Polygon thisTriangle = new Polygon();
