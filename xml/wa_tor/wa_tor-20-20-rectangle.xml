@@ -29,6 +29,10 @@
          <name>fishBreed</name>
          <value>3</value>
       </chars>
+      <chars>
+         <name>sim</name>
+         <value>3</value>
+      </chars>
    </global>
    <index>400</index>
    <squares>

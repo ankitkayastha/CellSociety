@@ -25,6 +25,10 @@
          <name>type</name>
          <value>1</value>
       </chars>
+      <chars>
+         <name>sim</name>
+         <value>2</value>
+      </chars>
    </global>
    <index>25</index>
    <squares>

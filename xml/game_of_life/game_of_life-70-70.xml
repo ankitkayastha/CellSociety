@@ -17,6 +17,10 @@
          <name>type</name>
          <value>1</value>
       </chars>
+      <chars>
+         <name>sim</name>
+         <value>0</value>
+      </chars>
    </global>
    <index>4900</index>
    <squares>

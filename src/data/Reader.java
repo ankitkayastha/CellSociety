@@ -38,22 +38,6 @@ public class Reader {
 			return false;
 		}
 		System.out.println(inputFile.getName());
-
-		System.out.println(inputFile.getName().split("-")[0]);
-
-		sim = inputFile.getName().split("-")[0];
-		if (sim.equals("game_of_life")) {
-			globalChars.put("sim", 0);
-		}
-		else if (sim.equals("spreading_fire")) {
-			globalChars.put("sim", 1);
-		}
-		else if (sim.equals("segregation")) {
-			globalChars.put("sim", 2);
-		}
-		else if (sim.equals("wa_tor")) {
-			globalChars.put("sim", 3);
-		}
 		parseXML();
 		return true;
 	}
@@ -120,19 +104,7 @@ public class Reader {
 	}
 	
 	public int getSimNum() {
-		if (sim.equals("game_of_life")) {
-			return 0;
-		}
-		else if (sim.equals("spreading_fire")) {
-			return 1;
-		}
-		else if (sim.equals("segregation")) {
-			return 2;
-		}
-		else if (sim.equals("wa_tor")) {
-			return 3;
-		}
-		return -1;
+		return globalChars.get("sim");
 	}
 	
 	public int getSize() {
