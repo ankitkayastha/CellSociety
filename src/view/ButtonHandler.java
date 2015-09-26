@@ -128,7 +128,8 @@ public class ButtonHandler {
 		tileButtons.setPrefColumns(2);
 		tileButtons.setPadding(new Insets(7.5, 0, 7.5, 7.5));
 		tileButtons.setHgap(20.0);
-		tileButtons.getChildren().addAll(playButton, pauseButton, stopButton, ffButton, sdButton, stepButton,
+		tileButtons.setVgap(10.0);
+		tileButtons.getChildren().addAll(playButton, pauseButton, stepButton, stopButton, sdButton, ffButton,
 				openButton, wrapButton);
 		tileButtons.setLayoutX(width);
 		tileButtons.setLayoutY(0);

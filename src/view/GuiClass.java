@@ -8,6 +8,10 @@ import java.util.ResourceBundle;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
@@ -27,28 +31,40 @@ public class GuiClass {
 	private Simulation thisSim;
 	private Stats myStats;
 	private List<Shape> shapeList;
+	private GraphHandler gh;
+	private int stepNum;
 
 	private int width = 500;
 	private int height = 500;
 	private int toolbar = 150;
-	private int graphbar = 100;
+	private int graphbar = 150;
+	private int graphbarSmall = 100;
 
 	private ResourceBundle myResources;
 
 	public GuiClass(ResourceBundle myResources) {
 		this.myResources = myResources;
+		stepNum = 19;
 	}
 
 	// step function for Timeline
 	public void step() {
+		stepNum++;
 		thisSim.update(myGrid, myStats);
+		gh.updateGraph(myGrid.getGrid(), myStats, stepNum);
 		display();
 	}
 
 	// sets up the basic Scene
 	public Scene init(Stage stage, Timeline animation) {
 		root = new Group();
-		myScene = new Scene(root, width + toolbar, height+graphbar, Color.ALICEBLUE);
+		myScene = new Scene(root, width + toolbar, height + graphbar, Color.ALICEBLUE);
+		myScene.getStylesheets().add("/css/graph.css");
+
+		gh = new GraphHandler();
+		LineChart<Number, Number> lineChart = gh.createGraph(height, graphbarSmall, width);
+		root.getChildren().add(lineChart);
+
 		ButtonHandler buttonHandler = new ButtonHandler(this, root, animation, myResources, height, width);
 		buttonHandler.createButtons();
 		return myScene;
@@ -79,7 +95,7 @@ public class GuiClass {
 			root.getChildren().remove(thisShape);
 		}
 	}
-	
+
 	public void toggleType() {
 		myStats.flipType();
 	}
