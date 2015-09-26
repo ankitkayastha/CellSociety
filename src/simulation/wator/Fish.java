@@ -26,7 +26,6 @@ public class Fish extends Creature {
 				if (oldCell.getChars().get(BREED) >= fishBreed) {
 					if (hasAnimal(i, myGridGrid, stats, KELP)) {
 						reproduce(i, myGridGrid, stats, FISH, KELP);
-						System.out.println("Fish is reproducing");
 					} 
 				}
 				else if (hasAnimal(i, myGridGrid, stats, KELP)) {
