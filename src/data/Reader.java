@@ -1,5 +1,6 @@
 package data;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,14 +23,14 @@ public class Reader {
 	private static Map<String, Integer> globalChars;
 	private static List<Map<String, Integer>> data;
 
-	public Reader() {
+	public Reader() throws IOException {
 		globalChars = new TreeMap<String, Integer>();;
 		data = new ArrayList<Map<String, Integer>>();;
 		openFile();
 	}
 
 	
-	private boolean openFile() {
+	private boolean openFile() throws IOException {
 		FileChooser fileChooser = new FileChooser();
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
 		fileChooser.getExtensionFilters().add(extFilter);
@@ -39,6 +40,7 @@ public class Reader {
 		}
 		System.out.println(inputFile.getName());
 		parseXML();
+		checkData();
 		return true;
 	}
 
@@ -97,6 +99,19 @@ public class Reader {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void checkData() throws IOException {
+		if (globalChars.get("sim")<0 || globalChars.get("sim")>3) {
+			throw new IOException();
+		} 
+		if (globalChars.get("type") <0 || globalChars.get("type")>1) {
+			throw new IOException();
+		}
+		if (globalChars.get("rows")*globalChars.get("cols") != data.size()) {
+			throw new IOException();
+		}
+		return;
 	}
 
 	public String getSim() {

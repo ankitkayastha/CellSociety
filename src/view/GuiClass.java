@@ -1,5 +1,6 @@
 package view;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -19,10 +20,7 @@ import data.Reader;
 import shape.ShapeFactory;
 import data.Stats;
 import simulation.Simulation;
-import simulation.game_of_life.GameOfLife;
-import simulation.segregation.Segregation;
-import simulation.spreading_fire.SpreadingFire;
-import simulation.wator.WaTor;
+import simulation.SimulationFactory;
 
 public class GuiClass {
 
@@ -33,7 +31,6 @@ public class GuiClass {
 	private Simulation thisSim;
 	private Stats myStats;
 	private List<Shape> shapeList;
-	private Simulation[] sims = new Simulation[4];
 
 	private double rate = 1;
 
@@ -162,23 +159,20 @@ public class GuiClass {
 	}
 
 	private void initializeGrid() {
-		Reader myReader = new Reader();
-		myStats = new Stats(myReader);
+		Reader myReader;
+		try {
+			myReader = new Reader();
+			myStats = new Stats(myReader);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		myStats.putDimensions(height, width);
-		
-		Simulation gameOfLife = new GameOfLife(myStats);
-		sims[0] = gameOfLife;
-		Simulation spreadingFire = new SpreadingFire(myStats);
-		sims[1] = spreadingFire;
-		Simulation segregation = new Segregation(myStats);
-		sims[2] = segregation;
-		Simulation waTor = new WaTor(myStats);
-		sims[3] = waTor;
+		SimulationFactory simFactory = new SimulationFactory(myStats);
 		myGrid = new Grid(myStats);
-		thisSim = sims[myReader.getSimNum()];
+		thisSim = simFactory.createSim();
 		System.out.println(myStats.getGlobalChars().toString());
 		System.out.printf("About to initialize Sim: %d\n", myStats.getGlobalChars().get("sim"));
-		// TODO: make sim a parameter
 		initDisplay();
 	}
 
