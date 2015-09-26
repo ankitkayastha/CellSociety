@@ -49,6 +49,12 @@ public class GameOfLife extends Simulation {
 					myCell.getChars().put(characteristic, DEAD);
 				}
 			}
+			if (i==14) {
+				System.out.printf(myCell.getChars().toString());
+				for (int j=0; j<cellNeighbors.size(); j++) {
+					System.out.printf("CellNeighbors: %s\n", cellNeighbors.get(j).getChars().toString());
+				}
+			}
 			//System.out.printf("NumLiveNeights: %d\n", numLiveNeighbors);
 		}
 	}

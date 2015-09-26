@@ -17,6 +17,10 @@
          <name>prob</name>
          <value>30</value>
       </chars>
+      <chars>
+         <name>type</name>
+         <value>1</value>
+      </chars>
    </global>
    <index>25</index>
    <squares>
