@@ -13,6 +13,10 @@
          <name>cols</name>
          <value>30</value>
       </chars>
+      <chars>
+         <name>type</name>
+         <value>1</value>
+      </chars>
    </global>
    <index>900</index>
    <squares>

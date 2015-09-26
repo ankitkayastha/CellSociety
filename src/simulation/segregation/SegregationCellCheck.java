@@ -61,7 +61,6 @@ public class SegregationCellCheck {
 				numSameNeighbors++;
 			}
 		}
-		System.out.printf("index: %d, numsame: %d\n", index, numSameNeighbors);
 
 		double percentageSame = (double) numSameNeighbors / cellNeighbors.size();
 		return percentageSame >= (threshold / 100.0);
