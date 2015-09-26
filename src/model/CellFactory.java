@@ -6,6 +6,7 @@ import data.Stats;
 import simulation.game_of_life.GameOfLifeCell;
 import simulation.segregation.SegregationCell;
 import simulation.spreading_fire.SpreadingFireCell;
+import simulation.wator.WaTorCell;
 
 public class CellFactory {
 	Stats myStats;
@@ -24,7 +25,7 @@ public class CellFactory {
 			return new SegregationCell(charMap);
 		}
 		else if (myStats.getGlobalChars().get("sim")==3) {
-			// return new TODO:
+			 return new WaTorCell(charMap);
 		}
 		return null;
 	}
