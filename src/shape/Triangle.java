@@ -29,10 +29,7 @@ public class Triangle extends CellShape{
 		
 		if (rowNum % 2 == 0 && index % 2 == 0) {
 			int shiftIndex = index % cols;
-			// top shift
 			x1 = (sideLength * (shiftIndex /2))+ sideLength/2;
-			
-			//x1 = (sideLength * (index / 2)) % (sideLength * cols);
 			y1 = triangleHeight * (rowNum) +triangleHeight;
 			x2 = x1-sideLength/2;
 			y2 = y1-triangleHeight;
@@ -41,7 +38,6 @@ public class Triangle extends CellShape{
 		}
 		else if (rowNum % 2 == 0 && index % 2 ==1) {
 			int shiftIndex = (index-1) % cols;
-			
 			x2 = (sideLength * ((shiftIndex) /2))+ sideLength/2;
 			y2 = triangleHeight * (rowNum) + triangleHeight;
 			x1 = x2 + sideLength/2;
@@ -52,7 +48,6 @@ public class Triangle extends CellShape{
 		else if (rowNum % 2 == 1 && index % 2 == 0) {
 			int shiftIndex = index % (cols);
 			x1 = (sideLength * (shiftIndex /2))+ sideLength/2;
-			// bottom of second row
 			y1 = (rowNum-1)*triangleHeight + triangleHeight;
 			x2 = x1 - sideLength/2;
 			y2 = y1+triangleHeight;
@@ -61,16 +56,12 @@ public class Triangle extends CellShape{
 		}
 		else if (rowNum %2 == 1 && index % 2 == 1) {
 			int shiftIndex = (index-1) % cols;
-			
 			x2 = (sideLength * ((shiftIndex) /2))+ sideLength/2;
-
 			y2 = (rowNum-1)*triangleHeight + triangleHeight;	
-			
 			x1 = x2 + sideLength/2;
 			y1 = y2 + triangleHeight;
 			x3 = x2 + sideLength;
 			y3 = y2;
-			
 		}
 		
 		Polygon thisTriangle = new Polygon();

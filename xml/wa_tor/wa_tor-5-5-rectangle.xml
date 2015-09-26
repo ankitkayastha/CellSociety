@@ -25,6 +25,10 @@
          <name>sharkLife</name>
          <value>3</value>
       </chars>
+      <chars>
+         <name>type</name>
+         <value>0</value>
+      </chars>
    </global>
    <index>25</index>
    <squares>

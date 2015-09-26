@@ -11,7 +11,6 @@ public class WaTor extends Simulation {
 	protected final int KELP = 0;
 	protected final int FISH = 1;
 	protected final int SHARK = 2;
-	private final String ANIMAL = "animal";
 	private Creature myFish;
 	private Creature myShark;
 	
