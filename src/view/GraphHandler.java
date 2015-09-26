@@ -3,24 +3,19 @@ package view;
 import java.util.ArrayList;
 
 import data.Stats;
-import javafx.geometry.Point2D;
-import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Data;
-import javafx.scene.chart.XYChart.Series;
 import model.Cell;
 
 public class GraphHandler {
 	private LineChart<Number, Number> graph;
-	private ArrayList<XYChart.Series> allSeries;
+	private ArrayList<XYChart.Series<Number, Number>> allSeries;
 	private NumberAxis xAxis;
 	private NumberAxis yAxis;
 	
 	public GraphHandler() {
-		allSeries = new ArrayList<XYChart.Series>();
+		allSeries = new ArrayList<XYChart.Series<Number, Number>>();
 	}
 
 	public void updateGraph(Cell[] cells, Stats myStats, int stepNum) {
@@ -37,12 +32,12 @@ public class GraphHandler {
 			}
 			int alivePercent = alive*100/total;
 			int deadPercent = dead*100/total;
-			XYChart.Series thisSeries = allSeries.get(0);
+			XYChart.Series<Number, Number> thisSeries = allSeries.get(0);
 			thisSeries.getData().remove(0);
-			thisSeries.getData().add(new XYChart.Data(stepNum, alivePercent));
-			XYChart.Series thisSeries2 = allSeries.get(1);
+			thisSeries.getData().add(new XYChart.Data<Number, Number>(stepNum, alivePercent));
+			XYChart.Series<Number, Number> thisSeries2 = allSeries.get(1);
 			thisSeries2.getData().remove(0);
-			thisSeries2.getData().add(new XYChart.Data(stepNum, deadPercent));
+			thisSeries2.getData().add(new XYChart.Data<Number, Number>(stepNum, deadPercent));
 			xAxis.setLowerBound(stepNum-20);
 			xAxis.setUpperBound(stepNum);
 		}
@@ -64,25 +59,12 @@ public class GraphHandler {
 		graph.setTitle("Populations");
 
 		for (int seriesNum = 0; seriesNum < 2; seriesNum++) {
-			XYChart.Series<Number, Number> series = new XYChart.Series();
+			XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
 			for (int i = 0; i < 20; i++) {
-				series.getData().add(new XYChart.Data(i, 0));
+				series.getData().add(new XYChart.Data<Number, Number>(i, 0));
 			}
 			graph.getData().add(series);
 			allSeries.add(series);
-			/*for (Data<Number, Number> data : series.getData()) {
-	            Node node = data.getNode() ;
-	            node.setCursor(Cursor.HAND);
-	            node.setOnMouseDragged(e -> {
-	                Point2D pointInScene = new Point2D(e.getSceneX(), e.getSceneY());
-	                double xAxisLoc = xAxis.sceneToLocal(pointInScene).getX();
-	                double yAxisLoc = yAxis.sceneToLocal(pointInScene).getY();
-	                Number x = xAxis.getValueForDisplay(xAxisLoc);
-	                Number y = yAxis.getValueForDisplay(yAxisLoc);
-	                data.setXValue(x);
-	                data.setYValue(y);
-	            });
-	        }*/
 		}
 
 		graph.setMaxHeight(height);
