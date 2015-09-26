@@ -23,5 +23,6 @@ public abstract class Cell {
 	public abstract void fillColorMap();
 
 	public abstract Color getCellColor();
+
 	
 }
