@@ -18,6 +18,10 @@ public class ShapeFactory {
 			CellShape thisCellShape = new Triangle();
 			return thisCellShape.getCellShape(index,  myStats);
 		}
+		else if (myStats.getGlobalChars().get("shape")==6) {
+			CellShape thisCellShape = new Hexagon();
+			return thisCellShape.getCellShape(index,  myStats);
+		}
 		return null;
 	}
 }

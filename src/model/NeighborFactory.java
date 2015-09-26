@@ -40,6 +40,7 @@ public class NeighborFactory {
 		int[] arrDelta = getIndexDelta(index);
 		for (int i = 0; i < arrDelta.length; i++) {
 			if (currentType == NOWRAP) {
+				System.out.println(arrDelta[i]);
 				if (!isOutOfBounds(rowNum + rowDelta[i], colNum + colDelta[i])) {
 					neighborsList.add(myArr[arrDelta[i]]);
 				}
@@ -48,8 +49,6 @@ public class NeighborFactory {
 				neighborsList.add(myArr[inBoundsDelta]);
 			}
 		}
-		// System.out.printf("index: %d, row: %d, col: %d, neighbors: %d\n",
-		// index, rowNum, colNum, neighborsList.size());
 		return neighborsList;
 	}
 
@@ -84,8 +83,8 @@ public class NeighborFactory {
 			return new int[] { index - numCols, index - numCols - 1, index - numCols + 1, index - 1, index + 1,
 					index + numCols, index + numCols - 1, index + numCols + 1 };
 		} else if (currentShape == HEXAGON) {
-			return new int[] { index - numCols, ((index % 2) - 1) * numCols - 1, ((index % 2) - 1) * numCols + 1,
-					index + numCols, (index % 2) * numCols - 1, (index % 2) * numCols + 1 };
+			return new int[] { index - numCols, index + ((index % 2) - 1) * numCols - 1, index + ((index % 2) - 1) * numCols + 1,
+					index + numCols, index + (index % 2) * numCols - 1, index + (index % 2) * numCols + 1 };
 		}
 		return null;
 	}

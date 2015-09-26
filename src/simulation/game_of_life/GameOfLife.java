@@ -31,7 +31,6 @@ public class GameOfLife extends Simulation {
 
 			int numLiveNeighbors = 0;
 			for (Cell cell : cellNeighbors) {
-				//System.out.printf("cell: %s\n", cell.getChars().toString());
 				if (cell.getChars().get(characteristic) == ALIVE) {
 					numLiveNeighbors++;
 				}
@@ -49,13 +48,6 @@ public class GameOfLife extends Simulation {
 					myCell.getChars().put(characteristic, DEAD);
 				}
 			}
-			if (i==14) {
-				System.out.printf(myCell.getChars().toString());
-				for (int j=0; j<cellNeighbors.size(); j++) {
-					System.out.printf("CellNeighbors: %s\n", cellNeighbors.get(j).getChars().toString());
-				}
-			}
-			//System.out.printf("NumLiveNeights: %d\n", numLiveNeighbors);
 		}
 	}
 }

@@ -70,5 +70,4 @@ public class Triangle extends CellShape{
 		thisTriangle.setStroke(Color.LIGHTGRAY);
 		return thisTriangle;
 	}
-
 }
