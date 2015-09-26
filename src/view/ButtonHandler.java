@@ -43,6 +43,8 @@ public class ButtonHandler {
 	}
 		
 	public void createButtons() {
+	//	for (int i = 0; i < )
+		
 		Button playButton = createButton(myResources.getString("PlayButtonText"));
 		Button pauseButton = createButton(myResources.getString("PauseButtonText"));
 		Button stopButton = createButton(myResources.getString("StopButtonText"));

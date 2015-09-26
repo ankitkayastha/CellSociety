@@ -7,6 +7,7 @@ import model.Cell;
 import model.CellFactory;
 import model.Grid;
 import data.Stats;
+import javafx.scene.control.Button;
 
 public abstract class Simulation {	
 	protected Stats myStats;
@@ -32,4 +33,14 @@ public abstract class Simulation {
 		}
 		return oldGrid;
 	}
+	
+	/*public void changeCellState(Grid myGrid) {
+		Cell[] arr = myGrid.getGrid();
+		for (Cell cell: arr) {
+			(cell).setOnAction((event) -> {
+				
+				
+			})
+		}
+	}*/
 }
