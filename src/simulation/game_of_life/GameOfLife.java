@@ -49,7 +49,6 @@ public class GameOfLife extends Simulation {
 					myCell.getChars().put(characteristic, DEAD);
 				}
 			}
-			//System.out.printf("NumLiveNeights: %d\n", numLiveNeighbors);
 		}
 	}
 }
