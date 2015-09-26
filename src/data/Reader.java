@@ -1,5 +1,6 @@
 package data;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,14 +23,14 @@ public class Reader {
 	private static Map<String, Integer> globalChars;
 	private static List<Map<String, Integer>> data;
 
-	public Reader() {
+	public Reader() throws IOException {
 		globalChars = new TreeMap<String, Integer>();;
 		data = new ArrayList<Map<String, Integer>>();;
 		openFile();
 	}
 
 	
-	private boolean openFile() {
+	private boolean openFile() throws IOException {
 		FileChooser fileChooser = new FileChooser();
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
 		fileChooser.getExtensionFilters().add(extFilter);
@@ -38,23 +39,8 @@ public class Reader {
 			return false;
 		}
 		System.out.println(inputFile.getName());
-
-		System.out.println(inputFile.getName().split("-")[0]);
-
-		sim = inputFile.getName().split("-")[0];
-		if (sim.equals("game_of_life")) {
-			globalChars.put("sim", 0);
-		}
-		else if (sim.equals("spreading_fire")) {
-			globalChars.put("sim", 1);
-		}
-		else if (sim.equals("segregation")) {
-			globalChars.put("sim", 2);
-		}
-		else if (sim.equals("wa_tor")) {
-			globalChars.put("sim", 3);
-		}
 		parseXML();
+		checkData();
 		return true;
 	}
 
@@ -114,25 +100,26 @@ public class Reader {
 			e.printStackTrace();
 		}
 	}
+	
+	private void checkData() throws IOException {
+		if (globalChars.get("sim")<0 || globalChars.get("sim")>3) {
+			throw new IOException();
+		} 
+		if (globalChars.get("type") <0 || globalChars.get("type")>1) {
+			throw new IOException();
+		}
+		if (globalChars.get("rows")*globalChars.get("cols") != data.size()) {
+			throw new IOException();
+		}
+		return;
+	}
 
 	public String getSim() {
 		return sim;
 	}
 	
 	public int getSimNum() {
-		if (sim.equals("game_of_life")) {
-			return 0;
-		}
-		else if (sim.equals("spreading_fire")) {
-			return 1;
-		}
-		else if (sim.equals("segregation")) {
-			return 2;
-		}
-		else if (sim.equals("wa_tor")) {
-			return 3;
-		}
-		return -1;
+		return globalChars.get("sim");
 	}
 	
 	public int getSize() {

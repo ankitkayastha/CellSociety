@@ -28,6 +28,15 @@ public class Stats {
 		return data;
 	}
 	
+	private void updateStats(String key, int value) {
+		globalChars.put(key, value);
+	}
+	
+	public void flipType() {
+		globalChars.put("type", 1- globalChars.get("type"));
+		System.out.printf("Wrap flipped: %d\n", globalChars.get("type"));
+	}
+	
 	public void putDimensions(int height, int width) {
 		globalChars.put("height", height);
 		globalChars.put("width",  width);
