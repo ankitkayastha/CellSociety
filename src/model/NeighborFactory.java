@@ -6,6 +6,8 @@ import java.util.List;
 import data.Stats;
 
 public class NeighborFactory {
+	private Stats myStats;
+	
 	private int numRows;
 	private int numCols;
 	private int currentShape;
@@ -24,6 +26,7 @@ public class NeighborFactory {
 	private int WRAP = 1;
 
 	public NeighborFactory(Stats myStats) {
+		this.myStats = myStats;
 		currentShape = myStats.getGlobalChars().get("shape");
 		currentSim = myStats.getGlobalChars().get("sim");
 		numCols = myStats.getGlobalChars().get("cols");
@@ -32,6 +35,7 @@ public class NeighborFactory {
 	}
 
 	public List<Cell> getNeighbors(Cell[] myArr, int index) {
+		currentType = myStats.getGlobalChars().get("type");
 		int rowNum = getRow(index);
 		int colNum = getCol(index);
 		List<Cell> neighborsList = new ArrayList<Cell>();
@@ -40,7 +44,6 @@ public class NeighborFactory {
 		int[] arrDelta = getIndexDelta(index);
 		for (int i = 0; i < arrDelta.length; i++) {
 			if (currentType == NOWRAP) {
-				System.out.println(arrDelta[i]);
 				if (!isOutOfBounds(rowNum + rowDelta[i], colNum + colDelta[i])) {
 					neighborsList.add(myArr[arrDelta[i]]);
 				}

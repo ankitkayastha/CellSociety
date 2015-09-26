@@ -28,20 +28,30 @@ public class ButtonHandler {
 		this.width = width;
 	}
 	
+	private Button createButton(String title) {
+		Button thisButton = new Button(title);
+		thisButton.setDisable(true);
+		thisButton.setMaxSize(60, 30);
+		return thisButton;
+	}
+	
+	private void setDisables(Button playButton, Button pauseButton, Button stopButton, Button ffBUtton, 
+			Button sdButton, Button stepButton, Button openButton, Button wrapButton,
+			boolean play, boolean pause, boolean stop, boolean ff, 
+			boolean sd, boolean step, boolean open, boolean wrap) {
+		
+	}
+		
 	public void createButtons() {
-		Button playButton = new Button(myResources.getString("PlayButtonText"));
-		playButton.setDisable(true);
-		Button pauseButton = new Button(myResources.getString("PauseButtonText"));
-		pauseButton.setDisable(true);
-		Button stopButton = new Button(myResources.getString("StopButtonText"));
-		stopButton.setDisable(true);
-		Button ffButton = new Button(myResources.getString("FFButtonText"));
-		ffButton.setDisable(true);
-		Button sdButton = new Button(myResources.getString("SDButtonText"));
-		sdButton.setDisable(true);
-		Button stepButton = new Button(myResources.getString("StepButtonText"));
-		stepButton.setDisable(true);
-		Button openButton = new Button(myResources.getString("OpenButtonText"));
+		Button playButton = createButton(myResources.getString("PlayButtonText"));
+		Button pauseButton = createButton(myResources.getString("PauseButtonText"));
+		Button stopButton = createButton(myResources.getString("StopButtonText"));
+		Button ffButton = createButton(myResources.getString("FFButtonText"));
+		Button sdButton = createButton(myResources.getString("SDButtonText"));
+		Button stepButton = createButton(myResources.getString("StepButtonText"));
+		Button openButton = createButton(myResources.getString("OpenButtonText"));
+		Button wrapButton = createButton(myResources.getString("WrapButtonText"));
+		openButton.setDisable(false);
 
 		playButton.setOnAction((event) -> {
 			animation.play();
@@ -106,26 +116,22 @@ public class ButtonHandler {
 			sdButton.setDisable(true);
 			stepButton.setDisable(false);
 			openButton.setDisable(true);
+			wrapButton.setDisable(false);
+		});
+		wrapButton.setOnAction((event) -> {
+			gui.toggleType();
 		});
 
 		// ffButton.setStyle("-fx-font-size: 15pt;");
 
-		playButton.setMaxSize(60, 30);
-		pauseButton.setMaxSize(60, 30);
-		stopButton.setMaxSize(60, 30);
-		ffButton.setMaxSize(60, 30);
-		sdButton.setMaxSize(60, 30);
-		stepButton.setMaxSize(60, 30);
-		openButton.setMaxSize(60, 30);
-
 		TilePane tileButtons = new TilePane(Orientation.HORIZONTAL);
-		tileButtons.setPrefColumns(7);
+		tileButtons.setPrefColumns(2);
 		tileButtons.setPadding(new Insets(7.5, 0, 7.5, 7.5));
 		tileButtons.setHgap(20.0);
 		tileButtons.getChildren().addAll(playButton, pauseButton, stopButton, ffButton, sdButton, stepButton,
-				openButton);
-		tileButtons.setLayoutX(0);
-		tileButtons.setLayoutY(height);
+				openButton, wrapButton);
+		tileButtons.setLayoutX(width);
+		tileButtons.setLayoutY(0);
 
 		root.getChildren().add(tileButtons);
 	}

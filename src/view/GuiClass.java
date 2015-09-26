@@ -30,7 +30,8 @@ public class GuiClass {
 
 	private int width = 500;
 	private int height = 500;
-	private int toolbar = 40;
+	private int toolbar = 150;
+	private int graphbar = 100;
 
 	private ResourceBundle myResources;
 
@@ -47,7 +48,7 @@ public class GuiClass {
 	// sets up the basic Scene
 	public Scene init(Stage stage, Timeline animation) {
 		root = new Group();
-		myScene = new Scene(root, width, height+toolbar, Color.ALICEBLUE);
+		myScene = new Scene(root, width + toolbar, height+graphbar, Color.ALICEBLUE);
 		ButtonHandler buttonHandler = new ButtonHandler(this, root, animation, myResources, height, width);
 		buttonHandler.createButtons();
 		return myScene;
@@ -77,6 +78,10 @@ public class GuiClass {
 		for (Shape thisShape : shapeList) {
 			root.getChildren().remove(thisShape);
 		}
+	}
+	
+	public void toggleType() {
+		myStats.flipType();
 	}
 
 	public void initDisplay() {
