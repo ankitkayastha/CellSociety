@@ -172,8 +172,8 @@ public class GuiClass {
 		sims[1] = spreadingFire;
 		Simulation segregation = new Segregation(myStats);
 		sims[2] = segregation;
-		//Simulation waTor = new WaTor(myStats);
-		//sims[3] = waTor;
+		Simulation waTor = new WaTor(myStats);
+		sims[3] = waTor;
 		myGrid = new Grid(myStats);
 		thisSim = sims[myReader.getSimNum()];
 		System.out.println(myStats.getGlobalChars().toString());
