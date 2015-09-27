@@ -22,12 +22,8 @@ public class GameOfLifeGraph extends GraphTemplate{
 		}
 		int alivePercent = alive*100/total;
 		int deadPercent = dead*100/total;
-		XYChart.Series<Number, Number> thisSeries = allSeries.get(0);
-		thisSeries.getData().remove(0);
-		thisSeries.getData().add(new XYChart.Data<Number, Number>(stepNum, alivePercent));
-		XYChart.Series<Number, Number> thisSeries2 = allSeries.get(1);
-		thisSeries2.getData().remove(0);
-		thisSeries2.getData().add(new XYChart.Data<Number, Number>(stepNum, deadPercent));
+		allSeries.get(0).getData().add(new XYChart.Data<Number, Number>(stepNum, alivePercent));
+		allSeries.get(1).getData().add(new XYChart.Data<Number, Number>(stepNum, deadPercent));
 	}
 	
 }

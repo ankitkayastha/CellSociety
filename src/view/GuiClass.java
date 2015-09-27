@@ -88,9 +88,6 @@ public class GuiClass {
 		myGrid = new Grid(myStats);
 		thisSim = simFactory.createSim();
 		
-		if (lineChart != null) {
-			root.getChildren().remove(lineChart);
-		}
 		gh = new GraphHandler(myStats);
 		lineChart = gh.createGraph(height, graphbarSmall, width);
 		root.getChildren().add(lineChart);
@@ -106,6 +103,7 @@ public class GuiClass {
 		for (Shape thisShape : shapeList) {
 			root.getChildren().remove(thisShape);
 		}
+		root.getChildren().remove(lineChart);
 	}
 
 	public void toggleType() {

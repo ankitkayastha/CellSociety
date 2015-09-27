@@ -35,13 +35,13 @@ public class GraphFactory {
 			thisGF = new GameOfLifeGraph();
 		}
 		else if (myStats.getGlobalChars().get("sim")==1) {
-			thisGF = new GameOfLifeGraph();
+			thisGF = new SpreadingFireGraph();
 		}
 		else if (myStats.getGlobalChars().get("sim")==2) {
-			thisGF = new GameOfLifeGraph();
+			thisGF = new SegregationGraph();
 		}
 		else if (myStats.getGlobalChars().get("sim")==3) {
-			thisGF = new GameOfLifeGraph();
+			thisGF = new WaTorGraph();
 		}
 		return thisGF;
 	}
