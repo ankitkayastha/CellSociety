@@ -2,6 +2,7 @@ package simulation.segregation;
 
 import java.util.Map;
 
+import data.Stats;
 import javafx.scene.paint.Color;
 import model.Cell;
 
@@ -32,6 +33,12 @@ public class SegregationCell extends Cell {
 		double three = (two * 9.232) %1;
 		double four = (three * 12.042) %1;
 		return new Color(one, two, three, four);
+	}
+
+	@Override
+	public void change(Stats myStats) {
+		int cellTypes = myStats.getGlobalChars().get("agents")+1;
+		myCharacteristicMap.put("agent", (myCharacteristicMap.get("agent")+1)%cellTypes);			
 	}
 
 }

@@ -107,13 +107,12 @@ public class GuiClass {
 	}
 	
 	public void click(double x, double y) {
-		System.out.printf("Location %f, %f clicked\n", x, y);
 		for (int i=0; i<shapeList.size(); i++) {
 			Shape thisShape = shapeList.get(i);
 			if (thisShape.contains(x,y)) {
 				System.out.println(thisShape.toString());
 				int index = shapeMap.get(thisShape);
-				myGrid.changeCell(index);
+				myGrid.changeCell(index, myStats);
 				display();
 			}
 		}

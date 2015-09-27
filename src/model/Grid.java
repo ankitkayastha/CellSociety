@@ -24,7 +24,7 @@ public class Grid {
 		return myGrid[i];
 	}
 	
-	public void changeCell(int index) {
-		myGrid[index].change();
+	public void changeCell(int index, Stats myStats) {
+		myGrid[index].change(myStats);
 	}
 }
