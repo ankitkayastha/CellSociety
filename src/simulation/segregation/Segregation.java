@@ -19,6 +19,11 @@ public class Segregation extends Simulation {
 		}
 		cellCheck = new SegregationCellCheck();
 	}
+	
+	public void setParam(double t){
+		threshold = t;
+		System.out.println("Threshold = " + t);
+	}
 
 	@Override
 	public void update(Grid myGrid, Stats myStats) {

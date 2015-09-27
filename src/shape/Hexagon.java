@@ -6,6 +6,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
 public class Hexagon extends CellShape{
+
 	@Override
 	public Shape getCellShape(int index, Stats stats) {
 		int height = stats.getGlobalChars().get("height");

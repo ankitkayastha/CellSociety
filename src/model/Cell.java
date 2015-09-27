@@ -25,5 +25,5 @@ public abstract class Cell {
 
 	public abstract Color getCellColor(Stats stats);
 
-	
+	public abstract void change(Stats myStats);
 }

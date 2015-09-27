@@ -10,7 +10,6 @@ public class SpreadingFireCell extends Cell {
 	private final int EMPTY = 0; // empty ground or burnt tree
 	private final int TREE = 1; // non burning tree
 	private final int BURNING = 2; // burning tree
-	private final String characteristicFire = "fire";
 
 	public SpreadingFireCell(Map<String, Integer> characteristicMap) {
 		super(characteristicMap);
@@ -25,7 +24,12 @@ public class SpreadingFireCell extends Cell {
 
 	@Override
 	public Color getCellColor(Stats stats) {
-		return getColorMap().get(getChars().get(characteristicFire));
+		return getColorMap().get(getChars().get("fire"));
+	}
+
+	@Override
+	public void change(Stats myStats) {
+		myCharacteristicMap.put("fire", (myCharacteristicMap.get("fire")+1)%3);			
 	}
 
 }

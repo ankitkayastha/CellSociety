@@ -28,4 +28,15 @@ public class WaTorCell extends Cell {
 		return getColorMap().get(getChars().get(ANIMAL));
 	}
 
+	@Override
+	public void change(Stats myStats) {
+		myCharacteristicMap.put("animal", (myCharacteristicMap.get("animal")+1)%3);		
+		myCharacteristicMap.put("life", myStats.getGlobalChars().get("sharkLife"));
+		if (myCharacteristicMap.get("animal")==FISH) {
+			myCharacteristicMap.put("breed", myStats.getGlobalChars().get("fishBreed"));
+		} else {
+			myCharacteristicMap.put("breed", myStats.getGlobalChars().get("sharkBreed"));
+		}
+	}
+
 }

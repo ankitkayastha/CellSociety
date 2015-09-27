@@ -33,6 +33,11 @@ public abstract class Simulation {
 		}
 		return oldGrid;
 	}
+
+	public void setParam(double parseDouble) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	/*public void changeCellState(Grid myGrid) {
 		Cell[] arr = myGrid.getGrid();

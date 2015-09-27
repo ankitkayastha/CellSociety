@@ -22,6 +22,11 @@ public class SpreadingFire extends Simulation {
 			probCatch = stats.getGlobalChars().get("prob")/100.0;
 		}
 	}
+	
+	public void setParam(double t){
+		probCatch = t;
+		System.out.println("Flame Probability = " + t);
+	}
 
 	@Override
 	public void update(Grid myGrid, Stats myStats) {

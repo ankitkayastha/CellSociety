@@ -35,4 +35,10 @@ public class SegregationCell extends Cell {
 		return new Color(one, two, three, four);
 	}
 
+	@Override
+	public void change(Stats myStats) {
+		int cellTypes = myStats.getGlobalChars().get("agents")+1;
+		myCharacteristicMap.put("agent", (myCharacteristicMap.get("agent")+1)%cellTypes);			
+	}
+
 }
