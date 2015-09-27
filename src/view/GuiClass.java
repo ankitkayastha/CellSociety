@@ -2,7 +2,9 @@ package view;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.animation.Timeline;
@@ -29,6 +31,7 @@ public class GuiClass {
 	private Simulation thisSim;
 	private Stats myStats;
 	private List<Shape> shapeList;
+	private Map<Shape, Integer> shapeMap;
 	private GraphHandler gh;
 	private int stepNum;
 
@@ -102,9 +105,22 @@ public class GuiClass {
 	public void toggleType() {
 		myStats.flipType();
 	}
+	
+	public void click(double x, double y) {
+		for (int i=0; i<shapeList.size(); i++) {
+			Shape thisShape = shapeList.get(i);
+			if (thisShape.contains(x,y)) {
+				System.out.println(thisShape.toString());
+				int index = shapeMap.get(thisShape);
+				myGrid.changeCell(index, myStats);
+				display();
+			}
+		}
+	}
 
 	public void initDisplay() {
 		shapeList = new ArrayList<Shape>();
+		shapeMap = new HashMap<Shape, Integer>();
 		ShapeFactory myShapeFactory = new ShapeFactory(myStats);
 		for (int i = 0; i < myStats.getSize(); i++) {
 			Shape newShape = myShapeFactory.getShape(i);
@@ -112,6 +128,7 @@ public class GuiClass {
 			newShape.setFill(myGrid.getCell(i).getCellColor());
 			root.getChildren().add(newShape);
 			shapeList.add(newShape);
+			shapeMap.put(newShape, i);
 		}
 		System.out.println("Display Initialized");
 	}

@@ -1,6 +1,7 @@
 package model;
 import java.util.*;
 
+import data.Stats;
 import javafx.scene.paint.Color;
 
 public abstract class Cell {
@@ -24,5 +25,5 @@ public abstract class Cell {
 
 	public abstract Color getCellColor();
 
-	
+	public abstract void change(Stats myStats);
 }
