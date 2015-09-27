@@ -24,5 +24,5 @@ public abstract class Cell {
 
 	public abstract Color getCellColor();
 
-	
+	public abstract void change();
 }

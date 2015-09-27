@@ -23,5 +23,10 @@ public class GameOfLifeCell extends Cell {
 		return getColorMap().get(getChars().get("life"));
 	}
 
+	@Override
+	public void change() {
+		super.myCharacteristicMap.put("life", 1-super.myCharacteristicMap.get("life"));		
+	}
+
 
 }

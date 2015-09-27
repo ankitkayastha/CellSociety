@@ -44,6 +44,8 @@ public class Main extends Application {
 		animation.pause();
 		
 		scene = gui.init(stage, animation);
+        scene.setOnMouseClicked(e -> gui.click(e.getX(), e.getY()));
+
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.sizeToScene();

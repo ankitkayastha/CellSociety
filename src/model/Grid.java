@@ -23,4 +23,8 @@ public class Grid {
 	public Cell getCell(int i) {
 		return myGrid[i];
 	}
+	
+	public void changeCell(int index) {
+		myGrid[index].change();
+	}
 }
