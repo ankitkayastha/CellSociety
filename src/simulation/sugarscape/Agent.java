@@ -28,10 +28,7 @@ public class Agent {
 			int antSugar = oldGrid[i].getChars().get("antSugar");
 			int patchSugar = oldGrid[newIndex].getChars().get("patchSugar");
 			int sugarMetab = oldGrid[i].getChars().get("antSugarMetabolism");
-			
-			System.out.printf("current grid: %d\n", i);
-			System.out.printf("neighbor got: %d\n", newIndex);
-			
+						
 			newGrid[i].getChars().put("hasAnt", 0); //original square won't have ant
 			newGrid[newIndex].getChars().put("hasAnt", 1);
 			newGrid[newIndex].getChars().put("antSugar", antSugar + patchSugar - sugarMetab);

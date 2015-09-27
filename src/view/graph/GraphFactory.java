@@ -44,11 +44,14 @@ public class GraphFactory {
 		else if (myStats.getGlobalChars().get("sim")==3) {
 			thisGF = new WaTorGraph(myScene);
 		}
+		else if (myStats.getGlobalChars().get("sim")==4) {
+			thisGF = new SugarScapeGraph(myScene);
+		}
 		return thisGF;
 	}
 	
 	private int findSeriesNum() {
-		if (myStats.getGlobalChars().get("sim")==0) {
+		if (myStats.getGlobalChars().get("sim")==0 || myStats.getGlobalChars().get("sim")==4) {
 			return 2;
 		} else if (myStats.getGlobalChars().get("sim")==1 || myStats.getGlobalChars().get("sim")==3) {
 			return 3;
@@ -56,5 +59,4 @@ public class GraphFactory {
 			return myStats.getGlobalChars().get("agents")+1;
 		}
 	}
-
 }

@@ -10,7 +10,6 @@ public class SugarScapeCell extends Cell {
 
 	public SugarScapeCell(Map<String, Integer> characteristicMap) {
 		super(characteristicMap);
-		System.out.println(characteristicMap.toString());
 	}
 
 	@Override
@@ -39,8 +38,7 @@ public class SugarScapeCell extends Cell {
 
 	@Override
 	public void change(Stats myStats) {
-		// TODO Auto-generated method stub
-
+		myCharacteristicMap.put("hasAnt", 1-myCharacteristicMap.get("hasAnt"));		
 	}
 
 }

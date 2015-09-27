@@ -54,8 +54,7 @@ public class GuiClass {
 	public void step() {
 		stepNum++;
 		thisSim.update(myGrid, myStats);
-		// TODO
-		//gh.updateGraph(myGrid.getGrid(), myStats, stepNum);
+		gh.updateGraph(myGrid.getGrid(), myStats, stepNum);
 		display();
 	}
 
@@ -80,7 +79,6 @@ public class GuiClass {
 			myReader = new Reader();
 			myStats = new Stats(myReader);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		myStats.putDimensions(height, width);
@@ -88,10 +86,9 @@ public class GuiClass {
 		myGrid = new Grid(myStats);
 		thisSim = simFactory.createSim();
 		
-		// TODO
-		//gh = new GraphHandler(myStats);
-		//lineChart = gh.createGraph(height, graphbarSmall, width, myScene);
-		//root.getChildren().add(lineChart);
+		gh = new GraphHandler(myStats);
+		lineChart = gh.createGraph(height, graphbarSmall, width, myScene);
+		root.getChildren().add(lineChart);
 		
 		System.out.println(myStats.getGlobalChars().toString());
 		System.out.printf("About to initialize Sim: %d\n", myStats.getGlobalChars().get("sim"));
@@ -104,8 +101,7 @@ public class GuiClass {
 		for (Shape thisShape : shapeList) {
 			root.getChildren().remove(thisShape);
 		}
-		// TODO
-		// root.getChildren().remove(lineChart);
+		root.getChildren().remove(lineChart);
 	}
 
 	public void toggleType() {
