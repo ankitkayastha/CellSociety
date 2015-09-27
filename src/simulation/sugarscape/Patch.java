@@ -29,7 +29,7 @@ public class Patch {
 			int initSugar = oldGrid[index].getChars().get(amountSugar);
 			int newSugar = initSugar + oldGrid[index].getChars().get(sugarGrowBackRate);
 			int maxSugar = oldGrid[index].getChars().get(maxCapacity);
-			if (initSugar + newSugar <= oldGrid[index].getChars().get(maxCapacity)) {
+			if (initSugar + newSugar <= maxSugar) {
 				newGrid[index].getChars().put(amountSugar, newSugar);
 			}
 			else {

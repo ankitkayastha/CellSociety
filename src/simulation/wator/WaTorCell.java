@@ -2,6 +2,7 @@ package simulation.wator;
 
 import java.util.Map;
 
+import data.Stats;
 import javafx.scene.paint.Color;
 import model.Cell;
 
@@ -23,7 +24,7 @@ public class WaTorCell extends Cell {
 	}
 
 	@Override
-	public Color getCellColor() {
+	public Color getCellColor(Stats stats) {
 		return getColorMap().get(getChars().get(ANIMAL));
 	}
 

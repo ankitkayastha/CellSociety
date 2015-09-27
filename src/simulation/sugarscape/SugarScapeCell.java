@@ -2,12 +2,14 @@ package simulation.sugarscape;
 
 import java.util.Map;
 
+import data.Stats;
 import javafx.scene.paint.Color;
 import model.Cell;
 
 public class SugarScapeCell extends Cell {
 	
-	private String string = "amountSugar";
+	private String patchSugar = "amountSugar";
+	private String maxPatchSugar = "maxPatchSugar";
 	
 	public SugarScapeCell(Map<String, Integer> characteristicMap) {
 		super(characteristicMap);
@@ -15,23 +17,24 @@ public class SugarScapeCell extends Cell {
 
 	@Override
 	public void fillColorMap() {
-		generateColor(getChars().get(string));
+		
+	//	generateColor(getChars().get(patchSugar));
 	}
 
 	@Override
-	public Color getCellColor() {
-		return generateColor(getChars().get(string));
+	public Color getCellColor(Stats stats) {
+		return generateColor(stats);
 	}
 	
-	private Color generateColor(int sugarAmount) {
-		if (sugarAmount==0) {
+	private Color generateColor(Stats stats) {
+		int sugar = getChars().get(patchSugar);
+
+		if (sugar==0) {
 			return Color.WHITE;
 		}
-		double one = (13.49289/(double) sugarAmount) %1;        
-		double two = (one * 13.429) %1;
-		double three = (two * 9.232) %1;
-		double four = (three * 12.042) %1;
-		return new Color(one, two, three, four);
+		int maxSugar = stats.getGlobalChars().get(maxPatchSugar);
+		double one = ((double) sugar / maxSugar);        
+		return new Color(one, 0, 0, 0);
 	}
 
 }

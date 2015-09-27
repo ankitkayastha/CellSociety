@@ -2,6 +2,7 @@ package simulation.segregation;
 
 import java.util.Map;
 
+import data.Stats;
 import javafx.scene.paint.Color;
 import model.Cell;
 
@@ -18,7 +19,7 @@ public class SegregationCell extends Cell {
 	}
 	
 	@Override
-	public Color getCellColor() {
+	public Color getCellColor(Stats stats) {
 		return generateColor(getChars().get(agent));
 	}
 	

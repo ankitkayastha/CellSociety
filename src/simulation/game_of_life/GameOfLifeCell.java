@@ -2,6 +2,7 @@ package simulation.game_of_life;
 
 import java.util.Map;
 
+import data.Stats;
 import javafx.scene.paint.Color;
 import model.Cell;
 
@@ -19,7 +20,7 @@ public class GameOfLifeCell extends Cell {
 		getColorMap().put(ALIVE, Color.LAWNGREEN);
 	}
 	@Override
-	public Color getCellColor() {
+	public Color getCellColor(Stats stats) {
 		return getColorMap().get(getChars().get("life"));
 	}
 

@@ -1,6 +1,8 @@
 package simulation.spreading_fire;
 
 import java.util.*;
+
+import data.Stats;
 import javafx.scene.paint.Color;
 import model.Cell;
 
@@ -22,7 +24,7 @@ public class SpreadingFireCell extends Cell {
 	}
 
 	@Override
-	public Color getCellColor() {
+	public Color getCellColor(Stats stats) {
 		return getColorMap().get(getChars().get(characteristicFire));
 	}
 
