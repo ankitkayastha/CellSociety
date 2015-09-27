@@ -4,6 +4,7 @@ import data.Stats;
 import simulation.game_of_life.GameOfLife;
 import simulation.segregation.Segregation;
 import simulation.spreading_fire.SpreadingFire;
+import simulation.sugarscape.SugarScape;
 import simulation.wator.WaTor;
 
 public class SimulationFactory {
@@ -24,6 +25,9 @@ public class SimulationFactory {
 		}
 		else if (myStats.getGlobalChars().get("sim")==3) {
 			sim= new WaTor(myStats);
+		}
+		else if (myStats.getGlobalChars().get("sim") == 4) {
+			sim = new SugarScape(myStats);
 		}
 		return sim;
 	}

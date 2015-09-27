@@ -102,7 +102,7 @@ public class Reader {
 	}
 	
 	private void checkData() throws IOException {
-		if (globalChars.get("sim")<0 || globalChars.get("sim")>3) {
+		if (globalChars.get("sim")<0 || globalChars.get("sim")>4) {
 			throw new IOException();
 		} 
 		if (globalChars.get("type") <0 || globalChars.get("type")>1) {
