@@ -1,4 +1,4 @@
-package view;
+package view.graph;
 
 import java.util.ArrayList;
 
@@ -13,35 +13,20 @@ public class GraphHandler {
 	private ArrayList<XYChart.Series<Number, Number>> allSeries;
 	private NumberAxis xAxis;
 	private NumberAxis yAxis;
+	private GraphFactory gf;
+	private Stats myStats;
+	private GraphTemplate simGraph;
 	
-	public GraphHandler() {
+	public GraphHandler(Stats myStats) {
 		allSeries = new ArrayList<XYChart.Series<Number, Number>>();
+		this.myStats = myStats;
 	}
 
 	public void updateGraph(Cell[] cells, Stats myStats, int stepNum) {
-		if (myStats.getGlobalChars().get("sim")==0){
-			int total = cells.length;
-			int dead = 0;
-			int alive = 0;
-			for (int i=0; i<cells.length; i++) {
-				if (cells[i].getChars().get("life")==0) {
-					dead++;
-				} else {
-					alive++;
-				}
-			}
-			int alivePercent = alive*100/total;
-			int deadPercent = dead*100/total;
-			XYChart.Series<Number, Number> thisSeries = allSeries.get(0);
-			thisSeries.getData().remove(0);
-			thisSeries.getData().add(new XYChart.Data<Number, Number>(stepNum, alivePercent));
-			XYChart.Series<Number, Number> thisSeries2 = allSeries.get(1);
-			thisSeries2.getData().remove(0);
-			thisSeries2.getData().add(new XYChart.Data<Number, Number>(stepNum, deadPercent));
-			xAxis.setLowerBound(stepNum-20);
-			xAxis.setUpperBound(stepNum);
-		}
-		else if (myStats.getGlobalChars().get("sim") == 1) {
+		xAxis.setLowerBound(stepNum-20);
+		xAxis.setUpperBound(stepNum);
+		simGraph.update(cells, myStats, stepNum, allSeries);
+		if (myStats.getGlobalChars().get("sim") == 1) {
 			int total = cells.length;
 			int empty = 0;
 			int tree = 0;
@@ -66,8 +51,6 @@ public class GraphHandler {
 			XYChart.Series<Number, Number> thisSeries3 = allSeries.get(2);
 			thisSeries3.getData().remove(0);
 			thisSeries3.getData().add(new XYChart.Data<Number, Number>(stepNum, burningPercent));
-			xAxis.setLowerBound(stepNum-20);
-			xAxis.setUpperBound(stepNum);
 		}
 		
 		else if (myStats.getGlobalChars().get("sim") == 2) {
@@ -148,19 +131,12 @@ public class GraphHandler {
 		graph.setCreateSymbols(false);
 		graph.setAnimated(false);
 		graph.setTitle("Populations");
-
-		for (int seriesNum = 0; seriesNum < 3; seriesNum++) {
-			XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
-			for (int i = 0; i < 20; i++) {
-				series.getData().add(new XYChart.Data<Number, Number>(i, 0));
-			}
-			graph.getData().add(series);
-			allSeries.add(series);
-		}
-
 		graph.setMaxHeight(height);
 		graph.setMaxWidth(width);
 		graph.setLayoutY(top);
+		gf = new GraphFactory (graph, allSeries, myStats);
+		gf.initializeSeries();
+		simGraph = gf.generateGraphTemplate();
 		return graph;
 	}
 }
