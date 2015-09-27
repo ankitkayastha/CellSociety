@@ -7,85 +7,76 @@ import java.util.*;
 
 import data.Stats;
 public class Agent {
-	
-	
-	private String vision = "vision";
-	private String sugar = "sugar"; //sugar of ant
-	private String sugarMetabolism = "sugarMetabolism";
-	private final String amountSugar = "sugarAmount"; //sugar of patch
-	private final String cols = "cols";
-	private final String index = "index";
-	private final String hasAnt = "hasAnt";
-	
+	private Stats myStats;
 	private NeighborFactory factory;
 	
 	public Agent(Stats stats) {
 		factory = new NeighborFactory(stats);
+		this.myStats = stats;
 	}
-	
 	
 	public void doAgent(Cell[] oldGrid, Cell[] newGrid, Stats stats) {
 		for (int i = 0; i < stats.getSize(); i++) {
-			Cell cellToMove = getCellToMoveTo(oldGrid, i, stats);
-			int newIndex = cellToMove.getChars().get(index);
-			int antSugar = oldGrid[i].getChars().get(sugar);
-			int patchSugar = oldGrid[newIndex].getChars().get(amountSugar);
-			int sugarMetab = oldGrid[i].getChars().get(sugarMetabolism);
+			if (newGrid[i].getChars().get("hasAnt")==0) {
+				continue;
+			}
+			Cell cellToMove = getCellToMoveTo(newGrid, i, stats);
+			if (cellToMove == null) {
+				continue;
+			}
+			int newIndex = cellToMove.getChars().get("index");
+			int antSugar = oldGrid[i].getChars().get("antSugar");
+			int patchSugar = oldGrid[newIndex].getChars().get("patchSugar");
+			int sugarMetab = oldGrid[i].getChars().get("antSugarMetabolism");
 			
+			System.out.printf("current grid: %d\n", i);
+			System.out.printf("neighbor got: %d\n", newIndex);
 			
-			newGrid[i].getChars().put(hasAnt, 0); //original square won't have ant
-			newGrid[newIndex].getChars().put(hasAnt, 1);
-			newGrid[newIndex].getChars().put(sugar, antSugar + patchSugar - sugarMetab);
-			newGrid[newIndex].getChars().put(amountSugar, 0); //patch has no more sugar
+			newGrid[i].getChars().put("hasAnt", 0); //original square won't have ant
+			newGrid[newIndex].getChars().put("hasAnt", 1);
+			newGrid[newIndex].getChars().put("antSugar", antSugar + patchSugar - sugarMetab);
+			newGrid[newIndex].getChars().put("patchSugar", 0); //patch has no more sugar
+			if (newGrid[newIndex].getChars().get("antSugar")<=0) {
+				newGrid[newIndex].getChars().put("hasAnt", 0);
+			}
 		}
 	}
 	
-
-	
-	public double calculateShortestDistance(int rowOne, int colOne, int colTwo, int rowTwo) {
-		return Math.sqrt(Math.pow((rowTwo - rowOne), 2) - Math.pow((colTwo - colOne), 2));
+	private int calculateShortestDistance(int index, int index2) {
+		int rowOne = index / myStats.getGlobalChars().get("cols");
+		int rowTwo = index2 / myStats.getGlobalChars().get("cols");
+		int colOne = index % myStats.getGlobalChars().get("cols");
+		int colTwo = index % myStats.getGlobalChars().get("cols");
+		return Math.abs(rowOne-rowTwo) + Math.abs(colOne-colTwo);
 	}
 	
-	public Map<Cell, Double> findShortestDistanceCell(Map<Cell, Integer> sugarMap, int index, Stats stats) {
-		Map<Cell, Double> distanceMap = new HashMap<Cell, Double>();
-		int numCols = stats.getGlobalChars().get(cols);
-		int rowLocation = index / numCols;
-		int colLocation = index % numCols;
-		for (Cell cell: sugarMap.keySet()) {
-			//System.out.println(cell.getChars().toString());
-			int rowCompare = cell.getChars().get("index") / numCols;
-			int colCompare = cell.getChars().get("index") % numCols;
-			distanceMap.put(cell, calculateShortestDistance(rowLocation, colLocation, rowCompare, colCompare));
-		}
-		
-		return distanceMap;
-	}
-	
-	
-	public Cell getCellToMoveTo(Cell[] oldGrid, int index, Stats stats) {
+	private Cell getCellToMoveTo(Cell[] oldGrid, int index, Stats stats) {
 		List<Cell> neighbors = factory.getNeighbors(oldGrid, index);
-		Map<Cell, Integer> sugarMap = new HashMap<Cell, Integer>();
+		// iterate through patches without ants
+		for (int i=neighbors.size()-1; i>=0; i--) {
+			if (neighbors.get(i).getChars().get("hasAnt")==1) {
+				neighbors.remove(i);
+			}
+		}
+		if (neighbors.size()==0) {
+			return null;
+		}
+		// find patch with max sugar
 		int maxSugar = -1;
+		int minDistance = Integer.MAX_VALUE;
+		Cell maxSugarCell = neighbors.get(0);
+		
 		for (int i = 0; i < neighbors.size(); i++) {
-			int patchSugar = neighbors.get(i).getChars().get(amountSugar);
+			int patchSugar = neighbors.get(i).getChars().get("patchSugar");
 			if (patchSugar >= maxSugar) {
-				sugarMap.put(neighbors.get(i), patchSugar);
+				if (calculateShortestDistance(index, neighbors.get(i).getChars().get("index"))<minDistance) {
+					maxSugarCell = neighbors.get(i);
+					minDistance = calculateShortestDistance(index, neighbors.get(i).getChars().get("index"));
+				}
 				maxSugar = patchSugar;
 			}
 		}
-		//now have map of cell to max sugar
-		
-		Map<Cell, Double> distanceMap = findShortestDistanceCell(sugarMap, index, stats); 
-		double min = Double.MAX_VALUE;
-		// TODO
-		Cell cellToMove = new SugarScapeCell(oldGrid[0].getChars());
-		for (Cell cell: distanceMap.keySet()) {
-			if (distanceMap.get(cell) < min) {
-				min = distanceMap.get(cell);
-				cellToMove = cell;
-			}
-		}
-		return cellToMove;
+		return maxSugarCell;
 	}
 
 }

@@ -20,8 +20,8 @@ public class SugarScape extends Simulation {
 		Cell[] oldGrid = super.copyGrid(currentGrid, myStats);
 		Cell[] myGridGrid = currentGrid.getGrid();
 		
-		myPatch.doPatch(oldGrid, myGridGrid); //update patches
 		myAgent.doAgent(oldGrid, myGridGrid, myStats);
-	}
 
+		myPatch.doPatch(oldGrid, myGridGrid); //update patches
+	}
 }

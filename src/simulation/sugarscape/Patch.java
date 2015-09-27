@@ -4,11 +4,6 @@ import model.Cell;
 
 public class Patch {
 	
-	
-	private final String amountSugar = "sugarAmount";
-	private final String maxCapacity = "maxCapacity";
-	private final String sugarGrowBackRate = "sugarGrowBackRate";
-	private final String sugarGrowBackInterval = "sugarGrowBackInterval";
 	private int counter;
 	
 	public Patch() {
@@ -23,17 +18,16 @@ public class Patch {
 		
 	}
 	
-	
 	public void updateSugar(Cell[] oldGrid, Cell[] newGrid, int index) {
-		if (counter % oldGrid[index].getChars().get(sugarGrowBackInterval) == 0) {
-			int initSugar = oldGrid[index].getChars().get(amountSugar);
-			int newSugar = initSugar + oldGrid[index].getChars().get(sugarGrowBackRate);
-			int maxSugar = oldGrid[index].getChars().get(maxCapacity);
+		if (counter % oldGrid[index].getChars().get("patchSugarGrowBackInterval") == 0) {
+			int initSugar = oldGrid[index].getChars().get("patchSugar");
+			int newSugar = initSugar + oldGrid[index].getChars().get("patchSugarGrowBackRate");
+			int maxSugar = oldGrid[index].getChars().get("patchSugarCapacity");
 			if (initSugar + newSugar <= maxSugar) {
-				newGrid[index].getChars().put(amountSugar, newSugar);
+				newGrid[index].getChars().put("patchSugar", newSugar);
 			}
 			else {
-				newGrid[index].getChars().put(amountSugar, maxSugar);
+				newGrid[index].getChars().put("patchSugar", maxSugar);
 			}
 		}
 		
