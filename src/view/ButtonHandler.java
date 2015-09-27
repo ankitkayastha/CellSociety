@@ -7,7 +7,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.TilePane;
+import simulation.Simulation;
 
 
 
@@ -40,6 +42,15 @@ public class ButtonHandler {
 			boolean play, boolean pause, boolean stop, boolean ff, 
 			boolean sd, boolean step, boolean open, boolean wrap) {
 		
+	}
+	
+	public TextField createParam(Simulation thisSim) {
+		TextField parameter = new TextField ();
+		parameter.setPromptText("Enter parameter");
+		parameter.setLayoutX(width+25);
+		parameter.setLayoutY(200);
+		parameter.setMaxWidth(100);
+		return parameter;
 	}
 		
 	public void createButtons() {
@@ -145,7 +156,7 @@ public class ButtonHandler {
 		}
 		ffButton.setDisable(!(animation.getRate() <= 32));
 		animation.setRate(animation.getRate());
-		System.out.printf("Rate: %f\n", animation.getRate());
+		//System.out.printf("Rate: %f\n", animation.getRate());
 	}
 
 	private void slowDown(Timeline animation, Button sdButton) {
@@ -153,6 +164,6 @@ public class ButtonHandler {
 			animation.setRate(animation.getRate()/2); 
 		sdButton.setDisable(!(animation.getRate() >= 1 / 32.0));
 		animation.setRate(animation.getRate());
-		System.out.printf("Rate: %f\n", animation.getRate());
+		//System.out.printf("Rate: %f\n", animation.getRate());
 	}
 }

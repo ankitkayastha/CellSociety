@@ -9,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
+import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
@@ -64,6 +65,11 @@ public class GuiClass {
 
 		ButtonHandler buttonHandler = new ButtonHandler(this, root, animation, myResources, height, width);
 		buttonHandler.createButtons();
+		TextField parameter = buttonHandler.createParam(thisSim);
+		parameter.setOnAction(event -> {
+			thisSim.setParam(Double.parseDouble(parameter.getText()));
+		});
+		root.getChildren().add(parameter);
 		return myScene;
 	}
 
