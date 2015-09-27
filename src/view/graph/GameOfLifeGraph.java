@@ -3,10 +3,16 @@ package view.graph;
 import java.util.ArrayList;
 
 import data.Stats;
+import javafx.scene.Scene;
 import javafx.scene.chart.XYChart;
 import model.Cell;
 
 public class GameOfLifeGraph extends GraphTemplate{
+
+	public GameOfLifeGraph(Scene myScene) {
+		super(myScene);
+		myScene.getStylesheets().add("/css/game_of_life_graph.css");
+	}
 
 	@Override
 	public void update(Cell[] cells, Stats myStats, int stepNum,ArrayList<XYChart.Series<Number, Number>> allSeries) {

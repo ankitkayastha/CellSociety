@@ -62,7 +62,6 @@ public class GuiClass {
 	public Scene init(Stage stage, Timeline animation) {
 		root = new Group();
 		myScene = new Scene(root, width + toolbar, height + graphbar, Color.ALICEBLUE);
-		myScene.getStylesheets().add("/css/graph.css");
 
 		ButtonHandler buttonHandler = new ButtonHandler(this, root, animation, myResources, height, width);
 		buttonHandler.createButtons();
@@ -89,7 +88,7 @@ public class GuiClass {
 		thisSim = simFactory.createSim();
 		
 		gh = new GraphHandler(myStats);
-		lineChart = gh.createGraph(height, graphbarSmall, width);
+		lineChart = gh.createGraph(height, graphbarSmall, width, myScene);
 		root.getChildren().add(lineChart);
 		
 		System.out.println(myStats.getGlobalChars().toString());

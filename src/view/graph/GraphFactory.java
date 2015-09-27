@@ -3,6 +3,7 @@ package view.graph;
 import java.util.ArrayList;
 
 import data.Stats;
+import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 
@@ -29,19 +30,19 @@ public class GraphFactory {
 		}
 	}
 	
-	public GraphTemplate generateGraphTemplate() {
+	public GraphTemplate generateGraphTemplate(Scene myScene) {
 		GraphTemplate thisGF = null;
 		if (myStats.getGlobalChars().get("sim")==0) {
-			thisGF = new GameOfLifeGraph();
+			thisGF = new GameOfLifeGraph(myScene);
 		}
 		else if (myStats.getGlobalChars().get("sim")==1) {
-			thisGF = new SpreadingFireGraph();
+			thisGF = new SpreadingFireGraph(myScene);
 		}
 		else if (myStats.getGlobalChars().get("sim")==2) {
-			thisGF = new SegregationGraph();
+			thisGF = new SegregationGraph(myScene);
 		}
 		else if (myStats.getGlobalChars().get("sim")==3) {
-			thisGF = new WaTorGraph();
+			thisGF = new WaTorGraph(myScene);
 		}
 		return thisGF;
 	}

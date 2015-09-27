@@ -3,6 +3,7 @@ package view.graph;
 import java.util.ArrayList;
 
 import data.Stats;
+import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -31,16 +32,13 @@ public class GraphHandler {
 		}
 	}
 
-	public LineChart<Number, Number> createGraph(int top, int height, int width) {
-		xAxis = new NumberAxis();
-		yAxis = new NumberAxis();
+	public LineChart<Number, Number> createGraph(int top, int height, int width, Scene myScene) {
+		xAxis = new NumberAxis(0, 20, 5);
+		yAxis = new NumberAxis(0, 100, 25);
 		xAxis.setAnimated(false);
 		yAxis.setAnimated(false);
 		xAxis.setAutoRanging(false);
-		xAxis.setLowerBound(0);
-		xAxis.setUpperBound(20);
-		yAxis.setLowerBound(0);
-		yAxis.setUpperBound(100);
+		yAxis.setAutoRanging(false);
 		xAxis.setLabel("Step");
 		yAxis.setLabel("%");
 		graph = new LineChart<Number, Number>(xAxis, yAxis);
@@ -52,7 +50,7 @@ public class GraphHandler {
 		graph.setLayoutY(top);
 		gf = new GraphFactory (graph, allSeries, myStats);
 		gf.initializeSeries();
-		simGraph = gf.generateGraphTemplate();
+		simGraph = gf.generateGraphTemplate(myScene);
 		return graph;
 	}
 }
