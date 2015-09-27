@@ -8,7 +8,7 @@ import model.Cell;
 
 public class SugarScapeCell extends Cell {
 	
-	private String patchSugar = "amountSugar";
+	private String patchSugar = "sugarAmount";
 	private String maxPatchSugar = "maxPatchSugar";
 	
 	public SugarScapeCell(Map<String, Integer> characteristicMap) {
@@ -17,7 +17,7 @@ public class SugarScapeCell extends Cell {
 
 	@Override
 	public void fillColorMap() {
-		
+		// TODO
 	//	generateColor(getChars().get(patchSugar));
 	}
 
@@ -33,8 +33,14 @@ public class SugarScapeCell extends Cell {
 			return Color.WHITE;
 		}
 		int maxSugar = stats.getGlobalChars().get(maxPatchSugar);
-		double one = ((double) sugar / maxSugar);        
+		double one = (((double)sugar%1) / maxSugar);        
 		return new Color(one, 0, 0, 0);
+	}
+
+	@Override
+	public void change(Stats myStats) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

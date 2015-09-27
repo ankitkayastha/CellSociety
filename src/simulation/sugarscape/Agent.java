@@ -47,13 +47,14 @@ public class Agent {
 	}
 	
 	public Map<Cell, Double> findShortestDistanceCell(Map<Cell, Integer> sugarMap, int index, Stats stats) {
-		Map<Cell, Double> distanceMap = new TreeMap<Cell, Double>();
+		Map<Cell, Double> distanceMap = new HashMap<Cell, Double>();
 		int numCols = stats.getGlobalChars().get(cols);
 		int rowLocation = index / numCols;
 		int colLocation = index % numCols;
 		for (Cell cell: sugarMap.keySet()) {
-			int rowCompare = cell.getChars().get(index) / numCols;
-			int colCompare = cell.getChars().get(index) % numCols;
+			//System.out.println(cell.getChars().toString());
+			int rowCompare = cell.getChars().get("index") / numCols;
+			int colCompare = cell.getChars().get("index") % numCols;
 			distanceMap.put(cell, calculateShortestDistance(rowLocation, colLocation, rowCompare, colCompare));
 		}
 		
@@ -63,7 +64,7 @@ public class Agent {
 	
 	public Cell getCellToMoveTo(Cell[] oldGrid, int index, Stats stats) {
 		List<Cell> neighbors = factory.getNeighbors(oldGrid, index);
-		Map<Cell, Integer> sugarMap = new TreeMap<Cell, Integer>();
+		Map<Cell, Integer> sugarMap = new HashMap<Cell, Integer>();
 		int maxSugar = -1;
 		for (int i = 0; i < neighbors.size(); i++) {
 			int patchSugar = neighbors.get(i).getChars().get(amountSugar);
@@ -76,7 +77,8 @@ public class Agent {
 		
 		Map<Cell, Double> distanceMap = findShortestDistanceCell(sugarMap, index, stats); 
 		double min = Double.MAX_VALUE;
-		Cell cellToMove = null;
+		// TODO
+		Cell cellToMove = new SugarScapeCell(oldGrid[0].getChars());
 		for (Cell cell: distanceMap.keySet()) {
 			if (distanceMap.get(cell) < min) {
 				min = distanceMap.get(cell);
@@ -84,9 +86,6 @@ public class Agent {
 			}
 		}
 		return cellToMove;
-		
-		
-		
 	}
 
 }
