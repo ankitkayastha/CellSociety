@@ -11,7 +11,7 @@ public class SpreadingFireGraph extends GraphTemplate {
 
 	public SpreadingFireGraph(Scene myScene) {
 		super(myScene);
-		myScene.getStylesheets().add("/css/spreading_fire.css");
+		myScene.getStylesheets().add("/css/spreading_fire_graph.css");
 	}
 
 	@Override

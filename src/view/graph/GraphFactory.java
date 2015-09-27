@@ -49,10 +49,8 @@ public class GraphFactory {
 	private int findSeriesNum() {
 		if (myStats.getGlobalChars().get("sim") == 0 || myStats.getGlobalChars().get("sim") == 4) {
 			return 2;
-		} else if (myStats.getGlobalChars().get("sim") == 1 || myStats.getGlobalChars().get("sim") == 3) {
-			return 3;
 		} else {
-			return myStats.getGlobalChars().get("agents") + 1;
+			return 3;
 		}
 	}
 }
