@@ -23,7 +23,7 @@ public class SpreadingFireCell extends Cell {
 	}
 
 	@Override
-	public Color getCellColor() {
+	public Color getCellColor(Stats stats) {
 		return getColorMap().get(getChars().get("fire"));
 	}
 

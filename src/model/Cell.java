@@ -23,7 +23,7 @@ public abstract class Cell {
 	
 	public abstract void fillColorMap();
 
-	public abstract Color getCellColor();
+	public abstract Color getCellColor(Stats stats);
 
 	public abstract void change(Stats myStats);
 }

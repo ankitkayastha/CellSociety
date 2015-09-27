@@ -24,7 +24,7 @@ public class WaTorCell extends Cell {
 	}
 
 	@Override
-	public Color getCellColor() {
+	public Color getCellColor(Stats stats) {
 		return getColorMap().get(getChars().get(ANIMAL));
 	}
 

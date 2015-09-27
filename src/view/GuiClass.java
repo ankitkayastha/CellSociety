@@ -125,7 +125,7 @@ public class GuiClass {
 		for (int i = 0; i < myStats.getSize(); i++) {
 			Shape newShape = myShapeFactory.getShape(i);
 			myGrid.getCell(i).fillColorMap();
-			newShape.setFill(myGrid.getCell(i).getCellColor());
+			newShape.setFill(myGrid.getCell(i).getCellColor(myStats));
 			root.getChildren().add(newShape);
 			shapeList.add(newShape);
 			shapeMap.put(newShape, i);
@@ -136,7 +136,7 @@ public class GuiClass {
 	public void display() {
 		for (int i = 0; i < myStats.getSize(); i++) {
 			Shape currentShape = shapeList.get(i);
-			currentShape.setFill(myGrid.getCell(i).getCellColor());
+			currentShape.setFill(myGrid.getCell(i).getCellColor(myStats));
 		}
 	}
 }

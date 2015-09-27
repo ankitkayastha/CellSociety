@@ -19,7 +19,7 @@ public class SegregationCell extends Cell {
 	}
 	
 	@Override
-	public Color getCellColor() {
+	public Color getCellColor(Stats stats) {
 		return generateColor(getChars().get(agent));
 	}
 	
