@@ -11,8 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.TilePane;
 import simulation.Simulation;
 
-
-
 public class ButtonHandler {
 	private Group root;
 	private Timeline animation;
@@ -21,7 +19,8 @@ public class ButtonHandler {
 	private int width;
 	private GuiClass gui;
 
-	public ButtonHandler(GuiClass gui, Group root, Timeline animation, ResourceBundle myResources, int height, int width) {
+	public ButtonHandler(GuiClass gui, Group root, Timeline animation, ResourceBundle myResources, int height,
+			int width) {
 		this.gui = gui;
 		this.root = root;
 		this.animation = animation;
@@ -29,33 +28,24 @@ public class ButtonHandler {
 		this.height = height;
 		this.width = width;
 	}
-	
+
 	private Button createButton(String title) {
 		Button thisButton = new Button(title);
 		thisButton.setDisable(true);
 		thisButton.setMaxSize(60, 30);
 		return thisButton;
 	}
-	
-	private void setDisables(Button playButton, Button pauseButton, Button stopButton, Button ffBUtton, 
-			Button sdButton, Button stepButton, Button openButton, Button wrapButton,
-			boolean play, boolean pause, boolean stop, boolean ff, 
-			boolean sd, boolean step, boolean open, boolean wrap) {
-		
-	}
-	
+
 	public TextField createParam(Simulation thisSim) {
-		TextField parameter = new TextField ();
+		TextField parameter = new TextField();
 		parameter.setPromptText("Enter parameter");
-		parameter.setLayoutX(width+25);
+		parameter.setLayoutX(width + 25);
 		parameter.setLayoutY(200);
 		parameter.setMaxWidth(100);
 		return parameter;
 	}
-		
+
 	public void createButtons() {
-	//	for (int i = 0; i < )
-		
 		Button playButton = createButton(myResources.getString("PlayButtonText"));
 		Button pauseButton = createButton(myResources.getString("PauseButtonText"));
 		Button stopButton = createButton(myResources.getString("StopButtonText"));
@@ -149,21 +139,21 @@ public class ButtonHandler {
 
 		root.getChildren().add(tileButtons);
 	}
-	
+
 	private void speedUp(Timeline animation, Button ffButton) {
-		if (animation.getRate() <= 32){
-			animation.setRate(animation.getRate()*2); 
+		if (animation.getRate() <= 32) {
+			animation.setRate(animation.getRate() * 2);
 		}
 		ffButton.setDisable(!(animation.getRate() <= 32));
 		animation.setRate(animation.getRate());
-		//System.out.printf("Rate: %f\n", animation.getRate());
+		// System.out.printf("Rate: %f\n", animation.getRate());
 	}
 
 	private void slowDown(Timeline animation, Button sdButton) {
 		if (animation.getRate() >= 1 / 32.0)
-			animation.setRate(animation.getRate()/2); 
+			animation.setRate(animation.getRate() / 2);
 		sdButton.setDisable(!(animation.getRate() >= 1 / 32.0));
 		animation.setRate(animation.getRate());
-		//System.out.printf("Rate: %f\n", animation.getRate());
+		// System.out.printf("Rate: %f\n", animation.getRate());
 	}
 }

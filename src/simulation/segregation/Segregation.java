@@ -19,8 +19,8 @@ public class Segregation extends Simulation {
 		}
 		cellCheck = new SegregationCellCheck();
 	}
-	
-	public void setParam(double t){
+
+	public void setParam(double t) {
 		threshold = t;
 		System.out.println("Threshold = " + t);
 	}
@@ -41,4 +41,7 @@ public class Segregation extends Simulation {
 			}
 		}
 	}
+
+	@Override
+	public void setParam(Double thisDouble) {}
 }

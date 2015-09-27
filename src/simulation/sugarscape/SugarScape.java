@@ -6,9 +6,10 @@ import model.Grid;
 import simulation.Simulation;
 
 public class SugarScape extends Simulation {
-	
+
 	private Patch myPatch;
 	private Agent myAgent;
+
 	public SugarScape(Stats stats) {
 		super(stats);
 		myPatch = new Patch();
@@ -19,9 +20,10 @@ public class SugarScape extends Simulation {
 	public void update(Grid currentGrid, Stats myStats) {
 		Cell[] oldGrid = super.copyGrid(currentGrid, myStats);
 		Cell[] myGridGrid = currentGrid.getGrid();
-		
 		myAgent.doAgent(oldGrid, myGridGrid, myStats);
-
-		myPatch.doPatch(oldGrid, myGridGrid); //update patches
+		myPatch.doPatch(oldGrid, myGridGrid); 
 	}
+
+	@Override
+	public void setParam(Double thisDouble) {}
 }

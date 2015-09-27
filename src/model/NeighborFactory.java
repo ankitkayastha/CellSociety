@@ -7,7 +7,7 @@ import data.Stats;
 
 public class NeighborFactory {
 	private Stats myStats;
-	
+
 	private int numRows;
 	private int numCols;
 	private int currentShape;
@@ -65,18 +65,20 @@ public class NeighborFactory {
 	}
 
 	private int[] getRowDelta(int index) {
-		if ((currentShape == TRIANGLE || currentShape == SQUARE) && (currentSim == FIRE || currentSim == WATOR || currentSim == SUGAR)) {
+		if ((currentShape == TRIANGLE || currentShape == SQUARE)
+				&& (currentSim == FIRE || currentSim == WATOR || currentSim == SUGAR)) {
 			return new int[] { -1, 0, 0, 1 };
 		} else if ((currentShape == TRIANGLE || currentShape == SQUARE) && (currentSim == GOL || currentSim == SEG)) {
 			return new int[] { -1, -1, -1, 0, 0, 1, 1, 1 };
-		}  else if (currentShape == HEXAGON) {
+		} else if (currentShape == HEXAGON) {
 			return new int[] { -1, (index % 2) - 1, (index % 2) - 1, 1, (index % 2), (index % 2) };
 		}
 		return null;
 	}
 
 	private int[] getColDelta(int index) {
-		if ((currentShape == TRIANGLE || currentShape == SQUARE) && (currentSim == FIRE || currentSim == WATOR || currentSim == SUGAR)) {
+		if ((currentShape == TRIANGLE || currentShape == SQUARE)
+				&& (currentSim == FIRE || currentSim == WATOR || currentSim == SUGAR)) {
 			return new int[] { 0, -1, 1, 0 };
 		} else if ((currentShape == TRIANGLE || currentShape == SQUARE) && (currentSim == GOL || currentSim == SEG)) {
 			return new int[] { 0, -1, 1, -1, 1, 0, -1, 1 };
@@ -87,14 +89,16 @@ public class NeighborFactory {
 	}
 
 	private int[] getIndexDelta(int index) {
-		if ((currentShape == TRIANGLE || currentShape == SQUARE) && (currentSim == FIRE || currentSim == WATOR || currentSim == SUGAR)) {
+		if ((currentShape == TRIANGLE || currentShape == SQUARE)
+				&& (currentSim == FIRE || currentSim == WATOR || currentSim == SUGAR)) {
 			return new int[] { index - numCols, index - 1, index + 1, index + numCols };
 		} else if ((currentShape == TRIANGLE || currentShape == SQUARE) && (currentSim == GOL || currentSim == SEG)) {
 			return new int[] { index - numCols, index - numCols - 1, index - numCols + 1, index - 1, index + 1,
 					index + numCols, index + numCols - 1, index + numCols + 1 };
 		} else if (currentShape == HEXAGON) {
-			return new int[] { index - numCols, index + ((index % 2) - 1) * numCols - 1, index + ((index % 2) - 1) * numCols + 1,
-					index + numCols, index + (index % 2) * numCols - 1, index + (index % 2) * numCols + 1 };
+			return new int[] { index - numCols, index + ((index % 2) - 1) * numCols - 1,
+					index + ((index % 2) - 1) * numCols + 1, index + numCols, index + (index % 2) * numCols - 1,
+					index + (index % 2) * numCols + 1 };
 		}
 		return null;
 	}

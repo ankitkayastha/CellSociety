@@ -29,7 +29,7 @@ public class SpreadingFireCell extends Cell {
 
 	@Override
 	public void change(Stats myStats) {
-		myCharacteristicMap.put("fire", (myCharacteristicMap.get("fire")+1)%3);			
+		myCharacteristicMap.put("fire", (myCharacteristicMap.get("fire") + 1) % 3);
 	}
 
 }

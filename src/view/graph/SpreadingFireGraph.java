@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.XYChart;
 import model.Cell;
 
-public class SpreadingFireGraph extends GraphTemplate{
+public class SpreadingFireGraph extends GraphTemplate {
 
 	public SpreadingFireGraph(Scene myScene) {
 		super(myScene);
@@ -15,7 +15,7 @@ public class SpreadingFireGraph extends GraphTemplate{
 	}
 
 	@Override
-	public void update(Cell[] cells, Stats myStats, int stepNum,ArrayList<XYChart.Series<Number, Number>> allSeries) {
+	public void update(Cell[] cells, Stats myStats, int stepNum, ArrayList<XYChart.Series<Number, Number>> allSeries) {
 		int total = cells.length;
 		int empty = 0;
 		int tree = 0;
@@ -28,12 +28,12 @@ public class SpreadingFireGraph extends GraphTemplate{
 			else
 				burning++;
 		}
-		int emptyPercent = empty*100/total;
-		int treePercent = tree*100/total;
-		int burningPercent = burning*100/total;
+		int emptyPercent = empty * 100 / total;
+		int treePercent = tree * 100 / total;
+		int burningPercent = burning * 100 / total;
 		allSeries.get(0).getData().add(new XYChart.Data<Number, Number>(stepNum, emptyPercent));
 		allSeries.get(1).getData().add(new XYChart.Data<Number, Number>(stepNum, treePercent));
 		allSeries.get(2).getData().add(new XYChart.Data<Number, Number>(stepNum, burningPercent));
 	}
-	
+
 }

@@ -17,17 +17,17 @@ public class GraphHandler {
 	private GraphFactory gf;
 	private Stats myStats;
 	private GraphTemplate simGraph;
-	
+
 	public GraphHandler(Stats myStats) {
 		allSeries = new ArrayList<XYChart.Series<Number, Number>>();
 		this.myStats = myStats;
 	}
 
 	public void updateGraph(Cell[] cells, Stats myStats, int stepNum) {
-		xAxis.setLowerBound(stepNum-20);
+		xAxis.setLowerBound(stepNum - 20);
 		xAxis.setUpperBound(stepNum);
-		simGraph.update(cells, myStats, stepNum, allSeries);		
-		for (int i=0; i<allSeries.size();i++) {
+		simGraph.update(cells, myStats, stepNum, allSeries);
+		for (int i = 0; i < allSeries.size(); i++) {
 			allSeries.get(i).getData().remove(0);
 		}
 	}
@@ -48,7 +48,7 @@ public class GraphHandler {
 		graph.setMaxHeight(height);
 		graph.setMaxWidth(width);
 		graph.setLayoutY(top);
-		gf = new GraphFactory (graph, allSeries, myStats);
+		gf = new GraphFactory(graph, allSeries, myStats);
 		gf.initializeSeries();
 		simGraph = gf.generateGraphTemplate(myScene);
 		return graph;

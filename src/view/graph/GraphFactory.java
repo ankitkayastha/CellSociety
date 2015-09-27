@@ -12,8 +12,8 @@ public class GraphFactory {
 	private ArrayList<XYChart.Series<Number, Number>> allSeries;
 	private Stats myStats;
 
-
-	public GraphFactory(LineChart<Number, Number> graph, ArrayList<XYChart.Series<Number, Number>> allSeries, Stats myStats) {
+	public GraphFactory(LineChart<Number, Number> graph, ArrayList<XYChart.Series<Number, Number>> allSeries,
+			Stats myStats) {
 		this.graph = graph;
 		this.allSeries = allSeries;
 		this.myStats = myStats;
@@ -29,34 +29,30 @@ public class GraphFactory {
 			allSeries.add(series);
 		}
 	}
-	
+
 	public GraphTemplate generateGraphTemplate(Scene myScene) {
 		GraphTemplate thisGF = null;
-		if (myStats.getGlobalChars().get("sim")==0) {
+		if (myStats.getGlobalChars().get("sim") == 0) {
 			thisGF = new GameOfLifeGraph(myScene);
-		}
-		else if (myStats.getGlobalChars().get("sim")==1) {
+		} else if (myStats.getGlobalChars().get("sim") == 1) {
 			thisGF = new SpreadingFireGraph(myScene);
-		}
-		else if (myStats.getGlobalChars().get("sim")==2) {
+		} else if (myStats.getGlobalChars().get("sim") == 2) {
 			thisGF = new SegregationGraph(myScene);
-		}
-		else if (myStats.getGlobalChars().get("sim")==3) {
+		} else if (myStats.getGlobalChars().get("sim") == 3) {
 			thisGF = new WaTorGraph(myScene);
-		}
-		else if (myStats.getGlobalChars().get("sim")==4) {
+		} else if (myStats.getGlobalChars().get("sim") == 4) {
 			thisGF = new SugarScapeGraph(myScene);
 		}
 		return thisGF;
 	}
-	
+
 	private int findSeriesNum() {
-		if (myStats.getGlobalChars().get("sim")==0 || myStats.getGlobalChars().get("sim")==4) {
+		if (myStats.getGlobalChars().get("sim") == 0 || myStats.getGlobalChars().get("sim") == 4) {
 			return 2;
-		} else if (myStats.getGlobalChars().get("sim")==1 || myStats.getGlobalChars().get("sim")==3) {
+		} else if (myStats.getGlobalChars().get("sim") == 1 || myStats.getGlobalChars().get("sim") == 3) {
 			return 3;
 		} else {
-			return myStats.getGlobalChars().get("agents")+1;
+			return myStats.getGlobalChars().get("agents") + 1;
 		}
 	}
 }

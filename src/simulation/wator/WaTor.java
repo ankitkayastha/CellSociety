@@ -13,8 +13,7 @@ public class WaTor extends Simulation {
 	protected final int SHARK = 2;
 	private Creature myFish;
 	private Creature myShark;
-	
-	
+
 	Random myRandom = new Random(1234);
 
 	public WaTor(Stats stats) {
@@ -30,19 +29,8 @@ public class WaTor extends Simulation {
 
 		myFish.animalAction(oldGrid, myGridGrid, stats);
 		myShark.animalAction(oldGrid, myGridGrid, stats);
-		
-		/*int numFish = 0;
-		int numShark  = 0;
-		int numEmpty = 0;
-		for (int i=0; i<myGridGrid.length; i++) {
-			if (myGridGrid[i].getChars().get(ANIMAL)==FISH) {
-				numFish++;
-			}
-			else if (myGridGrid[i].getChars().get(ANIMAL)==SHARK) {
-				numShark++;
-			}
-			else 
-				numEmpty++;
-		}*/
 	}
+
+	@Override
+	public void setParam(Double thisDouble) {}
 }

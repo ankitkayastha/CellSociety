@@ -1,4 +1,5 @@
 package simulation.spreading_fire;
+
 import java.util.List;
 
 import data.Stats;
@@ -14,16 +15,15 @@ public class SpreadingFire extends Simulation {
 	private double probCatch; // probability of a cell catching fire based on
 	private final String characteristicFire = "fire";
 	private SpreadingFireCellCheck myCheck = new SpreadingFireCellCheck();
-	
-	
+
 	public SpreadingFire(Stats stats) {
 		super(stats);
 		if (stats.getGlobalChars().keySet().contains("prob")) {
-			probCatch = stats.getGlobalChars().get("prob")/100.0;
+			probCatch = stats.getGlobalChars().get("prob") / 100.0;
 		}
 	}
-	
-	public void setParam(double t){
+
+	public void setParam(double t) {
 		probCatch = t;
 		System.out.println("Flame Probability = " + t);
 	}
@@ -37,18 +37,20 @@ public class SpreadingFire extends Simulation {
 			Cell oldCell = oldGrid[i];
 			Cell myCell = myGridGrid[i];
 			NeighborFactory myNeighborFactory = new NeighborFactory(myStats);
-			
+
 			List<Cell> cellNeighbors = myNeighborFactory.getNeighbors(oldGrid, i);
 			if (oldCell.getChars().get(characteristicFire) == TREE) {
 				if (myCheck.areNeighborsBurning(cellNeighbors)) {
-						myCell.getChars().put(characteristicFire, myCheck.generateProbCatchState(probCatch));
+					myCell.getChars().put(characteristicFire, myCheck.generateProbCatchState(probCatch));
 				}
-			}			
+			}
 			if (oldCell.getChars().get(characteristicFire) == BURNING) {
 				myCell.getChars().put(characteristicFire, EMPTY);
 			}
 		}
 	}
-	
+
+	@Override
+	public void setParam(Double thisDouble) {}
 
 }

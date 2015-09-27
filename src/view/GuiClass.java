@@ -62,7 +62,11 @@ public class GuiClass {
 	public Scene init(Stage stage, Timeline animation) {
 		root = new Group();
 		myScene = new Scene(root, width + toolbar, height + graphbar, Color.ALICEBLUE);
+		createButtonHandler(animation);
+		return myScene;
+	}
 
+	private void createButtonHandler(Timeline animation) {
 		ButtonHandler buttonHandler = new ButtonHandler(this, root, animation, myResources, height, width);
 		buttonHandler.createButtons();
 		TextField parameter = buttonHandler.createParam(thisSim);
@@ -70,7 +74,6 @@ public class GuiClass {
 			thisSim.setParam(Double.parseDouble(parameter.getText()));
 		});
 		root.getChildren().add(parameter);
-		return myScene;
 	}
 
 	public void initializeGrid() {
@@ -85,11 +88,11 @@ public class GuiClass {
 		SimulationFactory simFactory = new SimulationFactory(myStats);
 		myGrid = new Grid(myStats);
 		thisSim = simFactory.createSim();
-		
+
 		gh = new GraphHandler(myStats);
 		lineChart = gh.createGraph(height, graphbarSmall, width, myScene);
 		root.getChildren().add(lineChart);
-		
+
 		System.out.println(myStats.getGlobalChars().toString());
 		System.out.printf("About to initialize Sim: %d\n", myStats.getGlobalChars().get("sim"));
 		initDisplay();
@@ -107,11 +110,11 @@ public class GuiClass {
 	public void toggleType() {
 		myStats.flipType();
 	}
-	
+
 	public void click(double x, double y) {
-		for (int i=0; i<shapeList.size(); i++) {
+		for (int i = 0; i < shapeList.size(); i++) {
 			Shape thisShape = shapeList.get(i);
-			if (thisShape.contains(x,y)) {
+			if (thisShape.contains(x, y)) {
 				int index = shapeMap.get(thisShape);
 				myGrid.changeCell(index, myStats);
 				display();

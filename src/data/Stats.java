@@ -6,12 +6,12 @@ import java.util.Map;
 public class Stats {
 	private Map<String, Integer> globalChars;
 	private List<Map<String, Integer>> data;
-	
+
 	public Stats(Reader myReader) {
 		this.globalChars = myReader.getGlobalChars();
 		this.data = myReader.getData();
 	}
-	
+
 	public int getSize() {
 		return data.size();
 	}
@@ -27,18 +27,14 @@ public class Stats {
 	public List<Map<String, Integer>> getData() {
 		return data;
 	}
-	
-	private void updateStats(String key, int value) {
-		globalChars.put(key, value);
-	}
-	
+
 	public void flipType() {
-		globalChars.put("type", 1- globalChars.get("type"));
+		globalChars.put("type", 1 - globalChars.get("type"));
 		System.out.printf("Wrap flipped: %d\n", globalChars.get("type"));
 	}
-	
+
 	public void putDimensions(int height, int width) {
 		globalChars.put("height", height);
-		globalChars.put("width",  width);
+		globalChars.put("width", width);
 	}
 }

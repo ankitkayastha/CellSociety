@@ -26,7 +26,7 @@ public class GameOfLife extends Simulation {
 			Cell oldCell = oldGrid[i];
 			Cell myCell = myGridGrid[i];
 			NeighborFactory myNeighborFactory = new NeighborFactory(myStats);
-			
+
 			List<Cell> cellNeighbors = myNeighborFactory.getNeighbors(oldGrid, i);
 
 			int numLiveNeighbors = 0;
@@ -50,4 +50,7 @@ public class GameOfLife extends Simulation {
 			}
 		}
 	}
+
+	@Override
+	public void setParam(Double thisDouble) {}
 }

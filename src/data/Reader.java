@@ -1,4 +1,5 @@
 package data;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,12 +25,11 @@ public class Reader {
 	private static List<Map<String, Integer>> data;
 
 	public Reader() throws IOException {
-		globalChars = new TreeMap<String, Integer>();;
-		data = new ArrayList<Map<String, Integer>>();;
+		globalChars = new TreeMap<String, Integer>();
+		data = new ArrayList<Map<String, Integer>>();
 		openFile();
 	}
 
-	
 	private boolean openFile() throws IOException {
 		FileChooser fileChooser = new FileChooser();
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
@@ -50,12 +50,8 @@ public class Reader {
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(inputFile);
 			doc.getDocumentElement().normalize();
-
 			String stringIndex = doc.getElementsByTagName("index").item(0).getTextContent();
-
 			globalIndex = Integer.parseInt(stringIndex);
-
-	
 
 			NodeList globalCharList = doc.getElementsByTagName("chars");
 			for (int i = 0; i < globalCharList.getLength(); i++) {
@@ -67,7 +63,6 @@ public class Reader {
 				Node stringGlobalCharName = globalCharElement.getElementsByTagName("name").item(0);
 				Node stringGlobalCharValue = globalCharElement.getElementsByTagName("value").item(0);
 				int globalCharValue = Integer.parseInt(stringGlobalCharValue.getTextContent());
-
 				globalChars.put(stringGlobalCharName.getTextContent(), globalCharValue);
 			}
 
@@ -76,23 +71,13 @@ public class Reader {
 				Node square = nList.item(i);
 				Element eElement = (Element) square;
 				Node stringIndexNode = eElement.getElementsByTagName("index").item(0);
-
 				int ind = Integer.parseInt(stringIndexNode.getTextContent());
-
 				Map<String, Integer> squareMap = new TreeMap<String, Integer>();
-
 				squareMap.put("index", ind);
-
 				NodeList charList = eElement.getElementsByTagName("characteristic");
 				for (int j = 0; j < charList.getLength(); j++) {
 					Node charch = charList.item(j);
-					Element charElement = (Element) charch;
-					Node charName = charElement.getElementsByTagName("name").item(0);
-					Node charValue = charElement.getElementsByTagName("value").item(0);
-
-					int charValueInt = Integer.parseInt(charValue.getTextContent());
-
-					squareMap.put(charName.getTextContent(), charValueInt);
+					putMap(squareMap, charch);
 				}
 				data.add(squareMap);
 			}
@@ -100,15 +85,23 @@ public class Reader {
 			e.printStackTrace();
 		}
 	}
-	
+
+	private void putMap(Map<String, Integer> squareMap, Node charch) {
+		Element charElement = (Element) charch;
+		Node charName = charElement.getElementsByTagName("name").item(0);
+		Node charValue = charElement.getElementsByTagName("value").item(0);
+		int charValueInt = Integer.parseInt(charValue.getTextContent());
+		squareMap.put(charName.getTextContent(), charValueInt);
+	}
+
 	private void checkData() throws IOException {
-		if (globalChars.get("sim")<0 || globalChars.get("sim")>4) {
-			throw new IOException();
-		} 
-		if (globalChars.get("type") <0 || globalChars.get("type")>1) {
+		if (globalChars.get("sim") < 0 || globalChars.get("sim") > 4) {
 			throw new IOException();
 		}
-		if (globalChars.get("rows")*globalChars.get("cols") != data.size()) {
+		if (globalChars.get("type") < 0 || globalChars.get("type") > 1) {
+			throw new IOException();
+		}
+		if (globalChars.get("rows") * globalChars.get("cols") != data.size()) {
 			throw new IOException();
 		}
 		return;
@@ -117,11 +110,11 @@ public class Reader {
 	public String getSim() {
 		return sim;
 	}
-	
+
 	public int getSimNum() {
 		return globalChars.get("sim");
 	}
-	
+
 	public int getSize() {
 		return globalIndex;
 	}

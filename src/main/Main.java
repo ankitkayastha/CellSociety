@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import view.GuiClass;
 
-
 public class Main extends Application {
 
 	private static final int FRAMES_PER_SECOND = 60;
@@ -30,9 +29,9 @@ public class Main extends Application {
 	}
 
 	private void setStage() {
-        ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "text");
+		ResourceBundle myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "text");
 		stage.setTitle(myResources.getString("Title"));
-		
+
 		gui = new GuiClass(myResources);
 
 		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> gui.step());
@@ -42,9 +41,9 @@ public class Main extends Application {
 		animation.getKeyFrames().add(frame);
 		animation.play();
 		animation.pause();
-		
+
 		scene = gui.init(stage, animation);
-        scene.setOnMouseClicked(e -> gui.click(e.getX(), e.getY()));
+		scene.setOnMouseClicked(e -> gui.click(e.getX(), e.getY()));
 
 		stage.setScene(scene);
 		stage.setResizable(false);

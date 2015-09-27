@@ -1,4 +1,5 @@
 package model;
+
 import data.Stats;
 
 public class Grid {
@@ -15,15 +16,15 @@ public class Grid {
 			myGrid[i] = initCell;
 		}
 	}
-	
+
 	public Cell[] getGrid() {
 		return myGrid;
 	}
-	
+
 	public Cell getCell(int i) {
 		return myGrid[i];
 	}
-	
+
 	public void changeCell(int index, Stats myStats) {
 		myGrid[index].change(myStats);
 	}

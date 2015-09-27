@@ -7,17 +7,16 @@ import model.Cell;
 import model.CellFactory;
 import model.Grid;
 import data.Stats;
-import javafx.scene.control.Button;
 
-public abstract class Simulation {	
+public abstract class Simulation {
 	protected Stats myStats;
-	
-	public Simulation(Stats stats){
+
+	public Simulation(Stats stats) {
 		myStats = stats;
 	}
-		
+
 	public abstract void update(Grid currentGrid, Stats myStats);
-	
+
 	protected Cell[] copyGrid(Grid myGrid, Stats myStats) {
 		Cell[] oldGrid = new Cell[myStats.getSize()];
 		for (int i = 0; i < myStats.getSize(); i++) {
@@ -33,19 +32,6 @@ public abstract class Simulation {
 		}
 		return oldGrid;
 	}
-
-	public void setParam(double parseDouble) {
-		// TODO Auto-generated method stub
-		
-	}
 	
-	/*public void changeCellState(Grid myGrid) {
-		Cell[] arr = myGrid.getGrid();
-		for (Cell cell: arr) {
-			(cell).setOnAction((event) -> {
-				
-				
-			})
-		}
-	}*/
+	public abstract void setParam(Double thisDouble);
 }
