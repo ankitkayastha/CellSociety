@@ -21,6 +21,7 @@ import shape.ShapeFactory;
 import data.Stats;
 import simulation.Simulation;
 import simulation.SimulationFactory;
+import view.graph.GraphHandler;
 
 public class GuiClass {
 
@@ -33,6 +34,7 @@ public class GuiClass {
 	private List<Shape> shapeList;
 	private Map<Shape, Integer> shapeMap;
 	private GraphHandler gh;
+	private LineChart<Number, Number> lineChart;
 	private int stepNum;
 
 	private int width = 500;
@@ -60,11 +62,6 @@ public class GuiClass {
 	public Scene init(Stage stage, Timeline animation) {
 		root = new Group();
 		myScene = new Scene(root, width + toolbar, height + graphbar, Color.ALICEBLUE);
-		myScene.getStylesheets().add("/css/graph.css");
-
-		gh = new GraphHandler();
-		LineChart<Number, Number> lineChart = gh.createGraph(height, graphbarSmall, width);
-		root.getChildren().add(lineChart);
 
 		ButtonHandler buttonHandler = new ButtonHandler(this, root, animation, myResources, height, width);
 		buttonHandler.createButtons();
@@ -89,6 +86,11 @@ public class GuiClass {
 		SimulationFactory simFactory = new SimulationFactory(myStats);
 		myGrid = new Grid(myStats);
 		thisSim = simFactory.createSim();
+		
+		gh = new GraphHandler(myStats);
+		lineChart = gh.createGraph(height, graphbarSmall, width, myScene);
+		root.getChildren().add(lineChart);
+		
 		System.out.println(myStats.getGlobalChars().toString());
 		System.out.printf("About to initialize Sim: %d\n", myStats.getGlobalChars().get("sim"));
 		initDisplay();
@@ -100,6 +102,7 @@ public class GuiClass {
 		for (Shape thisShape : shapeList) {
 			root.getChildren().remove(thisShape);
 		}
+		root.getChildren().remove(lineChart);
 	}
 
 	public void toggleType() {
@@ -110,7 +113,6 @@ public class GuiClass {
 		for (int i=0; i<shapeList.size(); i++) {
 			Shape thisShape = shapeList.get(i);
 			if (thisShape.contains(x,y)) {
-				System.out.println(thisShape.toString());
 				int index = shapeMap.get(thisShape);
 				myGrid.changeCell(index, myStats);
 				display();
